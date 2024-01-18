@@ -8,7 +8,15 @@ package frc.robot;
 public class RobotMap {
 
     //[D]rive
-    public final static int FRONT_LEFT_DRIVE_CAN = RoboRioMap.CAN_0;
+    public static final int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
+    public static final int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_5;
+    public static final int D_FRONT_RIGHT_DRIVE = RoboRioMap.CAN_3;
+    public static final int D_BACK_RIGHT_DRIVE = RoboRioMap.CAN_7;
+
+    public static final int D_FRONT_LEFT_TURNING = RoboRioMap.CAN_2;
+    public static final int D_BACK_LEFT_TURNING = RoboRioMap.CAN_6;
+    public static final int D_FRONT_RIGHT_TURNING = RoboRioMap.CAN_4;
+    public static final int D_BACK_RIGHT_TURNING = RoboRioMap.CAN_8;
 
     //[I]ntake
 
