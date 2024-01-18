@@ -5,13 +5,25 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.testingdashboard.TestingDashboard;
 
 public class Intake extends SubsystemBase {
+  private static Intake m_intake;
+
   /** Creates a new Intake. */
-  public Intake() {}
+  private Intake() {}
+
+  public static Intake getInstance() {
+    if (m_intake == null) {
+      m_intake = new Intake();
+      TestingDashboard.getInstance().registerSubsystem(m_intake, "Intake");
+    }
+    return m_intake;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+  
 }
