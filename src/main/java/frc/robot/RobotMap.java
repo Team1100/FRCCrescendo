@@ -19,5 +19,7 @@ public class RobotMap {
     public static final int D_BACK_RIGHT_TURNING = RoboRioMap.CAN_8;
 
     //[I]ntake
+    public static final int I_MOTOR_LEFT = RoboRioMap.CAN_10;
+    public static final int I_MOTOR_RIGHT = RoboRioMap.CAN_9;
 
 }
