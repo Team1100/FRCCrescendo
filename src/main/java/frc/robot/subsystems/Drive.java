@@ -25,6 +25,8 @@ import frc.robot.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
+  private static Drive m_drive;
+
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       RobotMap.D_FRONT_LEFT_DRIVE,
@@ -62,7 +64,7 @@ public class Drive extends SubsystemBase {
   SwerveDrivePoseEstimator m_DrivePoseEstimator;
 
   /** Creates a new Drive. */
-  public Drive() {
+  private Drive() {
     m_DrivePoseEstimator = new SwerveDrivePoseEstimator(
         Constants.kDriveKinematics, 
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
@@ -72,6 +74,14 @@ public class Drive extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
       }, new Pose2d());
+  }
+
+  public static Drive getInstance() {
+    if (m_drive == null) {
+      m_drive = new Drive();
+      // TestingDashboard.getInstance().registerSubsystem(m_drive, "Drive");
+    }
+    return m_drive;
   }
 
   @Override
