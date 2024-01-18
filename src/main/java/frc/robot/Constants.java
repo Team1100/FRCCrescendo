@@ -16,6 +16,9 @@ import com.revrobotics.CANSparkBase.IdleMode;
  */
 public final class Constants {
 
+// Defines Neo Motor constant
+  public static final double kFreeSpeedRpm = 5676;
+
   // Defines Drive constants
   public static final int kDrivingMotorPinionTeeth = 14;
 
@@ -64,7 +67,4 @@ public final class Constants {
   public static final int kTurningMotorCurrentLimit = 20; // amps
 
   public static final int kDriverControllerPort = 0;
-
-  // Defines Neo Motor constant
-  public static final double kFreeSpeedRpm = 5676;
 }

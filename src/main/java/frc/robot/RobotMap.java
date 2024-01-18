@@ -8,6 +8,7 @@ package frc.robot;
 public class RobotMap {
 
     //[D]rive
+    public final static int FRONT_LEFT_DRIVE_CAN = RoboRioMap.CAN_0;
 
     //[I]ntake
 
