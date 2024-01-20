@@ -100,5 +100,5 @@ public final class Constants {
     public static final double kDriveDeadband = 0.05;
 
     // Defines Intake constants
-    public static final double I_INTAKE_SPEED = 0.1;
+    public static final double I_INTAKE_SPEED = -0.1;
 }
