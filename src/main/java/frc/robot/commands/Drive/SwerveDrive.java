@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.drive;
+package frc.robot.commands.Drive;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
@@ -12,12 +12,12 @@ import frc.robot.OI;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
-public class ArcadeDrive extends Command {
+public class SwerveDrive extends Command {
   private static XboxController m_driverController;
   Drive m_drive;
 
-  /** Creates a new ArcadeDrive. */
-  public ArcadeDrive() {
+  /** Creates a new SwerveDrive. */
+  public SwerveDrive() {
     m_drive = Drive.getInstance();
     m_driverController = OI.getInstance().getDriverXboxController();
 
@@ -26,7 +26,7 @@ public class ArcadeDrive extends Command {
 
   public static void registerWithTestingDashboard() {
     Drive drive = Drive.getInstance();
-    ArcadeDrive cmd = new ArcadeDrive();
+    SwerveDrive cmd = new SwerveDrive();
     TestingDashboard.getInstance().registerCommand(drive, "Basic", cmd);
   }
 
