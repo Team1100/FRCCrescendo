@@ -21,7 +21,6 @@ public class RobotMap {
     //[I]ntake
     public static final int I_MOTOR_LEFT = RoboRioMap.CAN_10;
     public static final int I_MOTOR_RIGHT = RoboRioMap.CAN_9;
-    public static final double I_INTAKE_SPEED = 0.3;
 
     //[U]ser Input
 	public static final int U_DRIVER_XBOX_CONTROLLER = 0;
