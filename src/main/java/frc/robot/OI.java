@@ -8,6 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Intake.Consume;
+import frc.robot.commands.Intake.Expel;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -39,8 +43,8 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-    m_DriverXboxController.getAButton();
-    m_OperatorXboxController.getAButton();
+    new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new Consume());
+    new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new Expel());
   }
 
   /**

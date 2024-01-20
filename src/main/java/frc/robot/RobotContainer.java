@@ -51,6 +51,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     m_oi = OI.getInstance();
+    m_oi.getDriverXboxController().getAButton();
   }
 
   /**
