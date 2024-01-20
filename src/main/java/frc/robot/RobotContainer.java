@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.drive.ArcadeDrive;
+import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,10 +31,10 @@ public class RobotContainer {
 
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
-    m_robotDrive.setDefaultCommand(new ArcadeDrive());
+    m_robotDrive.setDefaultCommand(new SwerveDrive());
 
     // Register all commands with TestingDashboard
-    ArcadeDrive.registerWithTestingDashboard();
+    SwerveDrive.registerWithTestingDashboard();
 
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();

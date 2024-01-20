@@ -9,16 +9,18 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.Constants;
 import frc.robot.testingdashboard.TestingDashboard;
 
 public class Intake extends SubsystemBase {
   private static Intake m_intake;
-    CANSparkMax m_ILeftSparkMax ;
-    CANSparkMax m_IRightSparkMax ;
+    CANSparkMax m_ILeftSparkMax;
+    CANSparkMax m_IRightSparkMax;
   /** Creates a new Intake. */
   private Intake() {
     m_ILeftSparkMax = new CANSparkMax(RobotMap.I_MOTOR_LEFT, MotorType.kBrushless);
     m_IRightSparkMax = new CANSparkMax(RobotMap.I_MOTOR_RIGHT, MotorType.kBrushless);
+    // Motors are set opposite of each other and will spin in different directions on the robot
     m_IRightSparkMax.follow(m_ILeftSparkMax);
   }
 
@@ -31,11 +33,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void spinIn() {
-    m_ILeftSparkMax.set(-RobotMap.I_INTAKE_SPEED);
+    m_ILeftSparkMax.set(Constants.I_INTAKE_SPEED);
   }
 
   public void spinOut() {
-    m_ILeftSparkMax.set(RobotMap.I_INTAKE_SPEED);
+    m_ILeftSparkMax.set(-Constants.I_INTAKE_SPEED);
   }
 
   public void spinStop() {
