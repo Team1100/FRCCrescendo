@@ -10,7 +10,7 @@ import frc.robot.testingdashboard.Command;
 public class Consume extends Command {
   Intake m_intake;
 
-  /** Creates a new ArcadeDrive. */
+  /** Creates a new Consume. */
   public Consume() {
     super(Intake.getInstance(), "Intake", "Consume");
     m_intake = Intake.getInstance();

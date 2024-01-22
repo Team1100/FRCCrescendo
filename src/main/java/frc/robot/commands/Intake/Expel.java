@@ -11,7 +11,7 @@ import frc.robot.testingdashboard.Command;
 public class Expel extends Command {
   Intake m_intake;
 
-  /** Creates a new ArcadeDrive. */
+  /** Creates a new Expel. */
   public Expel() {
     super(Intake.getInstance(), "Intake", "Expel");
     m_intake = Intake.getInstance();
