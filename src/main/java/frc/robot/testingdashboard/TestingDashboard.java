@@ -7,6 +7,7 @@
 
 package frc.robot.testingdashboard;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -17,16 +18,14 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * This class sets up a testing dashboard using
  * WPILib's ShuffleBoard. The testing dashboard
- * contains a single tab for every subsystem
- * containing the subsystem status and all
- * commands associated with that subsystem.
+ * contains a single tab for every tabName
+ * containing the tabName status and all
+ * commands associated with that tabName.
  * 
  * There is also a debug tab that contains sensor
  * variables and debug values.
@@ -37,11 +36,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class TestingDashboard {
   private static TestingDashboard testingDashboard;
-  private ArrayList<TestingDashboardTab> testingTabs;
+  private HashMap<String, TestingDashboardTab> testingTabs;
   boolean initialized = false;
     
   private TestingDashboard() {
-    testingTabs = new ArrayList<TestingDashboardTab>();
+    testingTabs = new HashMap<String, TestingDashboardTab>();
     initialized = false;
   }
 
@@ -52,51 +51,35 @@ public class TestingDashboard {
     return testingDashboard;
   }
 
-  private boolean hasSubsystem(SubsystemBase subsystem) {
-    for (int i = 0; i < testingTabs.size(); i++) {
-      TestingDashboardTab tab = testingTabs.get(i);
-      if (tab.subsystem == subsystem) {
-        return true;
-      }
-    }
-    return false;
+  private boolean hasTab(String tabName) {
+    return testingTabs.containsKey(tabName);
   }
 
-  private TestingDashboardTab getSubsystemTab(SubsystemBase subsystem) {
-    for (int i = 0; i < testingTabs.size(); i++) {
-      TestingDashboardTab tab = testingTabs.get(i);
-      if (tab.subsystem == subsystem) {
-        return tab;
-      }
-    }
-    return null;
+  private TestingDashboardTab getTab(String tabName) {
+    return testingTabs.get(tabName);
   }
 
   /*
-   * This function registers a subsystem with
+   * This function registers a tab with
    * the testing dashboard.
    */
-  public void registerSubsystem(SubsystemBase subsystem, String name) {
-    if (hasSubsystem(subsystem)) {
+  void registerTab(String tabName) {
+    if (hasTab(tabName)) {
       // Subsystem has already been registered
       return;
     }
-    TestingDashboardTab tdt = new TestingDashboardTab();
-    tdt.subsystem = subsystem;
-    tdt.subsystemName = name;
-    tdt.commandTable = new TestingDashboardCommandTable();
-    tdt.dataTable = new TestingDashboardDataTable();
-    testingTabs.add(tdt);
-    System.out.println("Subsystem " + name + " registered with TestingDashboard");
+    TestingDashboardTab tdt = new TestingDashboardTab(tabName);
+    testingTabs.put(tabName, tdt);
+    System.out.println("Subsystem " + tabName + " registered with TestingDashboard");
   }
     
   /*
-   * This function registers a command with a subsystem
+   * This function registers a command with a tabName
    * and a command group in the command table on the testing
    * dashboard.
    */
-  public void registerCommand(SubsystemBase subsystem, String cmdGrpName, Command command) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+  void registerCommand(String tabName, String cmdGrpName, Command command) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for command does not exist!");
       return;
@@ -105,8 +88,8 @@ public class TestingDashboard {
     tab.commandTable.add(cmdGrpName, command);
   }
 
-  public void registerNumber(SubsystemBase subsystem, String dataGrpName, String dataName, double defaultValue) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+  void registerNumber(String tabName, String dataGrpName, String dataName, double defaultValue) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return;
@@ -116,8 +99,8 @@ public class TestingDashboard {
     tab.dataTable.addDefaultNumberValue(dataName, defaultValue);
   }
 
-  public void registerString(SubsystemBase subsystem, String dataGrpName, String dataName, String defaultValue) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+  void registerString(String tabName, String dataGrpName, String dataName, String defaultValue) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return;
@@ -127,8 +110,8 @@ public class TestingDashboard {
     tab.dataTable.addDefaultStringValue(dataName, defaultValue);
   }
 
-  public void registerSendable(SubsystemBase subsystem, String dataGrpName, String dataName, Sendable sendable) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+  void registerSendable(String tabName, String dataGrpName, String dataName, Sendable sendable) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return;
@@ -138,8 +121,8 @@ public class TestingDashboard {
     tab.dataTable.addDefaultSendableValue(dataName, sendable);
   }
 
-  public void updateNumber(SubsystemBase subsystem, String dataName, double value) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+   void updateNumber(String tabName, String dataName, double value) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return;
@@ -147,8 +130,8 @@ public class TestingDashboard {
     tab.dataTable.getEntry(dataName).setDouble(value);
   }
 
-  public void updateString(SubsystemBase subsystem, String dataName, String value) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+   void updateString(String tabName, String dataName, String value) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return;
@@ -156,8 +139,8 @@ public class TestingDashboard {
     tab.dataTable.getEntry(dataName).setString(value);
   }
 
-  public double getNumber(SubsystemBase subsystem, String dataName) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+   double getNumber(String tabName, String dataName) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return 0;
@@ -169,8 +152,8 @@ public class TestingDashboard {
     }
   }
 
-  public String getString(SubsystemBase subsystem, String dataName) {
-    TestingDashboardTab tab = getSubsystemTab(subsystem);
+   String getString(String tabName, String dataName) {
+    TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return "";
@@ -187,24 +170,23 @@ public class TestingDashboard {
    */
   public void createTestingDashboard() {
     System.out.println("Creating Testing Dashboard");
-    for (int i = 0; i < testingTabs.size(); i++) {
+    for (String tabName : testingTabs.keySet()) {
       // Create Shuffleboard Tab
-      TestingDashboardTab tdt = testingTabs.get(i);
-      tdt.tab = Shuffleboard.getTab(tdt.subsystemName);
+      TestingDashboardTab tdt = testingTabs.get(tabName);
+      tdt.tab = Shuffleboard.getTab(tdt.tabName);
       // Add Command Groups and Commands
       Enumeration<String> cmdGrpNames = tdt.commandTable.getCommandGroups();
       Iterator<String> it = cmdGrpNames.asIterator();
-      System.out.println("Created tab for " + tdt.subsystemName + " subsystem");
+      System.out.println("Created tab for " + tdt.tabName + " tabName");
       int colpos = 0; // columns in shuffleboard tab
       while (it.hasNext()) {
         String cmdGrpName = it.next();
         System.out.println("Creating \"" + cmdGrpName + "\" command group");
-        ArrayList<Command> cmdList = tdt.commandTable.getCommandList(cmdGrpName);
         ShuffleboardLayout layout = tdt.tab.getLayout(cmdGrpName, BuiltInLayouts.kList);
         layout.withPosition(colpos,0);
-        layout.withSize(1,cmdList.size());
-        for (int j = 0; j < cmdList.size(); j++) {
-          layout.add(cmdList.get(j));
+        layout.withSize(1, tdt.commandTable.getCommandList(cmdGrpName).size());
+        for (Command cmd : tdt.commandTable.getCommandList(cmdGrpName)) {
+          layout.add(cmd);
         }
         colpos++;
       }

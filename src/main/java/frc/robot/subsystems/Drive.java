@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.testingdashboard.TestingDashboard;
+import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.utils.SwerveUtils;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
   private static Drive m_drive;
@@ -63,8 +63,13 @@ public class Drive extends SubsystemBase {
   // SwerveDrivePoseEstimator class for tracking robot pose
   SwerveDrivePoseEstimator m_DrivePoseEstimator;
 
+  // testing dashboard instances
+  TDNumber TDxSpeedCommanded;
+  TDNumber TDySpeedCommanded;
+
   /** Creates a new Drive. */
   private Drive() {
+    super("Drive");
     m_DrivePoseEstimator = new SwerveDrivePoseEstimator(
         Constants.kDriveKinematics, 
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
@@ -74,12 +79,14 @@ public class Drive extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
       }, new Pose2d());
+
+    TDxSpeedCommanded = new TDNumber(this, "Drive Speed", "Xspeed");
+    TDySpeedCommanded = new TDNumber(this, "Drive Speed", "Yspeed");
   }
 
   public static Drive getInstance() {
     if (m_drive == null) {
       m_drive = new Drive();
-      TestingDashboard.getInstance().registerSubsystem(m_drive, "Drive");
     }
     return m_drive;
   }
@@ -188,9 +195,9 @@ public class Drive extends SubsystemBase {
       
       xSpeedCommanded = m_currentTranslationMag * Math.cos(m_currentTranslationDir);
       ySpeedCommanded = m_currentTranslationMag * Math.sin(m_currentTranslationDir);
+      TDxSpeedCommanded.set(xSpeedCommanded);
+      TDySpeedCommanded.set(ySpeedCommanded);
       m_currentRotation = m_rotLimiter.calculate(rot);
-
-
     } else {
       xSpeedCommanded = xSpeed;
       ySpeedCommanded = ySpeed;

@@ -73,7 +73,7 @@ public class TestingDashboardDataTable {
   public void addDefaultSendableValue(String name, Sendable sendable) {
     if (names.contains(name)) {
         type.put(name,TYPE_SENDABLE);
-        defaultSendable.put(name,(Object)sendable);
+        defaultSendable.put(name, sendable);
     }
   }
 

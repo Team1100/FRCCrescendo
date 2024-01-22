@@ -6,11 +6,10 @@ package frc.robot.commands.Drive;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.Drive;
-import frc.robot.testingdashboard.TestingDashboard;
+import frc.robot.testingdashboard.Command;
 
 public class SwerveDrive extends Command {
   private static XboxController m_driverController;
@@ -18,16 +17,11 @@ public class SwerveDrive extends Command {
 
   /** Creates a new SwerveDrive. */
   public SwerveDrive() {
+    super(Drive.getInstance(), "Basic", "SwerveDrive");
     m_drive = Drive.getInstance();
     m_driverController = OI.getInstance().getDriverXboxController();
 
     addRequirements(m_drive);
-  }
-
-  public static void registerWithTestingDashboard() {
-    Drive drive = Drive.getInstance();
-    SwerveDrive cmd = new SwerveDrive();
-    TestingDashboard.getInstance().registerCommand(drive, "Basic", cmd);
   }
 
   // Called when the command is initially scheduled.
