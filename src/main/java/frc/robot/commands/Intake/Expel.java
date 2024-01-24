@@ -5,25 +5,18 @@
 
 package frc.robot.commands.Intake;
 
-import edu.wpi.first.wpilibj2.command.Command;
-
 import frc.robot.subsystems.Intake;
-import frc.robot.testingdashboard.TestingDashboard;
+import frc.robot.testingdashboard.Command;
 
 public class Expel extends Command {
   Intake m_intake;
 
   /** Creates a new Expel. */
   public Expel() {
+    super(Intake.getInstance(), "Intake", "Expel");
     m_intake = Intake.getInstance();
 
     addRequirements(m_intake);
-  }
-
-  public static void registerWithTestingDashboard() {
-    Intake intake = Intake.getInstance();
-    Expel cmd = new Expel();
-    TestingDashboard.getInstance().registerCommand(intake, "Basic", cmd);
   }
 
   // Called when the command is initially scheduled.

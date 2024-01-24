@@ -5,7 +5,9 @@
 package frc.robot;
 
 import frc.robot.commands.Drive.SwerveDrive;
+import frc.robot.commands.Intake.Consume;
 import frc.robot.subsystems.Drive;
+import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -29,12 +31,13 @@ public class RobotContainer {
     // Configure the trigger/button bindings
     configureBindings();
 
+    // Instantiate parameterized commands to register them with the testing dashboard.
+    // The first instance of a Command registers itself. No need to store the resulting
+    // objects.
+
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
     m_robotDrive.setDefaultCommand(new SwerveDrive());
-
-    // Register all commands with TestingDashboard
-    SwerveDrive.registerWithTestingDashboard();
 
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();

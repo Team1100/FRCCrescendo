@@ -4,25 +4,18 @@
 
 package frc.robot.commands.Intake;
 
-import edu.wpi.first.wpilibj2.command.Command;
-
 import frc.robot.subsystems.Intake;
-import frc.robot.testingdashboard.TestingDashboard;
+import frc.robot.testingdashboard.Command;
 
 public class Consume extends Command {
   Intake m_intake;
 
   /** Creates a new Consume. */
   public Consume() {
+    super(Intake.getInstance(), "Intake", "Consume");
     m_intake = Intake.getInstance();
 
     addRequirements(m_intake);
-  }
-
-  public static void registerWithTestingDashboard() {
-    Intake intake = Intake.getInstance();
-    Consume cmd = new Consume();
-    TestingDashboard.getInstance().registerCommand(intake, "Basic", cmd);
   }
 
   // Called when the command is initially scheduled.
