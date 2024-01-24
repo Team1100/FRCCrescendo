@@ -34,8 +34,11 @@ public class TDString implements TDValue {
 
     public void set(String val)
     {
-      if (m_val != val) m_needsPost = true;
-      m_val = val;
+      if (m_val != val)
+      {
+        m_needsPost = true;
+        m_val = val;
+      }
     }
 
     /**
@@ -49,7 +52,10 @@ public class TDString implements TDValue {
     public void post()
     {
       if (m_needsPost)
+      {
         TestingDashboard.getInstance().updateString(m_tabName, m_dataName, m_val);
+        m_needsPost = false;
+      }
     }
 }
 

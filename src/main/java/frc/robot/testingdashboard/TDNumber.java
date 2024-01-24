@@ -35,8 +35,11 @@ public class TDNumber implements TDValue {
 
     public void set(double val)
     {
-      if (m_val != val) m_needsPost = true;
-      m_val = val;
+      if (m_val != val)
+      {
+        m_needsPost = true;
+        m_val = val;
+      }
     }
 
     /**
@@ -50,6 +53,9 @@ public class TDNumber implements TDValue {
     public void post()
     {
       if (m_needsPost)
+      {
         TestingDashboard.getInstance().updateNumber(m_tabName, m_dataName, m_val);
+        m_needsPost = false;
+      }
     }
 }
