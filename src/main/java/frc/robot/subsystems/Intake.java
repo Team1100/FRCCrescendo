@@ -20,10 +20,13 @@ public class Intake extends SubsystemBase {
   private Intake() {
     super("Intake");
   
-    m_ILeftSparkMax = new CANSparkMax(RobotMap.I_MOTOR_LEFT, MotorType.kBrushless);
-    m_IRightSparkMax = new CANSparkMax(RobotMap.I_MOTOR_RIGHT, MotorType.kBrushless);
-    // Motors are set opposite of each other and will spin in different directions on the robot
-    m_IRightSparkMax.follow(m_ILeftSparkMax);
+    if (RobotMap.I_INTAKE_ENABLED)
+    {
+      m_ILeftSparkMax = new CANSparkMax(RobotMap.I_MOTOR_LEFT, MotorType.kBrushless);
+      m_IRightSparkMax = new CANSparkMax(RobotMap.I_MOTOR_RIGHT, MotorType.kBrushless);
+      // Motors are set opposite of each other and will spin in different directions on the robot
+      m_IRightSparkMax.follow(m_ILeftSparkMax);
+    }
   }
 
   public static Intake getInstance() {
@@ -34,20 +37,22 @@ public class Intake extends SubsystemBase {
   }
 
   public void spinIn() {
-    m_ILeftSparkMax.set(Constants.I_INTAKE_SPEED);
+    if (m_ILeftSparkMax != null)
+      m_ILeftSparkMax.set(Constants.I_INTAKE_SPEED);
   }
 
   public void spinOut() {
-    m_ILeftSparkMax.set(-Constants.I_INTAKE_SPEED);
+    if (m_ILeftSparkMax != null)
+      m_ILeftSparkMax.set(-Constants.I_INTAKE_SPEED);
   }
 
   public void spinStop() {
-    m_ILeftSparkMax.set(0);
+    if (m_ILeftSparkMax != null)
+      m_ILeftSparkMax.set(0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-  
+  }  
 }

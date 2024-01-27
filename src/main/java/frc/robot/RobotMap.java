@@ -4,25 +4,109 @@
 
 package frc.robot;
 
+import java.io.File;
+import java.lang.reflect.Field;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 /** Add your docs here. */
 public class RobotMap {
 
-    //[D]rive
-    public static final int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
-    public static final int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_5;
-    public static final int D_FRONT_RIGHT_DRIVE = RoboRioMap.CAN_3;
-    public static final int D_BACK_RIGHT_DRIVE = RoboRioMap.CAN_7;
+  public static void init()
+  {
+    try {
+      File f = new File("/tmp/1100_Config");
+      if (f.exists())
+      {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = db.parse(f);  
+        Node root = doc.getFirstChild(); 
+        NodeList nodes = root.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); ++i)
+        {
+          String varName = "";
+          String varValue = "";
+          String varType = "";
+          Node n = nodes.item(i);
+          if (n.getNodeName() == "RobotMap")
+          {
+            NamedNodeMap nnm = n.getAttributes();
+            for (int j = 0; j < nnm.getLength(); ++j)
+            {
+              Node config = nnm.item(j);
+              if (config.getNodeType() != Node.ATTRIBUTE_NODE)
+              {
+                continue;
+              }
+              String attrName = config.getNodeName();
+              String attrVal = config.getNodeValue();
+              if (attrName.equals("VarName"))
+              {
+                varName = attrVal;
+              }
+              else if (attrName.equals("Value"))
+              {
+                varValue = attrVal;
+              }
+              else if (attrName.equals("Type"))
+              {
+                varType = attrVal;
+              }
+            }
+          }
+          if (!varName.isEmpty() && !varValue.isEmpty() && !varType.isEmpty())
+          {
+            Field field = RobotMap.class.getField(varName);
+            if (varType.equals("double"))
+            {
+              System.out.println("Configuring " + varName + " to (double)" + varValue);
+              field.setDouble(null, Double.parseDouble(varValue));
+            }
+            else if (varType.equals("int"))
+            {
+              System.out.println("Configuring " + varName + " to (int)" + varValue);
+              field.setInt(null, Integer.parseInt(varValue));
+            }
+            else if (varType.equals("boolean"))
+            {
+              System.out.println("Configuring " + varName + " to (boolean)" + varValue);
+              field.setBoolean(null, Boolean.parseBoolean(varValue));             
+            }
+          }
+        }
+      }  
+      else
+      {
+        System.out.println("No configuration present, using defaults");
+      }          
+    } catch (Exception e) {
+      System.err.println("exception from RobotMap.init():" + e.toString());
+      // can't read the config. Carry on.
+    }
+  }
 
-    public static final int D_FRONT_LEFT_TURNING = RoboRioMap.CAN_2;
-    public static final int D_BACK_LEFT_TURNING = RoboRioMap.CAN_6;
-    public static final int D_FRONT_RIGHT_TURNING = RoboRioMap.CAN_4;
-    public static final int D_BACK_RIGHT_TURNING = RoboRioMap.CAN_8;
+  //[D]rive
+  public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
+  public static int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_5;
+  public static int D_FRONT_RIGHT_DRIVE = RoboRioMap.CAN_3;
+  public static int D_BACK_RIGHT_DRIVE = RoboRioMap.CAN_7;
 
-    //[I]ntake
-    public static final int I_MOTOR_LEFT = RoboRioMap.CAN_10;
-    public static final int I_MOTOR_RIGHT = RoboRioMap.CAN_9;
+  public static int D_FRONT_LEFT_TURNING = RoboRioMap.CAN_2;
+  public static int D_BACK_LEFT_TURNING = RoboRioMap.CAN_6;
+  public static int D_FRONT_RIGHT_TURNING = RoboRioMap.CAN_4;
+  public static int D_BACK_RIGHT_TURNING = RoboRioMap.CAN_8;
 
-    //[U]ser Input
-	public static final int U_DRIVER_XBOX_CONTROLLER = 0;
-	public static final int U_OPERATOR_XBOX_CONTROLLER = 1;
+  //[I]ntake
+  public static boolean I_INTAKE_ENABLED = true;
+  public static int I_MOTOR_LEFT = RoboRioMap.CAN_10;
+  public static int I_MOTOR_RIGHT = RoboRioMap.CAN_9;
+
+  //[U]ser Input
+	public static int U_DRIVER_XBOX_CONTROLLER = 0;
+	public static int U_OPERATOR_XBOX_CONTROLLER = 1;
 }
