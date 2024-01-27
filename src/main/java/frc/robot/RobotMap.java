@@ -19,7 +19,7 @@ public class RobotMap {
   public static void init()
   {
     try {
-      File f = new File("/tmp/1100_Config");
+      File f = new File("/home/lvuser/1100_Config");
       if (f.exists())
       {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
