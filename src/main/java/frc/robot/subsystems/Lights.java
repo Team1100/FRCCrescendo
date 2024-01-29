@@ -56,7 +56,7 @@ public class Lights extends SubsystemBase {
 
   public void enableLights() {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      m_LEDBuffer.setRGB(i, 255, 165, 0);
+      m_LEDBuffer.setRGB(i, 100, 10, 0);
     }
 
     m_LED.setData(m_LEDBuffer);
