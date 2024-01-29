@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
+import frc.robot.commands.Lights.EnableLights;
+import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.commands.Lights.DisableLights;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,6 +48,10 @@ public class OI {
     ////////////////////////////////////////////////////
     new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new Consume());
     new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new Expel());
+
+    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new EnableLights());
+    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new DisableLights());
+    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new MakeRainbow());
   }
 
   /**
