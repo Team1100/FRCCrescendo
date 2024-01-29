@@ -51,7 +51,7 @@ public class OI {
 
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new EnableLights());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new DisableLights());
-    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new MakeRainbow());
+    new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new MakeRainbow());
   }
 
   /**
