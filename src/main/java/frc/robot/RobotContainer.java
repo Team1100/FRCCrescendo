@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Vision;
 import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // Handle to Operator Inputs
   private OI m_oi;
+  private Vision m_Vision;
 
   // The robot's subsystems are defined here.
   private final Drive m_robotDrive;
@@ -40,6 +42,10 @@ public class RobotContainer {
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
     m_robotDrive.setDefaultCommand(new SwerveDrive());
+
+    if(Constants.kVisionEnabled){
+      m_Vision = Vision.getInstance();
+    }
 
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();
