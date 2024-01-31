@@ -89,6 +89,9 @@ public class RobotMap {
       // can't read the config. Carry on.
     }
   }
+  // [R]obot geometry
+  public static double R_TRACK_WIDTH_INCHES = 22.5;
+  public static double R_WHEEL_BASE_INCHES  = 22.5;
 
   //[D]rive
   public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
