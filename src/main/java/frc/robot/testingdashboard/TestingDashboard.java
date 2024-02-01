@@ -95,8 +95,8 @@ public class TestingDashboard {
       return;
     }
     System.out.println("Adding data " + dataName);
-    tab.dataTable.addName(dataGrpName, dataName);
-    tab.dataTable.addDefaultNumberValue(dataName, defaultValue);
+    if (tab.dataTable.addName(dataGrpName, dataName))
+      tab.dataTable.addDefaultNumberValue(dataName, defaultValue);
   }
 
   void registerString(String tabName, String dataGrpName, String dataName, String defaultValue) {
@@ -106,8 +106,8 @@ public class TestingDashboard {
       return;
     }
     System.out.println("Adding String data " + dataName);
-    tab.dataTable.addName(dataGrpName, dataName);
-    tab.dataTable.addDefaultStringValue(dataName, defaultValue);
+    if (tab.dataTable.addName(dataGrpName, dataName))
+      tab.dataTable.addDefaultStringValue(dataName, defaultValue);
   }
 
   void registerSendable(String tabName, String dataGrpName, String dataName, Sendable sendable) {
@@ -117,8 +117,8 @@ public class TestingDashboard {
       return;
     }
     System.out.println("Adding String data " + dataName);
-    tab.dataTable.addName(dataGrpName, dataName);
-    tab.dataTable.addDefaultSendableValue(dataName, sendable);
+    if (tab.dataTable.addName(dataGrpName, dataName))
+      tab.dataTable.addDefaultSendableValue(dataName, sendable);
   }
 
    void updateNumber(String tabName, String dataName, double value) {

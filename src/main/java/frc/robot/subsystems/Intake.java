@@ -45,12 +45,12 @@ public class Intake extends SubsystemBase {
 
   public void spinIn() {
     if (m_ILeftSparkMax != null)
-      m_ILeftSparkMax.set(Constants.I_INTAKE_SPEED);
+      m_ILeftSparkMax.set(Constants.kIntakeSpeed);
   }
 
   public void spinOut() {
     if (m_ILeftSparkMax != null)
-      m_ILeftSparkMax.set(-Constants.I_INTAKE_SPEED);
+      m_ILeftSparkMax.set(-Constants.kIntakeSpeed);
   }
 
   public void spinStop() {
@@ -60,6 +60,6 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-  }  
+    super.periodic();
+  }
 }

@@ -6,8 +6,17 @@ package frc.robot;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -28,10 +37,10 @@ public final class Constants {
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(22.5);
     // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(22.5);
+    public static final double kTrackWidth = Units.inchesToMeters(RobotMap.R_TRACK_WIDTH_INCHES);
     // Distance between front and back wheels on robot
+    public static final double kWheelBase = Units.inchesToMeters(RobotMap.R_WHEEL_BASE_INCHES);
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
@@ -100,14 +109,29 @@ public final class Constants {
     public static final double kDriveDeadband = 0.05;
 
     // Defines Intake constants
-    public static final double I_INTAKE_SPEED = -0.3;
+    public static final double kIntakeSpeed = -0.3;
 
     // Defines Lights constants
     public static final int LED_LENGTH = 35; // number of LEDs
-
     // Defines Shooter constants
     public static final boolean kEnableShooterPIDTuning = false;
 
     public static final double LEFT_SHOOTER_SPEED = 0.42;
     public static final double RIGHT_SHOOTER_SPEED = 0.92;
+
+    //Vision Constants
+    public static final boolean kVisionEnabled = false;
+    public static final String kCameraName = "Arducam_OV9281_USB_Camera";
+    // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+    public static final Transform3d kRobotToCam =
+            new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0, 0, 0));
+
+    // The layout of the AprilTags on the field
+    public static final AprilTagFieldLayout kTagLayout =
+            AprilTagFields.kDefaultField.loadAprilTagLayoutField();
+
+    // The standard deviations of our vision estimated poses, which affect correction rate
+    // (Fake values. Experiment and determine estimation noise on an actual robot.)
+    public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
+    public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 }

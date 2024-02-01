@@ -40,16 +40,22 @@ public class TestingDashboardDataTable {
     defaultSendable = new Hashtable<String, Object>();
   }
 
-  public void addName(String grp, String name) {
+  public boolean addName(String grp, String name) {
     if (table.containsKey(grp)) {
       ArrayList<String> l = table.get(grp);
-      l.add(name);
+      if (!l.contains(name)) {
+        l.add(name);
+      }
+      else {
+        return false;
+      }
     } else {
       ArrayList<String> l = new ArrayList<String>();
       l.add(name);
       table.put(grp, l);
     }
     names.add(name);
+    return true;
   }
   
   public int getType(String name) {

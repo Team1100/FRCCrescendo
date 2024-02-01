@@ -102,6 +102,7 @@ public class Drive extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+    super.periodic();
   }
 
   /**
