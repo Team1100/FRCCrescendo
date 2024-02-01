@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
@@ -18,6 +19,7 @@ public class Lights extends SubsystemBase {
   private AddressableLEDBuffer m_LEDBuffer;
 
   private int m_rainbowFirstPixelHue;
+  private int m_OrangeFirstPixelValue;
   private Timer m_timer;
 
   /** Creates a new Lights. */
@@ -33,6 +35,7 @@ public class Lights extends SubsystemBase {
     m_LED.start();
 
     m_rainbowFirstPixelHue = 0;
+    m_OrangeFirstPixelValue = 0;
     
     m_timer = new Timer();
     m_timer.start();
@@ -56,7 +59,7 @@ public class Lights extends SubsystemBase {
 
   public void enableLights() {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      m_LEDBuffer.setRGB(i, 100, 10, 0);
+      m_LEDBuffer.setHSV(i, 12, 255, 122);
     }
 
     m_LED.setData(m_LEDBuffer);
@@ -64,7 +67,7 @@ public class Lights extends SubsystemBase {
 
   public void disableLights() {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      m_LEDBuffer.setRGB(i, 0, 0, 0);
+      m_LEDBuffer.setLED(i, Color.kBlack);
     }
 
     m_LED.setData(m_LEDBuffer);
@@ -83,6 +86,25 @@ public class Lights extends SubsystemBase {
     m_rainbowFirstPixelHue += 3;
     // Check bounds
     m_rainbowFirstPixelHue %= 180;
+  }
+
+  public void moveLights() {
+    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
+      final var value = (m_OrangeFirstPixelValue + (i * 255 / m_LEDBuffer.getLength())) % 255;
+      m_LEDBuffer.setHSV(i, 10, 255, value);
+    }
+    
+    // what "moves" the program
+    m_OrangeFirstPixelValue += 8;
+    m_OrangeFirstPixelValue %= 255;
+  }
+
+  public void blinkLights() {
+    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
+      m_LEDBuffer.setHSV(i, 10, 255, m_OrangeFirstPixelValue);
+    }
+
+    m_OrangeFirstPixelValue = (int)(Math.sin(m_timer.get() * 5) * 128 + 128);
   }
 
   @Override

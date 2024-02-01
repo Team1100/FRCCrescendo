@@ -7,12 +7,12 @@ package frc.robot.commands.Lights;
 import frc.robot.testingdashboard.Command;
 import frc.robot.subsystems.Lights;
 
-public class DisableLights extends Command {
+public class MoveLights extends Command {
   Lights m_lights;
 
-  /** Creates a new EnableLights. */
-  public DisableLights() {
-    super(Lights.getInstance(), "Basic", "DisableLights");
+  /** Creates a new BlinkLights. */
+  public MoveLights() {
+    super(Lights.getInstance(), "Basic", "MoveLights");
     m_lights = Lights.getInstance();
     addRequirements(m_lights);
   }
@@ -24,7 +24,8 @@ public class DisableLights extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_lights.disableLights();
+    m_lights.moveLights();
+    m_lights.getLED().setData(m_lights.getLEDBuffer());
   }
 
   // Called once the command ends or is interrupted.
