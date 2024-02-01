@@ -14,6 +14,9 @@ import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.commands.Shooter.SpinUpShooter;
+import frc.robot.commands.Lights.MoveLights;
+import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.DisableLights;
 
 /**
@@ -49,9 +52,12 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new Consume());
     new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new Expel());
 
-    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new EnableLights());
-    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new DisableLights());
-    new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new MakeRainbow());
+    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).toggleOnTrue(new MakeRainbow());
+    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).toggleOnTrue(new DisableLights());
+    // new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new BlinkLights());
+    // new JoystickButton(m_DriverXboxController, Button.kY.value).toggleOnTrue(new MoveLights());
+
+    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new SpinUpShooter());
   }
 
   /**
