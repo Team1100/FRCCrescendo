@@ -6,7 +6,17 @@ package frc.robot;
 
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Intake.Consume;
+import frc.robot.commands.Intake.Expel;
+import frc.robot.commands.Lights.BlinkLights;
+import frc.robot.commands.Lights.DisableLights;
+import frc.robot.commands.Lights.EnableLights;
+import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.commands.Lights.MoveLights;
+import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -27,6 +37,9 @@ public class RobotContainer {
 
   // The robot's subsystems are defined here.
   private final Drive m_robotDrive;
+  private final Intake m_intake;
+  private final Lights m_lights;
+  private final Shooter m_shooter;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,12 +56,36 @@ public class RobotContainer {
     m_robotDrive = Drive.getInstance();
     m_robotDrive.setDefaultCommand(new SwerveDrive());
 
+    m_intake = Intake.getInstance();
+
+    m_lights = Lights.getInstance();
+    m_lights.setDefaultCommand(new MoveLights());
+
+    m_shooter = Shooter.getInstance();
+
     if(Constants.kVisionEnabled){
       m_Vision = Vision.getInstance();
     }
 
     // Create Testing Dashboard
+    registerCommands();
     TestingDashboard.getInstance().createTestingDashboard();
+  }
+
+  private static void registerCommands() {
+    // Intake commands
+    new Consume();
+    new Expel();
+
+    // Lights commands
+    new BlinkLights();
+    new DisableLights();
+    new EnableLights();
+    new MakeRainbow();
+    new MoveLights();
+
+    // Shooter commands
+    // new SpinUpShooter();
   }
 
   /**

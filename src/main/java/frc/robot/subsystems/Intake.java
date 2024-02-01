@@ -24,6 +24,13 @@ public class Intake extends SubsystemBase {
     {
       m_ILeftSparkMax = new CANSparkMax(RobotMap.I_MOTOR_LEFT, MotorType.kBrushless);
       m_IRightSparkMax = new CANSparkMax(RobotMap.I_MOTOR_RIGHT, MotorType.kBrushless);
+
+      m_ILeftSparkMax.restoreFactoryDefaults();
+      m_IRightSparkMax.restoreFactoryDefaults();
+
+      m_ILeftSparkMax.setInverted(false);
+      m_IRightSparkMax.setInverted(false);
+      
       // Motors are set opposite of each other and will spin in different directions on the robot
       m_IRightSparkMax.follow(m_ILeftSparkMax);
     }
