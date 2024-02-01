@@ -104,4 +104,10 @@ public final class Constants {
 
     // Defines Lights constants
     public static final int LED_LENGTH = 35; // number of LEDs
+
+    // Defines Shooter constants
+    public static final boolean kEnableShooterPIDTuning = false;
+
+    public static final double LEFT_SHOOTER_SPEED = 0.42;
+    public static final double RIGHT_SHOOTER_SPEED = 0.92;
 }
