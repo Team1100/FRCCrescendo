@@ -72,6 +72,15 @@ public class Drive extends SubsystemBase {
   // testing dashboard instances
   TDNumber TDxSpeedCommanded;
   TDNumber TDySpeedCommanded;
+  TDNumber TDrotSpeedCommanded;
+  
+  TDNumber TDxSpeedMeasured;
+  TDNumber TDySpeedMeasured;
+  TDNumber TDrotSpeedMeasured;
+
+  TDNumber TDPoseX;
+  TDNumber TDPoseY;
+  TDNumber TDPoseAngle;
 
   /** Creates a new Drive. */
   private Drive() {
@@ -86,8 +95,17 @@ public class Drive extends SubsystemBase {
             m_rearRight.getPosition()
       }, new Pose2d());
 
-    TDxSpeedCommanded = new TDNumber(this, "Drive Speed", "Xspeed");
-    TDySpeedCommanded = new TDNumber(this, "Drive Speed", "Yspeed");
+    TDxSpeedCommanded = new TDNumber(this, "Drive Input", "XInputSpeed");
+    TDySpeedCommanded = new TDNumber(this, "Drive Input", "YInputSpeed");
+    TDrotSpeedCommanded = new TDNumber(this, "Drive Input", "RotInputSpeed");
+
+    TDxSpeedMeasured = new TDNumber(this, "Drive Speed", "XMeasuredSpeed");
+    TDySpeedMeasured = new TDNumber(this, "Drive Speed", "YMeasuredSpeed");
+    TDrotSpeedMeasured = new TDNumber(this, "Drive Speed", "RotMeasuredSpeed");
+    
+    TDPoseX = new TDNumber(this, "Drive Pose", "PoseX");
+    TDPoseY = new TDNumber(this, "Drive Pose", "PoseY");
+    TDPoseAngle = new TDNumber(this, "Drive Pose", "PoseAngle");
 
     // Configure AutoBuilder last
     AutoBuilder.configureHolonomic(
@@ -135,6 +153,8 @@ public class Drive extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+
+    updateTD();
     super.periodic();
   }
 
@@ -145,6 +165,16 @@ public class Drive extends SubsystemBase {
    */
   public Pose2d getPose() {
     return m_DrivePoseEstimator.getEstimatedPosition();
+  }
+
+  public ChassisSpeeds getMeasuredSpeeds(){
+    SwerveModuleState[] moduleStates = new SwerveModuleState[4];
+    moduleStates[0] = m_frontLeft.getState();
+    moduleStates[1] = m_frontRight.getState();
+    moduleStates[2] = m_rearLeft.getState();
+    moduleStates[3] = m_rearRight.getState();
+
+    return Constants.kDriveKinematics.toChassisSpeeds(moduleStates);
   }
 
   /**
@@ -312,5 +342,17 @@ public class Drive extends SubsystemBase {
    */
   public double getTurnRate() {
     return m_gyro.getRate(IMUAxis.kZ) * (Constants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  private void updateTD(){
+    ChassisSpeeds measuredSpeeds = getMeasuredSpeeds();
+    TDxSpeedMeasured.set(measuredSpeeds.vxMetersPerSecond);
+    TDySpeedMeasured.set(measuredSpeeds.vyMetersPerSecond);
+    TDrotSpeedMeasured.set(measuredSpeeds.omegaRadiansPerSecond);
+
+    Pose2d currentPose = m_DrivePoseEstimator.getEstimatedPosition();
+    TDPoseX.set(currentPose.getX());
+    TDPoseY.set(currentPose.getY());
+    TDPoseAngle.set(currentPose.getRotation().getDegrees());
   }
 }
