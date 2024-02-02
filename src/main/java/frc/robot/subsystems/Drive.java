@@ -111,7 +111,7 @@ public class Drive extends SubsystemBase {
     AutoBuilder.configureHolonomic(
         this::getPose, // Robot pose supplier
         this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
-        this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        this::getMeasuredSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
             new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
@@ -203,10 +203,6 @@ public class Drive extends SubsystemBase {
             m_rearRight.getPosition()
         },
         pose);
-  }
-
-  public ChassisSpeeds getRobotRelativeSpeeds() {
-    return null;
   }
 
   /**
