@@ -48,12 +48,11 @@ public class RobotContainer {
   public RobotContainer() {
     // load configuration
     RobotMap.init();
-    // Configure the trigger/button bindings
-    configureBindings();
 
     // Instantiate parameterized commands to register them with the testing dashboard.
     // The first instance of a Command registers itself. No need to store the resulting
     // objects.
+    registerCommands();
 
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
@@ -70,8 +69,10 @@ public class RobotContainer {
       m_Vision = Vision.getInstance();
     }
 
+    // Configure the trigger/button bindings
+    configureBindings();
+
     // Create Testing Dashboard
-    registerCommands();
     TestingDashboard.getInstance().createTestingDashboard();
   }
 
@@ -88,7 +89,7 @@ public class RobotContainer {
     new MoveLights();
 
     // Shooter commands
-    // new SpinUpShooter();
+    new SpinUpShooter();
   }
 
   /**

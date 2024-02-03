@@ -36,11 +36,7 @@ public class Shooter extends SubsystemBase {
 
       m_SLeftSparkMax.restoreFactoryDefaults();
       m_SRightSparkMax.restoreFactoryDefaults();
-
-      // m_SLeftSparkMax.follow(m_SRightSparkMax, true); 
-      // Want to spin at different speeds in the end though
-
-      // "Left" = Spark 10 in this instance, wants to be inverted
+      
       m_SLeftSparkMax.setInverted(false);
       m_SRightSparkMax.setInverted(true);
 
@@ -68,10 +64,10 @@ public class Shooter extends SubsystemBase {
     return m_shooter;
   }
 
-  // public void setSpeeds(double LeftRPM, double RightRPM) {
-  //   m_LeftSparkPidController.setReference(LeftRPM, ControlType.kVelocity);
-  //   m_RightSparkPidController.setReference(RightRPM, ControlType.kVelocity);
-  // }
+  public void setSpeeds(double LeftRPM, double RightRPM) {
+    m_LeftSparkPidController.setReference(LeftRPM, ControlType.kVelocity);
+    m_RightSparkPidController.setReference(RightRPM, ControlType.kVelocity);
+  }
 
   public void spinOut() {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
@@ -79,13 +75,6 @@ public class Shooter extends SubsystemBase {
       m_SRightSparkMax.set(Constants.RIGHT_SHOOTER_SPEED);
     }
   }
-
-  // public void spinIn() {
-  //   if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
-  //     m_SLeftSparkMax.set(Constants.LEFT_SHOOTER_SPEED);
-  //     m_SRightSparkMax.set(Constants.RIGHT_SHOOTER_SPEED);
-  //   }
-  // }
 
   public void spinStop() {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
