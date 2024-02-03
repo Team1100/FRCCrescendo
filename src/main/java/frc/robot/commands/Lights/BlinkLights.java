@@ -16,6 +16,11 @@ public class BlinkLights extends Command {
     m_lights = Lights.getInstance();
     addRequirements(m_lights);
   }
+  
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
+  }
 
   // Called when the command is initially scheduled.
   @Override
