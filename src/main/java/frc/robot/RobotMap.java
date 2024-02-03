@@ -92,6 +92,7 @@ public class RobotMap {
   // [R]obot geometry
   public static double R_TRACK_WIDTH_INCHES = 22.5;
   public static double R_WHEEL_BASE_INCHES  = 22.5;
+  public static double R_BASE_RADIUS_INCHES = 11.25 * Math.sqrt(2);
 
   //[D]rive
   public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;

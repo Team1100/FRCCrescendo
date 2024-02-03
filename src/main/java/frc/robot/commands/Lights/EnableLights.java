@@ -17,6 +17,11 @@ public class EnableLights extends Command {
     addRequirements(m_lights);
   }
 
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
