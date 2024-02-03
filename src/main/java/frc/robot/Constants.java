@@ -42,6 +42,8 @@ public final class Constants {
     public static final double kTrackWidth = Units.inchesToMeters(RobotMap.R_TRACK_WIDTH_INCHES);
     // Distance between front and back wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(RobotMap.R_WHEEL_BASE_INCHES);
+    // Distance from robot center to furthest module
+    public static final double kBaseRadius = Units.inchesToMeters(RobotMap.R_BASE_RADIUS_INCHES);
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
