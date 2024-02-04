@@ -14,17 +14,11 @@ public class TDSendable implements TDValue {
     private String m_groupName;
     private String m_dataName;
     
-    public TDSendable(SubsystemBase subsystem, String groupName, String dataName) {
-        m_tabName = subsystem.getName();
-        m_groupName = groupName;
-        m_dataName = dataName;
-        TestingDashboard.getInstance().registerSendable(m_tabName, groupName, dataName, m_val);
-    }
-
     public TDSendable(SubsystemBase subsystem, String groupName, String dataName, Sendable val) {
         m_tabName = subsystem.getName();
         m_groupName = groupName;
         m_dataName = dataName;
+        m_val = val;
         TestingDashboard.getInstance().registerSendable(m_tabName, m_groupName, m_dataName, m_val);
     }
 

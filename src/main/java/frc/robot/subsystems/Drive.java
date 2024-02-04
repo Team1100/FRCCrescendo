@@ -23,15 +23,18 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDNumber;
+import frc.robot.testingdashboard.TDSendable;
 import frc.robot.utils.SwerveUtils;
 
 public class Drive extends SubsystemBase {
   private static Drive m_drive;
+  private final Field2d m_field;
 
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
@@ -94,6 +97,9 @@ public class Drive extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
       }, new Pose2d());
+
+    m_field = new Field2d();
+    new TDSendable(this, "Field", "Position", m_field);
 
     TDxSpeedCommanded = new TDNumber(this, "Drive Input", "XInputSpeed");
     TDySpeedCommanded = new TDNumber(this, "Drive Input", "YInputSpeed");
@@ -259,8 +265,6 @@ public class Drive extends SubsystemBase {
       
       xSpeedCommanded = m_currentTranslationMag * Math.cos(m_currentTranslationDir);
       ySpeedCommanded = m_currentTranslationMag * Math.sin(m_currentTranslationDir);
-      TDxSpeedCommanded.set(xSpeedCommanded);
-      TDySpeedCommanded.set(ySpeedCommanded);
       m_currentRotation = m_rotLimiter.calculate(rot);
     } else {
       xSpeedCommanded = xSpeed;
@@ -305,6 +309,9 @@ public class Drive extends SubsystemBase {
   }
 
   public void drive(ChassisSpeeds speeds) {
+    TDxSpeedCommanded.set(speeds.vxMetersPerSecond);
+    TDySpeedCommanded.set(speeds.vyMetersPerSecond);
+    TDrotSpeedCommanded.set(speeds.omegaRadiansPerSecond);
     var swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(speeds);
     setModuleStates(swerveModuleStates);
   }
@@ -341,6 +348,9 @@ public class Drive extends SubsystemBase {
   }
 
   private void updateTD(){
+
+    m_field.setRobotPose(getPose());
+
     ChassisSpeeds measuredSpeeds = getMeasuredSpeeds();
     TDxSpeedMeasured.set(measuredSpeeds.vxMetersPerSecond);
     TDySpeedMeasured.set(measuredSpeeds.vyMetersPerSecond);
