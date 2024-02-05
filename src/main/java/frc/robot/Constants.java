@@ -29,6 +29,9 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // Defines Barrel constants
+    public static final double BARREL_SPEED = -0.1;
+
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
@@ -116,13 +119,14 @@ public final class Constants {
 
     // Defines Lights constants
     public static final int LED_LENGTH = 35; // number of LEDs
+
     // Defines Shooter constants
     public static final boolean kEnableShooterPIDTuning = false;
 
     public static final double LEFT_SHOOTER_SPEED = 0.42;
     public static final double RIGHT_SHOOTER_SPEED = 0.92;
 
-    //Vision Constants
+    // Vision Constants
     public static final boolean kVisionEnabled = false;
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.

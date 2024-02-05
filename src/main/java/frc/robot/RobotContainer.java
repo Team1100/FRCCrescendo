@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
@@ -81,6 +82,9 @@ public class RobotContainer {
   }
 
   private static void registerCommands() {
+    // Barrel commands
+    new SpinForward();
+
     // Intake commands
     new Consume();
     new Expel();

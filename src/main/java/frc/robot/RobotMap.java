@@ -94,6 +94,9 @@ public class RobotMap {
   public static double R_WHEEL_BASE_INCHES  = 22.5;
   public static double R_BASE_RADIUS_INCHES = 11.25 * Math.sqrt(2);
 
+  // [B]arrel
+  public static int B_MOTOR = RoboRioMap.CAN_15;
+
   //[D]rive
   public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
   public static int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_5;
