@@ -22,6 +22,7 @@ import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -68,6 +69,9 @@ public class RobotContainer {
     if(Constants.kVisionEnabled){
       m_Vision = Vision.getInstance();
     }
+
+    NamedCommands.registerCommand("Consume", new Consume());
+    NamedCommands.registerCommand("SpinUpShooter", new SpinUpShooter());
 
     // Configure the trigger/button bindings
     configureBindings();

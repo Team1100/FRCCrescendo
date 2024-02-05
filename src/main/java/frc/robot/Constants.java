@@ -112,7 +112,7 @@ public final class Constants {
     public static final double kDriveDeadband = 0.05;
 
     // Defines Intake constants
-    public static final double kIntakeSpeed = -0.3;
+    public static final double kIntakeSpeed = -0.4;
 
     // Defines Lights constants
     public static final int LED_LENGTH = 35; // number of LEDs
