@@ -116,7 +116,7 @@ public class TestingDashboard {
       System.out.println("WARNING: Subsystem for data does not exist!");
       return;
     }
-    System.out.println("Adding String data " + dataName);
+    System.out.println("Adding Sendable data " + dataName);
     if (tab.dataTable.addName(dataGrpName, dataName))
       tab.dataTable.addDefaultSendableValue(dataName, sendable);
   }

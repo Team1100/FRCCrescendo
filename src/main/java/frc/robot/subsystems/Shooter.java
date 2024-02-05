@@ -85,7 +85,9 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (Constants.kEnableShooterPIDTuning) {
+    if (Constants.kEnableShooterPIDTuning && 
+        m_LeftSparkPidController != null &&
+        m_RightSparkPidController != null) {
       m_LeftSparkPidController.setP(m_P.get());
       m_LeftSparkPidController.setI(m_I.get());
       m_LeftSparkPidController.setD(m_D.get());
