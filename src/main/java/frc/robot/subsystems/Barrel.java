@@ -19,10 +19,12 @@ public class Barrel extends SubsystemBase {
   /** Creates a new Barrel. */
   public Barrel() {
     super("Barrel");
-    m_CanSparkMax = new CANSparkMax(RobotMap.B_MOTOR, MotorType.kBrushless);
+    if(RobotMap.B_ENABLED){
+      m_CanSparkMax = new CANSparkMax(RobotMap.B_MOTOR, MotorType.kBrushless);
 
-    m_CanSparkMax.restoreFactoryDefaults();
-    m_CanSparkMax.setInverted(false);
+      m_CanSparkMax.restoreFactoryDefaults();
+      m_CanSparkMax.setInverted(false);
+    }
   }
 
   public static Barrel getInstance() {
