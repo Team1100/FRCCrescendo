@@ -22,6 +22,7 @@ import frc.robot.commands.Lights.MoveLights;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.subsystems.Drive;
 import frc.robot.commands.Lights.DisableLights;
+import frc.robot.commands.IngestNote;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.TurnToTarget;
 
@@ -55,7 +56,7 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-    new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new SpinForward());
+    new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new IngestNote());
 
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new Consume());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new Expel());
