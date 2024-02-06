@@ -96,6 +96,7 @@ public class RobotMap {
 
   // [B]arrel
   public static int B_MOTOR = RoboRioMap.CAN_15;
+  public static boolean B_ENABLED = true;
 
   //[D]rive
   public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
