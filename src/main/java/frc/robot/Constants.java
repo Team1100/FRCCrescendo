@@ -30,6 +30,11 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
     // Defines Barrel constants
+    public static final boolean kEnableBarrelPID = false;
+    public static final double kBarrelP = 0;
+    public static final double kBarrelI = 0;
+    public static final double kBarrelD = 0;
+
     public static final double BARREL_SPEED = -0.3;
 
     // Defines Drive constants
@@ -115,13 +120,21 @@ public final class Constants {
     public static final double kDriveDeadband = 0.2;
 
     // Defines Intake constants
+    public static final boolean kEnableIntakePID = false;
+    public static final double kIntakeP = 0;
+    public static final double kIntakeI = 0;
+    public static final double kIntakeD = 0;
+
     public static final double kIntakeSpeed = -0.3;
 
     // Defines Lights constants
     public static final int LED_LENGTH = 35; // number of LEDs
 
     // Defines Shooter constants
-    public static final boolean kEnableShooterPIDTuning = false;
+    public static final boolean kEnableShooterPID = false;
+    public static final double kShooterP = 0;
+    public static final double kShooterI = 0;
+    public static final double kShooterD = 0;
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;

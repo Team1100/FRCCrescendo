@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Shooter;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;;
@@ -14,27 +15,31 @@ public class SpinUpShooter extends Command {
   TDNumber m_LeftRPM;
   TDNumber m_RightRPM;
 
+  TDNumber m_LeftShooterSpeed;
+  TDNumber m_RightShooterSpeed;
+
   /** Creates a new SpinUpShooter. */
   public SpinUpShooter() {
     super(Shooter.getInstance(), "Basic", "SpinUpShooter");
     m_shooter = Shooter.getInstance();
     addRequirements(m_shooter);
 
-    m_LeftRPM = new TDNumber(m_shooter, "Shooter Speed", "LeftRPM");
-    m_RightRPM = new TDNumber(m_shooter, "Shooter Speed", "RightRPM");
+    m_LeftRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "LeftRPM");
+    m_RightRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "RightRPM");
+
+    m_LeftShooterSpeed = new TDNumber(m_shooter, "Shooter Speed (Power)", "Left Speed", Constants.LEFT_SHOOTER_SPEED);
+    m_RightShooterSpeed = new TDNumber(m_shooter, "Shooter Speed (Power)", "Right Speed", Constants.RIGHT_SHOOTER_SPEED);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    // m_shooter.setSpeeds(0, 0);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // m_shooter.setSpeeds(m_LeftRPM.get(), m_RightRPM.get());
-    m_shooter.spinOut();
+    m_shooter.spinOut(m_LeftShooterSpeed.get(), m_RightShooterSpeed.get());
   }
 
   // Called once the command ends or is interrupted.
