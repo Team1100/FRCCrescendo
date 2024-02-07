@@ -4,18 +4,29 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
 
 import frc.robot.RobotMap;
 import frc.robot.Constants;
 
 import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDNumber;
 
 public class Intake extends SubsystemBase {
   private static Intake m_intake;
-    CANSparkMax m_ILeftSparkMax;
-    CANSparkMax m_IRightSparkMax;
+
+  TDNumber m_P;
+  TDNumber m_I;
+  TDNumber m_D;
+  
+  CANSparkMax m_ILeftSparkMax;
+  CANSparkMax m_IRightSparkMax;
+  SparkPIDController m_LeftSparkPIDController;
+  SparkPIDController m_RightSparkPIDController;
+
   /** Creates a new Intake. */
   private Intake() {
     super("Intake");
@@ -33,6 +44,21 @@ public class Intake extends SubsystemBase {
       
       // Motors are set opposite of each other and will spin in different directions on the robot
       m_IRightSparkMax.follow(m_ILeftSparkMax);
+
+      m_LeftSparkPIDController = m_ILeftSparkMax.getPIDController();
+      m_RightSparkPIDController = m_IRightSparkMax.getPIDController();
+
+      m_P = new TDNumber(this, "IntakePID", "P", Constants.kIntakeP);
+      m_I = new TDNumber(this, "IntakePID", "I", Constants.kIntakeI);
+      m_D = new TDNumber(this, "IntakePID", "D", Constants.kIntakeD);
+
+      m_LeftSparkPIDController.setP(m_P.get());
+      m_LeftSparkPIDController.setI(m_I.get());
+      m_LeftSparkPIDController.setD(m_D.get());
+
+      m_RightSparkPIDController.setP(m_P.get());
+      m_RightSparkPIDController.setI(m_I.get());
+      m_RightSparkPIDController.setD(m_D.get());
     }
   }
 
@@ -43,14 +69,19 @@ public class Intake extends SubsystemBase {
     return m_intake;
   }
 
-  public void spinIn() {
-    if (m_ILeftSparkMax != null)
-      m_ILeftSparkMax.set(Constants.kIntakeSpeed);
+  public void setSpeeds(double RPM) {
+    m_LeftSparkPIDController.setReference(RPM, ControlType.kVelocity);
+    m_RightSparkPIDController.setReference(RPM, ControlType.kVelocity);
   }
 
-  public void spinOut() {
+  public void spinIn(double speed) {
     if (m_ILeftSparkMax != null)
-      m_ILeftSparkMax.set(-Constants.kIntakeSpeed);
+      m_ILeftSparkMax.set(speed);
+  }
+
+  public void spinOut(double speed) {
+    if (m_ILeftSparkMax != null)
+      m_ILeftSparkMax.set(speed);
   }
 
   public void spinStop() {
@@ -60,6 +91,18 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (Constants.kEnableIntakePID && 
+        m_LeftSparkPIDController != null &&
+        m_RightSparkPIDController != null) {
+      m_LeftSparkPIDController.setP(m_P.get());
+      m_LeftSparkPIDController.setI(m_I.get());
+      m_LeftSparkPIDController.setD(m_D.get());
+
+      m_RightSparkPIDController.setP(m_P.get());
+      m_RightSparkPIDController.setI(m_I.get());
+      m_RightSparkPIDController.setD(m_D.get());
+    }
+    
     super.periodic();
   }
 }

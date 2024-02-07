@@ -16,8 +16,6 @@ import frc.robot.testingdashboard.TDNumber;
 
 public class Shooter extends SubsystemBase {
   private static Shooter m_shooter;
-  private static SparkPIDController m_LeftSparkPidController;
-  private static SparkPIDController m_RightSparkPidController;
 
   TDNumber m_P;
   TDNumber m_I;
@@ -25,6 +23,8 @@ public class Shooter extends SubsystemBase {
   
   CANSparkMax m_SLeftSparkMax;
   CANSparkMax m_SRightSparkMax;
+  SparkPIDController m_LeftSparkPIDController;
+  SparkPIDController m_RightSparkPIDController;
 
   /** Creates a new Intake. */
   private Shooter() {
@@ -40,20 +40,20 @@ public class Shooter extends SubsystemBase {
       m_SLeftSparkMax.setInverted(false);
       m_SRightSparkMax.setInverted(true);
 
-      m_LeftSparkPidController = m_SLeftSparkMax.getPIDController();
-      m_RightSparkPidController = m_SRightSparkMax.getPIDController();
+      m_LeftSparkPIDController = m_SLeftSparkMax.getPIDController();
+      m_RightSparkPIDController = m_SRightSparkMax.getPIDController();
 
-      m_P = new TDNumber(this, "ShooterPID", "P");
-      m_I = new TDNumber(this, "ShooterPID", "I");
-      m_D = new TDNumber(this, "ShooterPID", "D");
+      m_P = new TDNumber(this, "ShooterPID", "P", Constants.kShooterP);
+      m_I = new TDNumber(this, "ShooterPID", "I", Constants.kShooterI);
+      m_D = new TDNumber(this, "ShooterPID", "D", Constants.kShooterD);
 
-      m_LeftSparkPidController.setP(m_P.get());
-      m_LeftSparkPidController.setI(m_I.get());
-      m_LeftSparkPidController.setD(m_D.get());
+      m_LeftSparkPIDController.setP(m_P.get());
+      m_LeftSparkPIDController.setI(m_I.get());
+      m_LeftSparkPIDController.setD(m_D.get());
 
-      m_RightSparkPidController.setP(m_P.get());
-      m_RightSparkPidController.setI(m_I.get());
-      m_RightSparkPidController.setD(m_D.get());
+      m_RightSparkPIDController.setP(m_P.get());
+      m_RightSparkPIDController.setI(m_I.get());
+      m_RightSparkPIDController.setD(m_D.get());
     }
   }
 
@@ -65,14 +65,14 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSpeeds(double LeftRPM, double RightRPM) {
-    m_LeftSparkPidController.setReference(LeftRPM, ControlType.kVelocity);
-    m_RightSparkPidController.setReference(RightRPM, ControlType.kVelocity);
+    m_LeftSparkPIDController.setReference(LeftRPM, ControlType.kVelocity);
+    m_RightSparkPIDController.setReference(RightRPM, ControlType.kVelocity);
   }
 
-  public void spinOut() {
+  public void spinOut(double leftSpeed, double rightSpeed) {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
-      m_SLeftSparkMax.set(Constants.LEFT_SHOOTER_SPEED);
-      m_SRightSparkMax.set(Constants.RIGHT_SHOOTER_SPEED);
+      m_SLeftSparkMax.set(leftSpeed);
+      m_SRightSparkMax.set(rightSpeed);
     }
   }
 
@@ -85,16 +85,18 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (Constants.kEnableShooterPIDTuning && 
-        m_LeftSparkPidController != null &&
-        m_RightSparkPidController != null) {
-      m_LeftSparkPidController.setP(m_P.get());
-      m_LeftSparkPidController.setI(m_I.get());
-      m_LeftSparkPidController.setD(m_D.get());
+    if (Constants.kEnableShooterPID && 
+        m_LeftSparkPIDController != null &&
+        m_RightSparkPIDController != null) {
+      m_LeftSparkPIDController.setP(m_P.get());
+      m_LeftSparkPIDController.setI(m_I.get());
+      m_LeftSparkPIDController.setD(m_D.get());
 
-      m_RightSparkPidController.setP(m_P.get());
-      m_RightSparkPidController.setI(m_I.get());
-      m_RightSparkPidController.setD(m_D.get());
+      m_RightSparkPIDController.setP(m_P.get());
+      m_RightSparkPIDController.setI(m_I.get());
+      m_RightSparkPIDController.setD(m_D.get());
     }
+
+    super.periodic();
   }
 }
