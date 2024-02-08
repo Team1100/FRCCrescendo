@@ -14,6 +14,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
@@ -84,6 +86,9 @@ public class Drive extends SubsystemBase {
   TDNumber TDPoseX;
   TDNumber TDPoseY;
   TDNumber TDPoseAngle;
+
+  ChassisSpeeds m_requestedSpeeds = new ChassisSpeeds();
+  double m_driveTime = 0;
 
   /** Creates a new Drive. */
   private Drive() {
@@ -164,6 +169,24 @@ public class Drive extends SubsystemBase {
     super.periodic();
   }
 
+  public void simulationPeriodic()
+  {
+    double now = Timer.getFPGATimestamp();
+
+    Pose2d lastPose = getPose();
+    if (m_driveTime != 0 && m_requestedSpeeds != null)
+    {
+      double deltax = m_requestedSpeeds.vxMetersPerSecond * (now - m_driveTime);
+      double deltay = m_requestedSpeeds.vyMetersPerSecond * (now - m_driveTime);
+      Rotation2d rot = new Rotation2d(m_requestedSpeeds.omegaRadiansPerSecond * (now - m_driveTime));
+      Translation2d translation = new Translation2d(deltax, deltay);
+      Pose2d newPose = new Pose2d(lastPose.getTranslation().plus(translation),
+                                  lastPose.getRotation().plus(rot));
+      resetOdometry(newPose);
+    }
+
+    m_driveTime = now;
+  }
   /**
    * Returns the currently-estimated pose of the robot.
    *
@@ -312,6 +335,9 @@ public class Drive extends SubsystemBase {
     TDxSpeedCommanded.set(speeds.vxMetersPerSecond);
     TDySpeedCommanded.set(speeds.vyMetersPerSecond);
     TDrotSpeedCommanded.set(speeds.omegaRadiansPerSecond);
+    m_requestedSpeeds.vxMetersPerSecond = speeds.vxMetersPerSecond;
+    m_requestedSpeeds.vyMetersPerSecond = speeds.vyMetersPerSecond;
+    m_requestedSpeeds.omegaRadiansPerSecond = speeds.omegaRadiansPerSecond;
     var swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(speeds);
     setModuleStates(swerveModuleStates);
   }
@@ -356,7 +382,7 @@ public class Drive extends SubsystemBase {
     TDySpeedMeasured.set(measuredSpeeds.vyMetersPerSecond);
     TDrotSpeedMeasured.set(measuredSpeeds.omegaRadiansPerSecond);
 
-    Pose2d currentPose = m_DrivePoseEstimator.getEstimatedPosition();
+    Pose2d currentPose = getPose();
     TDPoseX.set(currentPose.getX());
     TDPoseY.set(currentPose.getY());
     TDPoseAngle.set(currentPose.getRotation().getDegrees());
