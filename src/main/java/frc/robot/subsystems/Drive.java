@@ -9,11 +9,14 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -32,6 +35,7 @@ import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TDSendable;
+import frc.robot.utils.FieldUtils;
 import frc.robot.utils.SwerveUtils;
 
 public class Drive extends SubsystemBase {
@@ -70,6 +74,7 @@ public class Drive extends SubsystemBase {
   private SlewRateLimiter m_magLimiter = new SlewRateLimiter(Constants.kMagnitudeSlewRate);
   private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(Constants.kRotationalSlewRate);
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
+  private ChassisSpeeds m_lastSpeeds = new ChassisSpeeds();
 
   // SwerveDrivePoseEstimator class for tracking robot pose
   SwerveDrivePoseEstimator m_DrivePoseEstimator;
@@ -299,10 +304,12 @@ public class Drive extends SubsystemBase {
     double xSpeedDelivered = xSpeedCommanded * Constants.kMaxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeedCommanded * Constants.kMaxSpeedMetersPerSecond;
     double rotDelivered = m_currentRotation * Constants.kMaxAngularSpeed;
+    Rotation2d fieldAngle = m_DrivePoseEstimator.getEstimatedPosition().getRotation()
+                                  .plus(FieldUtils.getInstance().getRotationOffset());//Compensates for alliance
 
     drive(
       fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, fieldAngle)
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered)
     );
   }
@@ -338,7 +345,8 @@ public class Drive extends SubsystemBase {
     m_requestedSpeeds.vxMetersPerSecond = speeds.vxMetersPerSecond;
     m_requestedSpeeds.vyMetersPerSecond = speeds.vyMetersPerSecond;
     m_requestedSpeeds.omegaRadiansPerSecond = speeds.omegaRadiansPerSecond;
-    var swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(speeds);
+    ChassisSpeeds limitedSpeeds = limitRates(speeds);
+    var swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(limitedSpeeds);
     setModuleStates(swerveModuleStates);
   }
 
@@ -386,5 +394,37 @@ public class Drive extends SubsystemBase {
     TDPoseX.set(currentPose.getX());
     TDPoseY.set(currentPose.getY());
     TDPoseAngle.set(currentPose.getRotation().getDegrees());
+  }
+  
+  public ChassisSpeeds limitRates(ChassisSpeeds commandedSpeeds) {
+    //Apply Speed Limits
+    double linearSpeed = Math.hypot(commandedSpeeds.vxMetersPerSecond, commandedSpeeds.vyMetersPerSecond);
+    Rotation2d direction = new Rotation2d(commandedSpeeds.vxMetersPerSecond, commandedSpeeds.vyMetersPerSecond);
+    double limitedSpeed = Math.min(linearSpeed, Constants.kMaxSpeedMetersPerSecond);
+    double limitedTheta = Math.min(commandedSpeeds.omegaRadiansPerSecond, Constants.kMaxAngularSpeed);
+
+    Translation2d linearVelocity = new Pose2d(new Translation2d(), direction)
+                  .transformBy(new Transform2d(new Translation2d(limitedSpeed, 0.0), new Rotation2d()))
+                  .getTranslation();
+    
+    //Apply Acceleration Limits
+    double currentTime = WPIUtilJNI.now() * 1e-6;
+    double accelerationDif = Constants.kMaxAccelerationMetersPerSecondSquared * (currentTime-m_prevTime);
+    double xSpeed = MathUtil.clamp(linearVelocity.getX(),
+                                   m_lastSpeeds.vxMetersPerSecond - accelerationDif, 
+                                  m_lastSpeeds.vxMetersPerSecond + accelerationDif);
+    double ySpeed = MathUtil.clamp(linearVelocity.getY(), 
+                                  m_lastSpeeds.vyMetersPerSecond - accelerationDif,
+                                  m_lastSpeeds.vyMetersPerSecond + accelerationDif);
+
+    double thetaAccelDif = Constants.kMaxAngularSpeedRadiansPerSecondSquared * (currentTime - m_prevTime);
+    double thetaSpeed = MathUtil.clamp(limitedTheta, 
+                                      m_lastSpeeds.omegaRadiansPerSecond - thetaAccelDif, 
+                                      m_lastSpeeds.omegaRadiansPerSecond + thetaAccelDif);
+
+    ChassisSpeeds limitedSpeeds = new ChassisSpeeds(xSpeed, ySpeed, thetaSpeed);
+    m_lastSpeeds = limitedSpeeds;
+    m_prevTime = currentTime;
+    return limitedSpeeds;
   }
 }

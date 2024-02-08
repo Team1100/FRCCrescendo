@@ -35,7 +35,7 @@ public class SwerveDrive extends Command {
       -MathUtil.applyDeadband(m_driverController.getLeftY(), Constants.kDriveDeadband),
       -MathUtil.applyDeadband(m_driverController.getLeftX(), Constants.kDriveDeadband),
       -MathUtil.applyDeadband(m_driverController.getRightX(), Constants.kDriveDeadband),
-      true, true);
+      true, false);
   }
 
   // Called once the command ends or is interrupted.
