@@ -2,32 +2,32 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Barrel;
+package frc.robot.commands.Shooter;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Barrel;
+import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;
 
-public class SpinForward extends Command {
-  Barrel m_barrel;
+public class IntakeFromSource extends Command {
+  Shooter m_shooter;
 
   TDNumber m_RPM;
   TDNumber m_enablePID;
 
-  TDNumber m_BarrelSpeed;
+  TDNumber m_shooterSpeed;
 
-  /** Creates a new SpinForward. */
-  public SpinForward() {
-    super(Barrel.getInstance(), "Basic", "SpinForward");
-    m_barrel = Barrel.getInstance();
+  /** Creates a new IntakeFromSource. */
+  public IntakeFromSource() {
+    super(Shooter.getInstance(), "Basic", "IntakeFromSource");
+    m_shooter = Shooter.getInstance();
 
-    m_RPM = new TDNumber(m_barrel, "Barrel Speed (RPM)", "RPM", Constants.BARREL_SPEED_RPM);
-    m_enablePID = new TDNumber(m_barrel, "Barrel Speed (RPM)", "Enable PID w/1");
+    m_RPM = new TDNumber(m_shooter, "Intaking Speed (RPM)", "RPM", Constants.SHOOTER_INTAKING_SPEED_RPM);
+    m_enablePID = new TDNumber(m_shooter, "Intaking Speed (RPM)", "Enable PID w/1");
 
-    m_BarrelSpeed = new TDNumber(m_barrel, "Barrel Speed (Power)", "Speed", Constants.BARREL_SPEED);
+    m_shooterSpeed = new TDNumber(m_shooter, "Intaking Speed (Power)", "Speed", Constants.SHOOTER_INTAKING_SPEED);
 
-    addRequirements(m_barrel);
+    addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -38,10 +38,10 @@ public class SpinForward extends Command {
   @Override
   public void execute() {
     if (m_enablePID.get() == 1) {
-      m_barrel.setSpeed(m_RPM.get());
+      m_shooter.setSpeeds(m_RPM.get(), m_RPM.get());
     }
     else {
-      m_barrel.spinForward(m_BarrelSpeed.get());
+      m_shooter.spinIn(m_shooterSpeed.get());
     }
   }
 
@@ -49,10 +49,10 @@ public class SpinForward extends Command {
   @Override
   public void end(boolean interrupted) {
     if (m_enablePID.get() == 1) {
-      m_barrel.setSpeed(0);
+      m_shooter.setSpeeds(0, 0);
     }
     else {
-      m_barrel.spinStop();
+      m_shooter.spinStop();
     }
   }
 

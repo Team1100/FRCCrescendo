@@ -17,6 +17,7 @@ import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.commands.Shooter.IntakeFromSource;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.commands.Lights.MoveLights;
 import frc.robot.commands.Lights.BlinkLights;
@@ -57,6 +58,7 @@ public class OI {
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
     new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new IngestNote());
+    new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new IntakeFromSource());
 
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new Consume());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new Expel());

@@ -71,7 +71,7 @@ public class Barrel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (Constants.kEnableBarrelPID && 
+    if (Constants.kEnableBarrelPIDTuning && 
         m_CanSparkMax != null) {
       m_SparkPIDController.setP(m_P.get());
       m_SparkPIDController.setI(m_I.get());
