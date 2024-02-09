@@ -76,6 +76,13 @@ public class Shooter extends SubsystemBase {
     }
   }
 
+  public void spinIn(double speed) {
+    if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
+      m_SLeftSparkMax.set(speed);
+      m_SRightSparkMax.set(speed);
+    }
+  }
+
   public void spinStop() {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
       m_SLeftSparkMax.set(0);
@@ -85,7 +92,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (Constants.kEnableShooterPID && 
+    if (Constants.kEnableShooterPIDTuning && 
         m_LeftSparkPIDController != null &&
         m_RightSparkPIDController != null) {
       m_LeftSparkPIDController.setP(m_P.get());

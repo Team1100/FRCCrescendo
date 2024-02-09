@@ -91,7 +91,7 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (Constants.kEnableIntakePID && 
+    if (Constants.kEnableIntakePIDTuning && 
         m_LeftSparkPIDController != null &&
         m_RightSparkPIDController != null) {
       m_LeftSparkPIDController.setP(m_P.get());
