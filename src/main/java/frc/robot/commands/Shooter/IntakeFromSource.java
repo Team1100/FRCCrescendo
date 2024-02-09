@@ -23,7 +23,7 @@ public class IntakeFromSource extends Command {
     m_shooter = Shooter.getInstance();
 
     m_RPM = new TDNumber(m_shooter, "Intaking Speed (RPM)", "RPM", Constants.SHOOTER_INTAKING_SPEED_RPM);
-    m_enablePID = new TDNumber(m_shooter, "Intaking Speed (RPM)", "Enable PID w/1");
+    m_enablePID = new TDNumber(m_shooter, "Intaking Speed (RPM)", "Enable PID w 1");
 
     m_shooterSpeed = new TDNumber(m_shooter, "Intaking Speed (Power)", "Speed", Constants.SHOOTER_INTAKING_SPEED);
 
@@ -38,10 +38,10 @@ public class IntakeFromSource extends Command {
   @Override
   public void execute() {
     if (m_enablePID.get() == 1) {
-      m_shooter.setSpeeds(m_RPM.get(), m_RPM.get());
+      m_shooter.setSpeeds(-m_RPM.get(), -m_RPM.get());
     }
     else {
-      m_shooter.spinIn(m_shooterSpeed.get());
+      m_shooter.spinIn(-m_shooterSpeed.get());
     }
   }
 

@@ -27,7 +27,7 @@ public class SpinUpShooter extends Command {
 
     m_LeftRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "LeftRPM", Constants.LEFT_SHOOTER_SPEED_RPM);
     m_RightRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "RightRPM", Constants.RIGHT_SHOOTER_SPEED_RPM);
-    m_enablePID = new TDNumber(m_shooter, "Shooter Speed (RPM)", "Enable PID w/1");
+    m_enablePID = new TDNumber(m_shooter, "Shooter Speed (RPM)", "Enable PID w 1");
 
     m_LeftShooterSpeed = new TDNumber(m_shooter, "Shooter Speed (Power)", "Left Speed", Constants.LEFT_SHOOTER_SPEED);
     m_RightShooterSpeed = new TDNumber(m_shooter, "Shooter Speed (Power)", "Right Speed", Constants.RIGHT_SHOOTER_SPEED);

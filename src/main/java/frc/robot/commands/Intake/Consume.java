@@ -23,7 +23,7 @@ public class Consume extends Command {
     m_intake = Intake.getInstance();
 
     m_RPM = new TDNumber(m_intake, "Intake Speed (RPM)", "RPM", Constants.INTAKE_SPEED_RPM);
-    m_enablePID = new TDNumber(m_intake, "Intake Speed (RPM)", "Enable PID w/1");
+    m_enablePID = new TDNumber(m_intake, "Intake Speed (RPM)", "Enable PID w 1");
 
     m_IntakeSpeed = new TDNumber(m_intake, "Intake Speed (Power)", "Speed", Constants.kIntakeSpeed);
 
