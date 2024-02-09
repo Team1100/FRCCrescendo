@@ -14,6 +14,7 @@ public class Expel extends Command {
   Intake m_intake;
 
   TDNumber m_RPM;
+  TDNumber m_enablePID;
 
   TDNumber m_IntakeSpeed;
 
@@ -22,7 +23,8 @@ public class Expel extends Command {
     super(Intake.getInstance(), "Intake", "Expel");
     m_intake = Intake.getInstance();
 
-    m_RPM = new TDNumber(m_intake, "Intake Speed (RPM)", "RPM");
+    m_RPM = new TDNumber(m_intake, "Intake Speed (RPM)", "RPM", Constants.INTAKE_SPEED_RPM);
+    m_enablePID = new TDNumber(m_intake, "Intake Speed (RPM)", "Enable PID w/1");
 
     m_IntakeSpeed = new TDNumber(m_intake, "Intake Speed (Power)", "Speed", Constants.kIntakeSpeed);
 
@@ -36,15 +38,23 @@ public class Expel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // m_intake.setSpeeds(-m_RPM.get());
-    m_intake.spinOut(-m_IntakeSpeed.get());
+    if (m_enablePID.get() == 1) {
+      m_intake.setSpeeds(-m_RPM.get());
+    }
+    else {
+      m_intake.spinIn(-m_IntakeSpeed.get());
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_intake.setSpeeds(0);
-    m_intake.spinStop();
+    if (m_enablePID.get() == 1) {
+      m_intake.setSpeeds(0);
+    }
+    else {
+      m_intake.spinStop();
+    }
   }
 
   // Returns true when the command should end.

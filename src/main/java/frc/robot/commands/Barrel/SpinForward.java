@@ -13,6 +13,7 @@ public class SpinForward extends Command {
   Barrel m_barrel;
 
   TDNumber m_RPM;
+  TDNumber m_enablePID;
 
   TDNumber m_BarrelSpeed;
 
@@ -21,7 +22,8 @@ public class SpinForward extends Command {
     super(Barrel.getInstance(), "Basic", "SpinForward");
     m_barrel = Barrel.getInstance();
 
-    m_RPM = new TDNumber(m_barrel, "Barrel Speed (RPM)", "RPM");
+    m_RPM = new TDNumber(m_barrel, "Barrel Speed (RPM)", "RPM", Constants.BARREL_SPEED_RPM);
+    m_enablePID = new TDNumber(m_barrel, "Barrel Speed (RPM)", "Enable PID w/1");
 
     m_BarrelSpeed = new TDNumber(m_barrel, "Barrel Speed (Power)", "Speed", Constants.BARREL_SPEED);
 
@@ -35,15 +37,23 @@ public class SpinForward extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // m_barrel.setSpeed(m_RPM.get());
-    m_barrel.spinForward(m_BarrelSpeed.get());
+    if (m_enablePID.get() == 1) {
+      m_barrel.setSpeed(m_RPM.get());
+    }
+    else {
+      m_barrel.spinForward(m_BarrelSpeed.get());
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_barrel.setSpeed(0);
-    m_barrel.spinStop();
+    if (m_enablePID.get() == 1) {
+      m_barrel.setSpeed(0);
+    }
+    else {
+      m_barrel.spinStop();
+    }
   }
 
   // Returns true when the command should end.

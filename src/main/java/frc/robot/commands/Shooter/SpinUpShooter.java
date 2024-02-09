@@ -14,6 +14,7 @@ public class SpinUpShooter extends Command {
 
   TDNumber m_LeftRPM;
   TDNumber m_RightRPM;
+  TDNumber m_enablePID;
 
   TDNumber m_LeftShooterSpeed;
   TDNumber m_RightShooterSpeed;
@@ -24,8 +25,9 @@ public class SpinUpShooter extends Command {
     m_shooter = Shooter.getInstance();
     addRequirements(m_shooter);
 
-    m_LeftRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "LeftRPM");
-    m_RightRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "RightRPM");
+    m_LeftRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "LeftRPM", Constants.LEFT_SHOOTER_SPEED_RPM);
+    m_RightRPM = new TDNumber(m_shooter, "Shooter Speed (RPM)", "RightRPM", Constants.RIGHT_SHOOTER_SPEED_RPM);
+    m_enablePID = new TDNumber(m_shooter, "Shooter Speed (RPM)", "Enable PID w/1");
 
     m_LeftShooterSpeed = new TDNumber(m_shooter, "Shooter Speed (Power)", "Left Speed", Constants.LEFT_SHOOTER_SPEED);
     m_RightShooterSpeed = new TDNumber(m_shooter, "Shooter Speed (Power)", "Right Speed", Constants.RIGHT_SHOOTER_SPEED);
@@ -38,15 +40,23 @@ public class SpinUpShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // m_shooter.setSpeeds(m_LeftRPM.get(), m_RightRPM.get());
-    m_shooter.spinOut(m_LeftShooterSpeed.get(), m_RightShooterSpeed.get());
+    if (m_enablePID.get() == 1) {
+      m_shooter.setSpeeds(m_LeftRPM.get(), m_RightRPM.get());
+    }
+    else {
+      m_shooter.spinOut(m_LeftShooterSpeed.get(), m_RightShooterSpeed.get());
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_shooter.setSpeeds(0, 0);
-    m_shooter.spinStop();
+    if (m_enablePID.get() == 1) {
+      m_shooter.setSpeeds(0, 0);
+    }
+    else {
+      m_shooter.spinStop();
+    }
   }
 
   // Returns true when the command should end.
