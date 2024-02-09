@@ -38,10 +38,10 @@ public class IntakeFromSource extends Command {
   @Override
   public void execute() {
     if (m_enablePID.get() == 1) {
-      m_shooter.setSpeeds(m_RPM.get(), m_RPM.get());
+      m_shooter.setSpeeds(-m_RPM.get(), -m_RPM.get());
     }
     else {
-      m_shooter.spinIn(m_shooterSpeed.get());
+      m_shooter.spinIn(-m_shooterSpeed.get());
     }
   }
 
