@@ -23,7 +23,7 @@ public class SpinForward extends Command {
     m_barrel = Barrel.getInstance();
 
     m_RPM = new TDNumber(m_barrel, "Barrel Speed (RPM)", "RPM", Constants.BARREL_SPEED_RPM);
-    m_enablePID = new TDNumber(m_barrel, "Barrel Speed (RPM)", "Enable PID w/1");
+    m_enablePID = new TDNumber(m_barrel, "Barrel Speed (RPM)", "Enable PID w 1");
 
     m_BarrelSpeed = new TDNumber(m_barrel, "Barrel Speed (Power)", "Speed", Constants.BARREL_SPEED);
 
