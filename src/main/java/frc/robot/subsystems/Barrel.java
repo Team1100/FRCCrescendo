@@ -25,7 +25,7 @@ public class Barrel extends SubsystemBase {
   SparkPIDController m_SparkPIDController;
 
   /** Creates a new Barrel. */
-  public Barrel() {
+  private Barrel() {
     super("Barrel");
     if(RobotMap.B_ENABLED){
       m_CanSparkMax = new CANSparkMax(RobotMap.B_MOTOR, MotorType.kBrushless);

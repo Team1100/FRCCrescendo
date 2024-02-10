@@ -23,7 +23,7 @@ public class Lights extends SubsystemBase {
   private Timer m_timer;
 
   /** Creates a new Lights. */
-  public Lights() {
+  private Lights() {
     super("Lights");
 
     m_LED = new AddressableLED(RobotMap.L_LEDS);
