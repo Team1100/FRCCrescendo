@@ -98,6 +98,11 @@ public class RobotMap {
   public static boolean B_ENABLED = true;
   public static int B_MOTOR = RoboRioMap.CAN_15;
 
+  // [B]arrel [P]ivot
+  public static boolean BP_ENABLED = false;
+  public static int BP_MOTOR_LEFT = RoboRioMap.CAN_13;
+  public static int BP_MOTOR_RIGHT = RoboRioMap.CAN_14;
+
   //[D]rive
   public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
   public static int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_5;

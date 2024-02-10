@@ -38,6 +38,12 @@ public final class Constants {
     public static final double BARREL_SPEED = -0.3;
     public static final double BARREL_SPEED_RPM = 0;
 
+    // Defines Barrel Pivot constants
+    public static final boolean kEnableBarrelPivotPIDTuning = false;
+    public static final double kBarrelPivotP = 0;
+    public static final double kBarrelPivotI = 0;
+    public static final double kBarrelPivotD = 0;
+
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
