@@ -26,7 +26,7 @@ public class BarrelPivot extends SubsystemBase {
   SparkPIDController m_RightSparkPIDController;
 
   /** Creates a new BarrelPivot. */
-  public BarrelPivot() {
+  private BarrelPivot() {
     super("BarrelPivot");
 
     if (RobotMap.BP_ENABLED) {
