@@ -9,11 +9,15 @@ import frc.robot.subsystems.Lights;
 
 public class BlinkLights extends Command {
   Lights m_lights;
+  int hue;
 
   /** Creates a new BlinkLights. */
   public BlinkLights() {
     super(Lights.getInstance(), "Basic", "BlinkLights");
     m_lights = Lights.getInstance();
+
+    int hue = 10; // Orange
+
     addRequirements(m_lights);
   }
   
@@ -29,7 +33,7 @@ public class BlinkLights extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_lights.blinkLights();
+    m_lights.blinkLights(hue);
     m_lights.getLED().setData(m_lights.getLEDBuffer());
   }
 

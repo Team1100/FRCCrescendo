@@ -9,11 +9,15 @@ import frc.robot.subsystems.Lights;
 
 public class EnableLights extends Command {
   Lights m_lights;
+  int hue;
 
   /** Creates a new EnableLights. */
   public EnableLights() {
     super(Lights.getInstance(), "Basic", "EnableLights");
     m_lights = Lights.getInstance();
+
+    hue = 10; // Orange
+
     addRequirements(m_lights);
   }
 
@@ -25,7 +29,7 @@ public class EnableLights extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_lights.enableLights();
+    m_lights.enableLights(hue);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
