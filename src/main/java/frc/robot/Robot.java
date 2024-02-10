@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Lights.MoveLights;
+import frc.robot.commands.Lights.MakeRainbow;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,7 +17,7 @@ import frc.robot.commands.Lights.MoveLights;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private MoveLights m_moveLights;
+  private MakeRainbow m_makeRainbow;
 
   private RobotContainer m_robotContainer;
 
@@ -51,13 +51,15 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    if (m_moveLights != null) {
-      m_moveLights.cancel();
+    if (m_makeRainbow != null) {
+      m_makeRainbow = new MakeRainbow();
     }
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    m_makeRainbow.schedule();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -69,14 +71,16 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    if (m_moveLights != null) {
-      m_moveLights.cancel();
+    if (m_makeRainbow != null) {
+      m_makeRainbow = new MakeRainbow();
     }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    m_makeRainbow.schedule();
+  }
 
   @Override
   public void teleopInit() {
@@ -88,13 +92,12 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_moveLights = new MoveLights();
+    m_makeRainbow.cancel();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_moveLights.schedule();
   }
 
   @Override
