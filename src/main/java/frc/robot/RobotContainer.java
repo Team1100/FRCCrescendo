@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.IngestNote;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Intake.Consume;
@@ -13,6 +14,7 @@ import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
 import frc.robot.commands.Lights.MoveLights;
+import frc.robot.commands.Shooter.IntakeFromSource;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
@@ -63,7 +65,7 @@ public class RobotContainer {
     m_intake = Intake.getInstance();
 
     m_lights = Lights.getInstance();
-    m_lights.setDefaultCommand(new MakeRainbow());
+    m_lights.setDefaultCommand(new MoveLights());
 
     m_shooter = Shooter.getInstance();
 
@@ -96,6 +98,10 @@ public class RobotContainer {
 
     // Shooter commands
     new SpinUpShooter();
+    new IntakeFromSource();
+
+    // Command groups
+    new IngestNote();
   }
 
   /**

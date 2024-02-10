@@ -19,7 +19,7 @@ public class Lights extends SubsystemBase {
   private AddressableLEDBuffer m_LEDBuffer;
 
   private int m_rainbowFirstPixelHue;
-  private int m_OrangeFirstPixelValue;
+  private int m_firstPixelValue;
   private Timer m_timer;
 
   /** Creates a new Lights. */
@@ -35,7 +35,7 @@ public class Lights extends SubsystemBase {
     m_LED.start();
 
     m_rainbowFirstPixelHue = 0;
-    m_OrangeFirstPixelValue = 0;
+    m_firstPixelValue = 0;
     
     m_timer = new Timer();
     m_timer.start();
@@ -57,9 +57,9 @@ public class Lights extends SubsystemBase {
     return m_LEDBuffer;
   }
 
-  public void enableLights() {
+  public void enableLights(int hue) {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      m_LEDBuffer.setHSV(i, 12, 255, 122);
+      m_LEDBuffer.setHSV(i, hue, 255, 122);
     }
 
     m_LED.setData(m_LEDBuffer);
@@ -88,23 +88,23 @@ public class Lights extends SubsystemBase {
     m_rainbowFirstPixelHue %= 180;
   }
 
-  public void moveLights() {
+  public void moveLights(int hue) {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      final var value = (m_OrangeFirstPixelValue + (i * 255 / m_LEDBuffer.getLength())) % 255;
-      m_LEDBuffer.setHSV(i, 10, 255, value);
+      final var value = (m_firstPixelValue + (i * 255 / m_LEDBuffer.getLength())) % 255;
+      m_LEDBuffer.setHSV(i, hue, 255, value);
     }
     
     // what "moves" the program
-    m_OrangeFirstPixelValue += 8;
-    m_OrangeFirstPixelValue %= 255;
+    m_firstPixelValue += 8;
+    m_firstPixelValue %= 255;
   }
 
-  public void blinkLights() {
+  public void blinkLights(int hue) {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      m_LEDBuffer.setHSV(i, 10, 255, m_OrangeFirstPixelValue);
+      m_LEDBuffer.setHSV(i, hue, 255, m_firstPixelValue);
     }
 
-    m_OrangeFirstPixelValue = (int)(Math.sin(m_timer.get() * 5) * 128 + 128);
+    m_firstPixelValue = (int)(Math.sin(m_timer.get() * 5) * 128 + 128);
   }
 
   @Override
