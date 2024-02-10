@@ -30,14 +30,13 @@ public class BarrelPivot extends SubsystemBase {
     super("BarrelPivot");
 
     if (RobotMap.BP_ENABLED) {
-      m_BPLeftSparkMax = new CANSparkMax(RobotMap.I_MOTOR_LEFT, MotorType.kBrushless);
-      m_BPRightSparkMax = new CANSparkMax(RobotMap.I_MOTOR_RIGHT, MotorType.kBrushless);
+      m_BPLeftSparkMax = new CANSparkMax(RobotMap.BP_MOTOR_LEFT, MotorType.kBrushless);
+      m_BPRightSparkMax = new CANSparkMax(RobotMap.BP_MOTOR_RIGHT, MotorType.kBrushless);
 
       m_BPLeftSparkMax.restoreFactoryDefaults();
       m_BPRightSparkMax.restoreFactoryDefaults();
 
       m_BPLeftSparkMax.setInverted(false);
-      m_BPRightSparkMax.setInverted(false);
       
       // Motors are set opposite of each other, but they want to spin in the same direction
       m_BPRightSparkMax.follow(m_BPLeftSparkMax, true);

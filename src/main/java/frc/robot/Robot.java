@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_makeRainbow = new MakeRainbow();
   }
 
   /**
@@ -51,9 +52,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    if (m_makeRainbow != null) {
-      m_makeRainbow = new MakeRainbow();
-    }
+    m_makeRainbow = new MakeRainbow();
   }
 
   @Override
@@ -69,10 +68,6 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }
-
-    if (m_makeRainbow != null) {
-      m_makeRainbow = new MakeRainbow();
     }
   }
 
@@ -92,13 +87,14 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_makeRainbow.cancel();
+    if (m_makeRainbow != null) {
+      m_makeRainbow.cancel();
+    }
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
