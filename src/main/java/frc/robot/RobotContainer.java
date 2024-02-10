@@ -67,9 +67,7 @@ public class RobotContainer {
 
     m_shooter = Shooter.getInstance();
 
-    if(Constants.kVisionEnabled){
-      m_Vision = Vision.getInstance();
-    }
+    m_Vision = Vision.getInstance();
 
     NamedCommands.registerCommand("Consume", new Consume());
     NamedCommands.registerCommand("SpinUpShooter", new SpinUpShooter());

@@ -147,7 +147,6 @@ public final class Constants {
     public static final double SHOOTER_INTAKING_SPEED_RPM = 0;
 
     // Vision Constants
-    public static final boolean kVisionEnabled = false;
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =

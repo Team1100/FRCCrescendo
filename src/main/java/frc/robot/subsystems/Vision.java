@@ -13,6 +13,7 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 import frc.robot.Constants;
+import frc.robot.RobotMap;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -34,20 +35,21 @@ public class Vision extends SubsystemBase {
   /** Creates a new Vision. */
   private Vision() {
     super("Vision");
-    m_camera = new PhotonCamera(Constants.kCameraName);
+    if(RobotMap.V_ENABLED){
+      m_camera = new PhotonCamera(Constants.kCameraName);
 
-    m_photonEstimator = new PhotonPoseEstimator(
-                          Constants.kTagLayout,
-                          PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                          m_camera,
-                          Constants.kRobotToCam);
-    
-    m_photonEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+      m_photonEstimator = new PhotonPoseEstimator(
+                            Constants.kTagLayout,
+                            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                            m_camera,
+                            Constants.kRobotToCam);
+      
+      m_photonEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
 
-    m_estX = new TDNumber(this, "Est Pose", "Est X");
-    m_estY = new TDNumber(this, "Est Pose", "Est Y");
-    m_estRot = new TDNumber(this, "Est Pose", "Est Rot");
-    
+      m_estX = new TDNumber(this, "Est Pose", "Est X");
+      m_estY = new TDNumber(this, "Est Pose", "Est Y");
+      m_estRot = new TDNumber(this, "Est Pose", "Est Rot");
+    }
   }
 
   public static Vision getInstance(){
@@ -59,57 +61,72 @@ public class Vision extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Drive robotDrive = Drive.getInstance();
+    if(m_photonEstimator != null){
+      Drive robotDrive = Drive.getInstance();
 
-    var newest = getEstimatedGlobalPose();
-    newest.ifPresent(
-      est -> {
-        Pose2d estPose = est.estimatedPose.toPose2d();
-        var stdDevs = getEstimationStdDevs(estPose);
+      var newest = getEstimatedGlobalPose();
+      newest.ifPresent(
+        est -> {
+          Pose2d estPose = est.estimatedPose.toPose2d();
+          var stdDevs = getEstimationStdDevs(estPose);
 
-        robotDrive.addVisionMeasurement(estPose, m_lastEstTime, stdDevs);
+          robotDrive.addVisionMeasurement(estPose, m_lastEstTime, stdDevs);
 
-        m_estX.set(estPose.getX());
-        m_estY.set(estPose.getY());
-        m_estRot.set(estPose.getRotation().getDegrees());
-      }
-    );
+          m_estX.set(estPose.getX());
+          m_estY.set(estPose.getY());
+          m_estRot.set(estPose.getRotation().getDegrees());
+        }
+      );
+    }
     super.periodic();
   }
 
   public PhotonPipelineResult getLatestResult() {
-    return m_camera.getLatestResult();
+    if(m_camera != null){
+      return m_camera.getLatestResult();
+    } else {
+      return new PhotonPipelineResult();
+    }
   }
 
   public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
-    var visionEst = m_photonEstimator.update();
-    double latestTimestamp = m_camera.getLatestResult().getTimestampSeconds();
-    boolean newResult = Math.abs(latestTimestamp - m_lastEstTime) > 1e-5;
+    if(m_photonEstimator != null && m_camera != null){
+      var visionEst = m_photonEstimator.update();
+      double latestTimestamp = m_camera.getLatestResult().getTimestampSeconds();
+      boolean newResult = Math.abs(latestTimestamp - m_lastEstTime) > 1e-5;
 
-    if (newResult) m_lastEstTime = latestTimestamp;
-    return visionEst;
+      if (newResult) { m_lastEstTime = latestTimestamp; }
+      return visionEst;
+    } else {
+      return Optional.empty();
+    }
   }
 
   public Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose) {
         var estStdDevs = Constants.kSingleTagStdDevs;
-        var targets = getLatestResult().getTargets();
-        int numTags = targets.size();
-        double avgDist = 0;
-        for (var tgt : targets) {
-            var tagPose = m_photonEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
-            if (tagPose.isEmpty()) continue;
-            numTags++;
-            avgDist +=
-                    tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
+
+        if(m_photonEstimator != null){
+          var targets = getLatestResult().getTargets();
+          int numTags = targets.size();
+          double avgDist = 0;
+          for (var tgt : targets) {
+              var tagPose = m_photonEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
+              if (tagPose.isEmpty()) continue;
+              numTags++;
+              avgDist +=
+                      tagPose.get().toPose2d().getTranslation().getDistance(estimatedPose.getTranslation());
+          }
+          if (numTags == 0) { return estStdDevs; }
+          avgDist /= numTags;
+          // Decrease std devs if multiple targets are visible
+          if (numTags > 1) { estStdDevs = Constants.kMultiTagStdDevs; }
+          // Increase std devs based on (average) distance
+          if (numTags == 1 && avgDist > 4) {
+              estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
+          } else {
+            estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 30));
+          }
         }
-        if (numTags == 0) return estStdDevs;
-        avgDist /= numTags;
-        // Decrease std devs if multiple targets are visible
-        if (numTags > 1) estStdDevs = Constants.kMultiTagStdDevs;
-        // Increase std devs based on (average) distance
-        if (numTags == 1 && avgDist > 4)
-            estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
-        else estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 30));
 
         return estStdDevs;
     }

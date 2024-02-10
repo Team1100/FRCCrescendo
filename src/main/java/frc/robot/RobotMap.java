@@ -95,8 +95,8 @@ public class RobotMap {
   public static double R_BASE_RADIUS_INCHES = 11.25 * Math.sqrt(2);
 
   // [B]arrel
-  public static int B_MOTOR = RoboRioMap.CAN_15;
   public static boolean B_ENABLED = true;
+  public static int B_MOTOR = RoboRioMap.CAN_15;
 
   //[D]rive
   public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
@@ -125,4 +125,7 @@ public class RobotMap {
   //[U]ser Input
 	public static int U_DRIVER_XBOX_CONTROLLER = 0;
 	public static int U_OPERATOR_XBOX_CONTROLLER = 1;
+
+  //[V]ision
+  public static boolean V_ENABLED = false;
 }
