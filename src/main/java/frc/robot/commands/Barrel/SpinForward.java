@@ -38,7 +38,7 @@ public class SpinForward extends Command {
   @Override
   public void execute() {
     if (m_enablePID.get() == 1) {
-      m_barrel.setSpeed(m_RPM.get());
+      m_barrel.setSpeed(m_RPM.get(), false);
     }
     else {
       m_barrel.spinForward(m_BarrelSpeed.get());
@@ -49,7 +49,7 @@ public class SpinForward extends Command {
   @Override
   public void end(boolean interrupted) {
     if (m_enablePID.get() == 1) {
-      m_barrel.setSpeed(0);
+      m_barrel.setSpeed(0, false);
     }
     else {
       m_barrel.spinStop();
