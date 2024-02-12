@@ -132,7 +132,7 @@ public final class Constants {
     public static final double kIntakeI = 0;
     public static final double kIntakeD = 0;
 
-    public static final double kIntakeSpeed = -0.3;
+    public static final double kIntakeSpeed = 0.3;
     public static final double INTAKE_SPEED_RPM = 0;
 
     // Defines Lights constants

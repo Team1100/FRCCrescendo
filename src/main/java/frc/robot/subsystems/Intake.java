@@ -39,8 +39,7 @@ public class Intake extends SubsystemBase {
       m_ILeftSparkMax.restoreFactoryDefaults();
       m_IRightSparkMax.restoreFactoryDefaults();
 
-      m_ILeftSparkMax.setInverted(false);
-      m_IRightSparkMax.setInverted(false);
+      m_ILeftSparkMax.setInverted(true);
       
       // Motors are set opposite of each other and will spin in different directions on the robot
       m_IRightSparkMax.follow(m_ILeftSparkMax);
