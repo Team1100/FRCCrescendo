@@ -39,10 +39,10 @@ public class Expel extends Command {
   @Override
   public void execute() {
     if (m_enablePID.get() == 1) {
-      m_intake.setSpeeds(-m_RPM.get());
+      m_intake.setSpeeds(m_RPM.get(), true);
     }
     else {
-      m_intake.spinIn(-m_IntakeSpeed.get());
+      m_intake.spinOut(m_IntakeSpeed.get());
     }
   }
 
@@ -50,7 +50,7 @@ public class Expel extends Command {
   @Override
   public void end(boolean interrupted) {
     if (m_enablePID.get() == 1) {
-      m_intake.setSpeeds(0);
+      m_intake.setSpeeds(0, true);
     }
     else {
       m_intake.spinStop();
