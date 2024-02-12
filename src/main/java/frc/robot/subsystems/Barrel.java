@@ -67,6 +67,12 @@ public class Barrel extends SubsystemBase {
     }
   }
 
+  public void spinBackward(double speed) {
+    if (m_CanSparkMax != null) {
+      m_CanSparkMax.set(-speed);
+    }
+  }
+
   public void spinStop() {
     if (m_CanSparkMax != null) {
       m_CanSparkMax.set(0);
