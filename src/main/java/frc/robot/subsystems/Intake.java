@@ -45,7 +45,6 @@ public class Intake extends SubsystemBase {
       m_IRightSparkMax.follow(m_ILeftSparkMax);
 
       m_LeftSparkPIDController = m_ILeftSparkMax.getPIDController();
-      m_RightSparkPIDController = m_IRightSparkMax.getPIDController();
 
       m_P = new TDNumber(this, "IntakePID", "P", Constants.kIntakeP);
       m_I = new TDNumber(this, "IntakePID", "I", Constants.kIntakeI);
@@ -54,10 +53,6 @@ public class Intake extends SubsystemBase {
       m_LeftSparkPIDController.setP(m_P.get());
       m_LeftSparkPIDController.setI(m_I.get());
       m_LeftSparkPIDController.setD(m_D.get());
-
-      m_RightSparkPIDController.setP(m_P.get());
-      m_RightSparkPIDController.setI(m_I.get());
-      m_RightSparkPIDController.setD(m_D.get());
     }
   }
 

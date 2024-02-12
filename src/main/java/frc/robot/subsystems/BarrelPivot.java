@@ -42,7 +42,6 @@ public class BarrelPivot extends SubsystemBase {
       m_BPRightSparkMax.follow(m_BPLeftSparkMax, true);
 
       m_LeftSparkPIDController = m_BPLeftSparkMax.getPIDController();
-      m_RightSparkPIDController = m_BPRightSparkMax.getPIDController();
 
       m_P = new TDNumber(this, "Barrel Pivot PID", "P", Constants.kBarrelPivotP);
       m_I = new TDNumber(this, "Barrel Pivot PID", "I", Constants.kBarrelPivotI);
@@ -51,10 +50,6 @@ public class BarrelPivot extends SubsystemBase {
       m_LeftSparkPIDController.setP(m_P.get());
       m_LeftSparkPIDController.setI(m_I.get());
       m_LeftSparkPIDController.setD(m_D.get());
-
-      m_RightSparkPIDController.setP(m_P.get());
-      m_RightSparkPIDController.setI(m_I.get());
-      m_RightSparkPIDController.setD(m_D.get());
     }
   }
 
@@ -63,6 +58,18 @@ public class BarrelPivot extends SubsystemBase {
       m_barrelPivot = new BarrelPivot();
     }
     return m_barrelPivot;
+  }
+
+  public void pivotUp() {
+    m_BPLeftSparkMax.set(0.1);
+  }
+
+  public void pivotDown() {
+    m_BPLeftSparkMax.set(-0.1);
+  }
+  
+  public void stop() {
+    m_BPLeftSparkMax.set(0);
   }
   
   @Override
