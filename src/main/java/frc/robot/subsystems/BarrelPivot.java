@@ -22,8 +22,7 @@ public class BarrelPivot extends SubsystemBase {
   
   CANSparkMax m_BPLeftSparkMax;
   CANSparkMax m_BPRightSparkMax;
-  SparkPIDController m_LeftSparkPIDController;
-  SparkPIDController m_RightSparkPIDController;
+  SparkPIDController m_SparkPIDController;
 
   /** Creates a new BarrelPivot. */
   private BarrelPivot() {
@@ -41,15 +40,15 @@ public class BarrelPivot extends SubsystemBase {
       // Motors are set opposite of each other, but they want to spin in the same direction
       m_BPRightSparkMax.follow(m_BPLeftSparkMax, true);
 
-      m_LeftSparkPIDController = m_BPLeftSparkMax.getPIDController();
+      m_SparkPIDController = m_BPLeftSparkMax.getPIDController();
 
       m_P = new TDNumber(this, "Barrel Pivot PID", "P", Constants.kBarrelPivotP);
       m_I = new TDNumber(this, "Barrel Pivot PID", "I", Constants.kBarrelPivotI);
       m_D = new TDNumber(this, "Barrel Pivot PID", "D", Constants.kBarrelPivotD);
 
-      m_LeftSparkPIDController.setP(m_P.get());
-      m_LeftSparkPIDController.setI(m_I.get());
-      m_LeftSparkPIDController.setD(m_D.get());
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
     }
   }
 
@@ -59,31 +58,14 @@ public class BarrelPivot extends SubsystemBase {
     }
     return m_barrelPivot;
   }
-
-  public void pivotUp() {
-    m_BPLeftSparkMax.set(0.1);
-  }
-
-  public void pivotDown() {
-    m_BPLeftSparkMax.set(-0.1);
-  }
-  
-  public void stop() {
-    m_BPLeftSparkMax.set(0);
-  }
   
   @Override
   public void periodic() {
     if (Constants.kEnableBarrelPivotPIDTuning && 
-        m_LeftSparkPIDController != null &&
-        m_RightSparkPIDController != null) {
-      m_LeftSparkPIDController.setP(m_P.get());
-      m_LeftSparkPIDController.setI(m_I.get());
-      m_LeftSparkPIDController.setD(m_D.get());
-
-      m_RightSparkPIDController.setP(m_P.get());
-      m_RightSparkPIDController.setI(m_I.get());
-      m_RightSparkPIDController.setD(m_D.get());
+        m_SparkPIDController != null) {
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
     }
 
     super.periodic();

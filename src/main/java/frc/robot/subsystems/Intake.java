@@ -24,8 +24,7 @@ public class Intake extends SubsystemBase {
   
   CANSparkMax m_ILeftSparkMax;
   CANSparkMax m_IRightSparkMax;
-  SparkPIDController m_LeftSparkPIDController;
-  SparkPIDController m_RightSparkPIDController;
+  SparkPIDController m_SparkPIDController;
 
   /** Creates a new Intake. */
   private Intake() {
@@ -44,15 +43,15 @@ public class Intake extends SubsystemBase {
       // Motors are set opposite of each other and will spin in different directions on the robot
       m_IRightSparkMax.follow(m_ILeftSparkMax);
 
-      m_LeftSparkPIDController = m_ILeftSparkMax.getPIDController();
+      m_SparkPIDController = m_ILeftSparkMax.getPIDController();
 
       m_P = new TDNumber(this, "IntakePID", "P", Constants.kIntakeP);
       m_I = new TDNumber(this, "IntakePID", "I", Constants.kIntakeI);
       m_D = new TDNumber(this, "IntakePID", "D", Constants.kIntakeD);
 
-      m_LeftSparkPIDController.setP(m_P.get());
-      m_LeftSparkPIDController.setI(m_I.get());
-      m_LeftSparkPIDController.setD(m_D.get());
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
     }
   }
 
@@ -65,12 +64,10 @@ public class Intake extends SubsystemBase {
 
   public void setSpeeds(double RPM, boolean backwards) {
     if (!backwards) {
-      m_LeftSparkPIDController.setReference(RPM, ControlType.kVelocity);
-      m_RightSparkPIDController.setReference(RPM, ControlType.kVelocity);
+      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
     }
     else {
-      m_LeftSparkPIDController.setReference(-RPM, ControlType.kVelocity);
-      m_RightSparkPIDController.setReference(-RPM, ControlType.kVelocity);
+      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
     }
   }
 
@@ -92,15 +89,10 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     if (Constants.kEnableIntakePIDTuning && 
-        m_LeftSparkPIDController != null &&
-        m_RightSparkPIDController != null) {
-      m_LeftSparkPIDController.setP(m_P.get());
-      m_LeftSparkPIDController.setI(m_I.get());
-      m_LeftSparkPIDController.setD(m_D.get());
-
-      m_RightSparkPIDController.setP(m_P.get());
-      m_RightSparkPIDController.setI(m_I.get());
-      m_RightSparkPIDController.setD(m_D.get());
+        m_SparkPIDController != null) {
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
     }
     
     super.periodic();
