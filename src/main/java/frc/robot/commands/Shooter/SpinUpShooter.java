@@ -41,7 +41,7 @@ public class SpinUpShooter extends Command {
   @Override
   public void execute() {
     if (m_enablePID.get() == 1) {
-      m_shooter.setSpeeds(m_LeftRPM.get(), m_RightRPM.get());
+      m_shooter.setSpeeds(m_LeftRPM.get(), m_RightRPM.get(), false);
     }
     else {
       m_shooter.spinOut(m_LeftShooterSpeed.get(), m_RightShooterSpeed.get());
@@ -52,7 +52,7 @@ public class SpinUpShooter extends Command {
   @Override
   public void end(boolean interrupted) {
     if (m_enablePID.get() == 1) {
-      m_shooter.setSpeeds(0, 0);
+      m_shooter.setSpeeds(0, 0, false);
     }
     else {
       m_shooter.spinStop();
