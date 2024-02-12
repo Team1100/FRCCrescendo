@@ -24,11 +24,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
-import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -73,9 +71,6 @@ public class RobotContainer {
     m_shooter = Shooter.getInstance();
 
     m_Vision = Vision.getInstance();
-
-    NamedCommands.registerCommand("Consume", new Consume());
-    NamedCommands.registerCommand("SpinUpShooter", new SpinUpShooter());
 
     // Configure the trigger/button bindings
     configureBindings();
