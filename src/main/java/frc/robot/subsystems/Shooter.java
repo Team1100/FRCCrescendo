@@ -64,9 +64,15 @@ public class Shooter extends SubsystemBase {
     return m_shooter;
   }
 
-  public void setSpeeds(double LeftRPM, double RightRPM) {
-    m_LeftSparkPIDController.setReference(LeftRPM, ControlType.kVelocity);
-    m_RightSparkPIDController.setReference(RightRPM, ControlType.kVelocity);
+  public void setSpeeds(double LeftRPM, double RightRPM, boolean backwards) {
+    if (!backwards) {
+      m_LeftSparkPIDController.setReference(LeftRPM, ControlType.kVelocity);
+      m_RightSparkPIDController.setReference(RightRPM, ControlType.kVelocity);
+    }
+    else {
+      m_LeftSparkPIDController.setReference(-LeftRPM, ControlType.kVelocity);
+      m_RightSparkPIDController.setReference(-RightRPM, ControlType.kVelocity);
+    }
   }
 
   public void spinOut(double leftSpeed, double rightSpeed) {
@@ -78,8 +84,8 @@ public class Shooter extends SubsystemBase {
 
   public void spinIn(double speed) {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
-      m_SLeftSparkMax.set(speed);
-      m_SRightSparkMax.set(speed);
+      m_SLeftSparkMax.set(-speed);
+      m_SRightSparkMax.set(-speed);
     }
   }
 

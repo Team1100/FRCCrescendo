@@ -35,7 +35,7 @@ public final class Constants {
     public static final double kBarrelI = 0;
     public static final double kBarrelD = 0;
 
-    public static final double BARREL_SPEED = -0.3;
+    public static final double BARREL_SPEED = 0.3;
     public static final double BARREL_SPEED_RPM = 0;
 
     // Defines Barrel Pivot constants
@@ -132,7 +132,7 @@ public final class Constants {
     public static final double kIntakeI = 0;
     public static final double kIntakeD = 0;
 
-    public static final double kIntakeSpeed = -0.3;
+    public static final double kIntakeSpeed = 0.3;
     public static final double INTAKE_SPEED_RPM = 0;
 
     // Defines Lights constants

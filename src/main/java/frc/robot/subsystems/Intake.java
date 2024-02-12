@@ -39,8 +39,7 @@ public class Intake extends SubsystemBase {
       m_ILeftSparkMax.restoreFactoryDefaults();
       m_IRightSparkMax.restoreFactoryDefaults();
 
-      m_ILeftSparkMax.setInverted(false);
-      m_IRightSparkMax.setInverted(false);
+      m_ILeftSparkMax.setInverted(true);
       
       // Motors are set opposite of each other and will spin in different directions on the robot
       m_IRightSparkMax.follow(m_ILeftSparkMax);
@@ -69,9 +68,15 @@ public class Intake extends SubsystemBase {
     return m_intake;
   }
 
-  public void setSpeeds(double RPM) {
-    m_LeftSparkPIDController.setReference(RPM, ControlType.kVelocity);
-    m_RightSparkPIDController.setReference(RPM, ControlType.kVelocity);
+  public void setSpeeds(double RPM, boolean backwards) {
+    if (!backwards) {
+      m_LeftSparkPIDController.setReference(RPM, ControlType.kVelocity);
+      m_RightSparkPIDController.setReference(RPM, ControlType.kVelocity);
+    }
+    else {
+      m_LeftSparkPIDController.setReference(-RPM, ControlType.kVelocity);
+      m_RightSparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    }
   }
 
   public void spinIn(double speed) {
@@ -81,7 +86,7 @@ public class Intake extends SubsystemBase {
 
   public void spinOut(double speed) {
     if (m_ILeftSparkMax != null)
-      m_ILeftSparkMax.set(speed);
+      m_ILeftSparkMax.set(-speed);
   }
 
   public void spinStop() {

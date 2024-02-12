@@ -31,7 +31,7 @@ public class Barrel extends SubsystemBase {
       m_CanSparkMax = new CANSparkMax(RobotMap.B_MOTOR, MotorType.kBrushless);
 
       m_CanSparkMax.restoreFactoryDefaults();
-      m_CanSparkMax.setInverted(false);
+      m_CanSparkMax.setInverted(true);
 
       m_SparkPIDController = m_CanSparkMax.getPIDController();
 
@@ -52,13 +52,24 @@ public class Barrel extends SubsystemBase {
     return m_barrel;
   }
 
-  public void setSpeed(double RPM) {
-    m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
+  public void setSpeed(double RPM, boolean backwards) {
+    if (!backwards) {
+      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
+    }
+    else {
+      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    }
   }
 
   public void spinForward(double speed) {
     if (m_CanSparkMax != null) {
       m_CanSparkMax.set(speed);
+    }
+  }
+
+  public void spinBackward(double speed) {
+    if (m_CanSparkMax != null) {
+      m_CanSparkMax.set(-speed);
     }
   }
 
