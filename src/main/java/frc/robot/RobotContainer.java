@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
+import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
+import frc.robot.commands.Drive.TurnToRotation;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.BlinkLights;
@@ -84,6 +87,7 @@ public class RobotContainer {
   private static void registerCommands() {
     // Barrel commands
     new SpinForward();
+    new SpinBackward();
 
     // Intake commands
     new Consume();
@@ -99,9 +103,6 @@ public class RobotContainer {
     // Shooter commands
     new SpinUpShooter();
     new IntakeFromSource();
-
-    // Command groups
-    new IngestNote();
   }
 
   /**
