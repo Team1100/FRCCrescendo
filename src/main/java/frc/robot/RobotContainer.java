@@ -6,10 +6,13 @@ package frc.robot;
 
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
+import frc.robot.commands.TestPoseMath;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
+import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Drive.TurnToRotation;
+import frc.robot.commands.Drive.TurnToTarget;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.BlinkLights;
@@ -24,10 +27,13 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TestingDashboard;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -98,6 +104,19 @@ public class RobotContainer {
     // Shooter commands
     new SpinUpShooter();
     new IntakeFromSource();
+
+    // TDNumber turnTestAngle = new TDNumber(Drive.getInstance(), "Test Inputs", "Turn Angle");
+    // new TurnToRotation(()->new Rotation2d(turnTestAngle.get()));
+    TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
+    TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");
+    Pose2d targetPose = new Pose2d(testX.get(), testY.get(), new Rotation2d());
+    new TurnToTarget(targetPose);
+
+    new TargetDrive(()->{
+      return new Pose2d(testX.get(), testY.get(), new Rotation2d());
+    });
+
+    new TestPoseMath();
   }
 
   /**
@@ -121,6 +140,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return AutoBuilder.buildAuto("autoCommand");
+    return AutoBuilder.buildAuto("3NotePaths");
   }
 }
