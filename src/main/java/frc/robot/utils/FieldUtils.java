@@ -6,8 +6,10 @@ package frc.robot.utils;
 
 import java.util.Optional;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 
@@ -65,5 +67,12 @@ public class FieldUtils{
                 offset = new Rotation2d(Math.PI);
         }
         return offset;
+    }
+
+    public Rotation2d getAngleToPose(Pose2d currentPose, Pose2d targetPose) {
+        Pose2d curNoRot = new Pose2d(currentPose.getX(), currentPose.getY(), new Rotation2d());
+        Pose2d targetNoRot = new Pose2d(targetPose.getX(), targetPose.getY(), new Rotation2d());
+        Transform2d trsfrm = targetNoRot.minus(curNoRot);
+        return new Rotation2d(trsfrm.getX(), trsfrm.getY());
     }
 }
