@@ -175,13 +175,13 @@ public final class Constants {
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 
     //Autonomous driving constants
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 10;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = 4*Math.PI;
 
     public static final double kPXController = 1;
     public static final double kPYController = 1;
-    public static final double kPThetaController = 0.9;
+    public static final double kPThetaController = 5;
     public static final double kIThetaController = 0.1;
     public static final double kDThetaController = 0.05;
     public static final double kThetaTolerance = 0.1;//radians
