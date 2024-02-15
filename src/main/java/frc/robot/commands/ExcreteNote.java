@@ -4,9 +4,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.testingdashboard.ParallelCommandGroup;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Intake.Expel;
+import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,6 +15,7 @@ import frc.robot.commands.Intake.Expel;
 public class ExcreteNote extends ParallelCommandGroup {
   /** Creates a new Excrete. */
   public ExcreteNote() {
+    super(Intake.getInstance(), "ParallelCommands", "ExcreteNote");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new Expel(), new SpinBackward());
