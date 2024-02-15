@@ -181,9 +181,10 @@ public class Drive extends SubsystemBase {
     Pose2d lastPose = getPose();
     if (m_driveTime != 0 && m_requestedSpeeds != null)
     {
-      double deltax = m_requestedSpeeds.vxMetersPerSecond * (now - m_driveTime);
-      double deltay = m_requestedSpeeds.vyMetersPerSecond * (now - m_driveTime);
-      Rotation2d rot = new Rotation2d(m_requestedSpeeds.omegaRadiansPerSecond * (now - m_driveTime));
+      ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(m_requestedSpeeds, lastPose.getRotation());
+      double deltax = fieldRelativeSpeeds.vxMetersPerSecond * (now - m_driveTime);
+      double deltay = fieldRelativeSpeeds.vyMetersPerSecond * (now - m_driveTime);
+      Rotation2d rot = new Rotation2d(fieldRelativeSpeeds.omegaRadiansPerSecond * (now - m_driveTime));
       Translation2d translation = new Translation2d(deltax, deltay);
       Pose2d newPose = new Pose2d(lastPose.getTranslation().plus(translation),
                                   lastPose.getRotation().plus(rot));
