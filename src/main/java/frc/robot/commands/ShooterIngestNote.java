@@ -6,18 +6,18 @@ package frc.robot.commands;
 
 import frc.robot.testingdashboard.ParallelCommandGroup;
 import frc.robot.commands.Barrel.SpinBackward;
-import frc.robot.commands.Intake.Expel;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.Shooter.IntakeFromSource;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ExcreteNote extends ParallelCommandGroup {
-  /** Creates a new Excrete. */
-  public ExcreteNote() {
-    super(Intake.getInstance(), "ParallelCommands", "ExcreteNote");
+public class ShooterIngestNote extends ParallelCommandGroup {
+  /** Creates a new ShooterIngestNote. */
+  public ShooterIngestNote() {
+    super(Shooter.getInstance(), "ParallelCommands", "ShooterIngestNote");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Expel(), new SpinBackward());
+    addCommands(new IntakeFromSource(), new SpinBackward());
   }
 }

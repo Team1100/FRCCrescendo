@@ -13,18 +13,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Intake.Consume;
-import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
-import frc.robot.commands.Shooter.IntakeFromSource;
-import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.commands.Lights.MoveLights;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.subsystems.Drive;
 import frc.robot.commands.Lights.DisableLights;
+import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
-import frc.robot.commands.Barrel.SpinForward;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.ShooterIngestNote;
 import frc.robot.commands.Drive.TurnToTarget;
 
 /**
@@ -57,11 +55,9 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-    new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new IngestNote());
-    new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new IntakeFromSource());
-
-    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new Consume());
-    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new Expel());
+    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new IngestNote());
+    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new ExcreteNote());
+    new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new ShooterIngestNote());
 
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
     // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).toggleOnTrue(new MakeRainbow());
@@ -69,7 +65,7 @@ public class OI {
     // new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new BlinkLights());
     // new JoystickButton(m_DriverXboxController, Button.kY.value).toggleOnTrue(new MoveLights());
 
-    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new SpinUpShooter());
+    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
     // new JoystickButton(m_DriverXboxController, Button.kY.value).onTrue(new TurnToTarget(new Pose2d(0,0, new Rotation2d())));
   }
 

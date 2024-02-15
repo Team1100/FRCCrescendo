@@ -4,9 +4,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.testingdashboard.ParallelCommandGroup;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Intake.Consume;
+import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,6 +15,7 @@ import frc.robot.commands.Intake.Consume;
 public class IngestNote extends ParallelCommandGroup {
   /** Creates a new IngestNote. */
   public IngestNote() {
+    super(Intake.getInstance(), "ParallelCommands", "IngestNote");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new Consume(), new SpinForward());
