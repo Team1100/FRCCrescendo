@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 
@@ -70,9 +71,9 @@ public class FieldUtils{
     }
 
     public Rotation2d getAngleToPose(Pose2d currentPose, Pose2d targetPose) {
-        Pose2d curNoRot = new Pose2d(currentPose.getX(), currentPose.getY(), new Rotation2d());
-        Pose2d targetNoRot = new Pose2d(targetPose.getX(), targetPose.getY(), new Rotation2d());
-        Transform2d trsfrm = targetNoRot.minus(curNoRot);
-        return new Rotation2d(trsfrm.getX(), trsfrm.getY());
+        Translation2d curTrans = currentPose.getTranslation();
+        Translation2d targetTrans = targetPose.getTranslation();
+        Translation2d toTarget = targetTrans.minus(curTrans);
+        return toTarget.getAngle();
     }
 }
