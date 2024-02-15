@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
-import frc.robot.commands.TestPoseMath;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
@@ -116,7 +115,6 @@ public class RobotContainer {
       return new Pose2d(testX.get(), testY.get(), new Rotation2d());
     });
 
-    new TestPoseMath();
   }
 
   /**
