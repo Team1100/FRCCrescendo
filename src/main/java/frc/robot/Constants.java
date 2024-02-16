@@ -29,6 +29,9 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // Defines AmpAddOn constants
+    public static final double AMP_SPEED = 0.2;
+
     // Defines Barrel constants
     public static final boolean kEnableBarrelPIDTuning = false;
     public static final double kBarrelP = 0;
