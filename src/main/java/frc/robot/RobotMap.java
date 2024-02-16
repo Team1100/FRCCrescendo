@@ -93,13 +93,18 @@ public class RobotMap {
   public static double R_TRACK_WIDTH_INCHES = 22.5;
   public static double R_WHEEL_BASE_INCHES  = 22.5;
   public static double R_BASE_RADIUS_INCHES = 11.25 * Math.sqrt(2);
+  
+  // [A]mp Add-On
+  public static boolean A_ENABLED = false;
+  public static int A_MOTOR = RoboRioMap.CAN_16;
+  public static int A_PIVOT_MOTOR = RoboRioMap.CAN_17;
 
   // [B]arrel
   public static boolean B_ENABLED = true;
   public static int B_MOTOR = RoboRioMap.CAN_15;
 
   // [B]arrel [P]ivot
-  public static boolean BP_ENABLED = false;
+  public static boolean BP_ENABLED = true;
   public static int BP_MOTOR_LEFT = RoboRioMap.CAN_13;
   public static int BP_MOTOR_RIGHT = RoboRioMap.CAN_14;
 
