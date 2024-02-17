@@ -55,6 +55,9 @@ public final class Constants {
     public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
+    // Defines Elevator constants
+    public static final double ELEVATOR_SPEED = 0.2;
+
     // Chassis configuration
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = Units.inchesToMeters(RobotMap.R_TRACK_WIDTH_INCHES);
