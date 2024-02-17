@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -93,6 +94,7 @@ public class Drive extends SubsystemBase {
   TDNumber TDPoseAngle;
 
   ChassisSpeeds m_requestedSpeeds = new ChassisSpeeds();
+  ChassisSpeeds m_limitSpeeds = new ChassisSpeeds();
   double m_driveTime = 0;
 
   /** Creates a new Drive. */
@@ -179,11 +181,12 @@ public class Drive extends SubsystemBase {
     double now = Timer.getFPGATimestamp();
 
     Pose2d lastPose = getPose();
-    if (m_driveTime != 0 && m_requestedSpeeds != null)
+    if (m_driveTime != 0 && m_limitSpeeds != null)
     {
-      double deltax = m_requestedSpeeds.vxMetersPerSecond * (now - m_driveTime);
-      double deltay = m_requestedSpeeds.vyMetersPerSecond * (now - m_driveTime);
-      Rotation2d rot = new Rotation2d(m_requestedSpeeds.omegaRadiansPerSecond * (now - m_driveTime));
+      ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(m_limitSpeeds, lastPose.getRotation());
+      double deltax = fieldRelativeSpeeds.vxMetersPerSecond * (now - m_driveTime);
+      double deltay = fieldRelativeSpeeds.vyMetersPerSecond * (now - m_driveTime);
+      Rotation2d rot = new Rotation2d(fieldRelativeSpeeds.omegaRadiansPerSecond * (now - m_driveTime));
       Translation2d translation = new Translation2d(deltax, deltay);
       Pose2d newPose = new Pose2d(lastPose.getTranslation().plus(translation),
                                   lastPose.getRotation().plus(rot));
@@ -202,13 +205,17 @@ public class Drive extends SubsystemBase {
   }
 
   public ChassisSpeeds getMeasuredSpeeds(){
-    SwerveModuleState[] moduleStates = new SwerveModuleState[4];
-    moduleStates[0] = m_frontLeft.getState();
-    moduleStates[1] = m_frontRight.getState();
-    moduleStates[2] = m_rearLeft.getState();
-    moduleStates[3] = m_rearRight.getState();
+    if(RobotBase.isReal()){
+      SwerveModuleState[] moduleStates = new SwerveModuleState[4];
+      moduleStates[0] = m_frontLeft.getState();
+      moduleStates[1] = m_frontRight.getState();
+      moduleStates[2] = m_rearLeft.getState();
+      moduleStates[3] = m_rearRight.getState();
 
-    return Constants.kDriveKinematics.toChassisSpeeds(moduleStates);
+      return Constants.kDriveKinematics.toChassisSpeeds(moduleStates);
+    } else {
+      return m_limitSpeeds;
+    }
   }
 
   /**
@@ -342,10 +349,9 @@ public class Drive extends SubsystemBase {
     TDxSpeedCommanded.set(speeds.vxMetersPerSecond);
     TDySpeedCommanded.set(speeds.vyMetersPerSecond);
     TDrotSpeedCommanded.set(speeds.omegaRadiansPerSecond);
-    m_requestedSpeeds.vxMetersPerSecond = speeds.vxMetersPerSecond;
-    m_requestedSpeeds.vyMetersPerSecond = speeds.vyMetersPerSecond;
-    m_requestedSpeeds.omegaRadiansPerSecond = speeds.omegaRadiansPerSecond;
+    m_requestedSpeeds = speeds;
     ChassisSpeeds limitedSpeeds = limitRates(speeds);
+    m_limitSpeeds = limitedSpeeds;
     var swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(limitedSpeeds);
     setModuleStates(swerveModuleStates);
   }

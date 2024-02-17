@@ -4,22 +4,25 @@
 
 package frc.robot.commands.Drive;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.Command;
+import frc.robot.utils.SwerveDriveInputs;
 
 public class SwerveDrive extends Command {
-  private static XboxController m_driverController;
+  private SwerveDriveInputs m_DriveInputs;
   Drive m_drive;
 
   /** Creates a new SwerveDrive. */
-  public SwerveDrive() {
+  public SwerveDrive(SwerveDriveInputs driveInputs) {
     super(Drive.getInstance(), "Basic", "SwerveDrive");
     m_drive = Drive.getInstance();
-    m_driverController = OI.getInstance().getDriverXboxController();
+    m_DriveInputs = driveInputs;
 
     addRequirements(m_drive);
   }
@@ -32,9 +35,9 @@ public class SwerveDrive extends Command {
   @Override
   public void execute() {
     m_drive.drive(
-      -MathUtil.applyDeadband(m_driverController.getLeftY(), Constants.kDriveDeadband),
-      -MathUtil.applyDeadband(m_driverController.getLeftX(), Constants.kDriveDeadband),
-      -MathUtil.applyDeadband(m_driverController.getRightX(), Constants.kDriveDeadband),
+      -MathUtil.applyDeadband(m_DriveInputs.getX(), Constants.kDriveDeadband),
+      -MathUtil.applyDeadband(m_DriveInputs.getY(), Constants.kDriveDeadband),
+      -MathUtil.applyDeadband(m_DriveInputs.getRotation(), Constants.kDriveDeadband),
       true, false);
   }
 

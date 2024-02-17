@@ -9,7 +9,9 @@ import frc.robot.commands.IngestNote;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
+import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Drive.TurnToRotation;
+import frc.robot.commands.Drive.TurnToTarget;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.BlinkLights;
@@ -24,10 +26,19 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TestingDashboard;
+import frc.robot.utils.FieldUtils;
+import frc.robot.utils.SwerveDriveInputs;
+
+import java.util.function.Supplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -49,10 +60,25 @@ public class RobotContainer {
   private final Lights m_lights;
   private final Shooter m_shooter;
 
+  private SwerveDriveInputs m_driveInputs;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // load configuration
     RobotMap.init();
+
+    //Set up drive translation and rotation inputs
+    XboxController driveController = OI.getInstance().getDriverXboxController();
+    Supplier<Double> xInput;
+    Supplier<Double> yInput;
+    if(RobotBase.isReal()){
+      xInput = ()->driveController.getLeftY();
+      yInput = ()->driveController.getLeftX();
+    } else {
+      xInput = ()->-driveController.getLeftX();
+      yInput = ()->driveController.getLeftY();
+    }
+    m_driveInputs = new SwerveDriveInputs(xInput, yInput, ()->driveController.getRightX());
 
     // Instantiate parameterized commands to register them with the testing dashboard.
     // The first instance of a Command registers itself. No need to store the resulting
@@ -61,7 +87,7 @@ public class RobotContainer {
 
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
-    m_robotDrive.setDefaultCommand(new SwerveDrive());
+    m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
     m_intake = Intake.getInstance();
 
@@ -79,7 +105,7 @@ public class RobotContainer {
     TestingDashboard.getInstance().createTestingDashboard();
   }
 
-  private static void registerCommands() {
+  private void registerCommands() {
     // Barrel commands
     new SpinForward();
     new SpinBackward();
@@ -98,6 +124,18 @@ public class RobotContainer {
     // Shooter commands
     new SpinUpShooter();
     new IntakeFromSource();
+
+    // TDNumber turnTestAngle = new TDNumber(Drive.getInstance(), "Test Inputs", "Turn Angle");
+    // new TurnToRotation(()->new Rotation2d(turnTestAngle.get()));
+    TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
+    TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");
+    Pose2d targetPose = new Pose2d(testX.get(), testY.get(), new Rotation2d());
+    new TurnToTarget(targetPose);
+
+    new TargetDrive(()->{
+      return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
+    }, m_driveInputs);
+
   }
 
   /**
@@ -121,6 +159,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return AutoBuilder.buildAuto("autoCommand");
+    return AutoBuilder.buildAuto("3NotePaths");
   }
 }

@@ -4,15 +4,18 @@
 
 package frc.robot.utils;
 
+import java.util.Optional;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 
 public class FieldUtils{
     private static FieldUtils m_fieldUtils;
-    private DriverStation.Alliance m_Alliance;
-    private AllianceAprilTags m_aprilTags;
 
     public static final AllianceAprilTags RedTags = new AllianceAprilTags(4, 3, 5, 10, 9, 13, 11, 12);
     public static final AllianceAprilTags BlueTags = new AllianceAprilTags(7, 8, 6, 1, 2, 14, 16, 15);
@@ -24,48 +27,25 @@ public class FieldUtils{
         return m_fieldUtils;
     }
 
-    private FieldUtils(){
-        //Get alliance from driverstation
-        DriverStation.getAlliance().ifPresent(
-                alliance -> {
-                    m_Alliance = alliance;
-                    setAprilTags();
-                }
-        );
-    }
+    private FieldUtils(){}
 
     public AllianceAprilTags getAllianceAprilTags(){
-        if(m_aprilTags == null && m_Alliance != null)
-        {
-            setAprilTags();
+        AllianceAprilTags tags = BlueTags;
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        if(alliance.isPresent()){
+            if(alliance.get() == DriverStation.Alliance.Red){
+                tags = RedTags;
+            } else if(alliance.get() == DriverStation.Alliance.Blue) {
+                tags = BlueTags;
+            }
         }
-        return m_aprilTags;
-    }
-
-    public void setAlliance(DriverStation.Alliance alliance){
-        m_Alliance = alliance;
-    }
-
-    public void setAprilTags(){
-        if(m_Alliance == DriverStation.Alliance.Red){
-            m_aprilTags = RedTags;
-        }
-        else if(m_Alliance == DriverStation.Alliance.Blue){
-            m_aprilTags = BlueTags;
-        }
-        else{
-            System.out.println("Unrecognized Alliance Color");
-        }
-    }
-
-    public DriverStation.Alliance getAlliance(){
-        return m_Alliance;
+        return tags;
     }
 
     public Pose3d getSpeakerPose(){
         var aprilTags = getAllianceAprilTags();
         if(aprilTags == null){
-            throw new RuntimeException("Attempted to get alliance specific info without a valid alliance");
+            aprilTags = BlueTags;
         }
 
         return Constants.kTagLayout.getTagPose(aprilTags.speakerMiddle).get();
@@ -74,17 +54,26 @@ public class FieldUtils{
     public Pose3d getAmpPose(){
         var aprilTags = getAllianceAprilTags();
         if(aprilTags == null){
-            throw new RuntimeException("Attempted to get alliance specific info without a valid alliance");
+            aprilTags = BlueTags;
         }
 
         return Constants.kTagLayout.getTagPose(aprilTags.amp).get();
     }
 
     public Rotation2d getRotationOffset() {
-        if(m_Alliance == DriverStation.Alliance.Red){
-            return new Rotation2d(Math.PI);
-        } else {
-            return new Rotation2d();
+        Rotation2d offset = new Rotation2d();//returns no offset by default
+        Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+        if(alliance.isPresent() && 
+            alliance.get() == DriverStation.Alliance.Red){
+                offset = new Rotation2d(Math.PI);
         }
+        return offset;
+    }
+
+    public Rotation2d getAngleToPose(Pose2d currentPose, Pose2d targetPose) {
+        Translation2d curTrans = currentPose.getTranslation();
+        Translation2d targetTrans = targetPose.getTranslation();
+        Translation2d toTarget = targetTrans.minus(curTrans);
+        return toTarget.getAngle();
     }
 }

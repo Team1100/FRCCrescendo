@@ -8,21 +8,28 @@ package frc.robot.commands.Drive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import frc.robot.testingdashboard.TDNumber;
+import frc.robot.utils.FieldUtils;
 
 
 public class TurnToTarget extends TurnToRotation {
   private Pose2d m_target;
 
-  public TurnToTarget(Pose2d target) {
-    super(new Rotation2d(), "Auto Commands", "TurnToTarget");//Target Rotation will be reset on init
-    m_target = target;
-  }
+  TDNumber m_targetX;
+  TDNumber m_targetY;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    Pose2d currentPose = m_drive.getPose();
-    Transform2d trsfrm = m_target.minus(currentPose);
-    m_targetRot = new Rotation2d(trsfrm.getX(), trsfrm.getY());
+  public TurnToTarget(Pose2d target) {
+    super(()->new Rotation2d(), "Auto Commands", "TurnToTarget");
+    m_target = target;
+
+    m_targetX = new TDNumber(m_drive, "Test Inputs", "TargetPoseX");
+    m_targetY = new TDNumber(m_drive, "Test Inputs", "TargetPoseY");
+
+    m_targetSupplier = ()->{
+      Pose2d currentPose = m_drive.getPose();
+      m_targetX.set(m_target.getX());
+      m_targetY.set(m_target.getY());
+      return FieldUtils.getInstance().getAngleToPose(currentPose, m_target);
+    };
   }
 }
