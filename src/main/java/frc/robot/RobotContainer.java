@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.ShooterIngestNote;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.Drive.SwerveDrive;
@@ -19,8 +21,9 @@ import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
 import frc.robot.commands.Lights.MoveLights;
-import frc.robot.commands.Shooter.IntakeFromSource;
+import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
@@ -59,6 +62,7 @@ public class RobotContainer {
   private final Intake m_intake;
   private final Lights m_lights;
   private final Shooter m_shooter;
+  private final BarrelPivot m_barrelPivot;
 
   private SwerveDriveInputs m_driveInputs;
 
@@ -89,6 +93,8 @@ public class RobotContainer {
     m_robotDrive = Drive.getInstance();
     m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
+    m_barrelPivot = BarrelPivot.getInstance();
+
     m_intake = Intake.getInstance();
 
     m_lights = Lights.getInstance();
@@ -109,7 +115,7 @@ public class RobotContainer {
     // Barrel commands
     new SpinForward();
     new SpinBackward();
-
+    
     // Intake commands
     new Consume();
     new Expel();
@@ -122,8 +128,14 @@ public class RobotContainer {
     new MoveLights();
 
     // Shooter commands
+    new IntakeFromShooter();
     new SpinUpShooter();
-    new IntakeFromSource();
+
+    new Shoot();
+    new ShooterIngestNote();
+
+    new IngestNote();
+    new ExcreteNote();
 
     // TDNumber turnTestAngle = new TDNumber(Drive.getInstance(), "Test Inputs", "Turn Angle");
     // new TurnToRotation(()->new Rotation2d(turnTestAngle.get()));

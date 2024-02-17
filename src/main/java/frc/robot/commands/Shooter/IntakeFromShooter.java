@@ -9,7 +9,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;
 
-public class IntakeFromSource extends Command {
+public class IntakeFromShooter extends Command {
   Shooter m_shooter;
 
   TDNumber m_RPM;
@@ -17,9 +17,9 @@ public class IntakeFromSource extends Command {
 
   TDNumber m_shooterSpeed;
 
-  /** Creates a new IntakeFromSource. */
-  public IntakeFromSource() {
-    super(Shooter.getInstance(), "Basic", "IntakeFromSource");
+  /** Creates a new IntakeFromShooter. */
+  public IntakeFromShooter() {
+    super(Shooter.getInstance(), "Basic", "IntakeFromShooter");
     m_shooter = Shooter.getInstance();
 
     m_RPM = new TDNumber(m_shooter, "Intaking Speed (RPM)", "RPM", Constants.SHOOTER_INTAKING_SPEED_RPM);
