@@ -14,6 +14,7 @@ import frc.robot.Constants;
 
 import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDNumber;
+import frc.robot.utils.NoteProximitySensor;
 
 public class Intake extends SubsystemBase {
   private static Intake m_intake;
@@ -25,6 +26,8 @@ public class Intake extends SubsystemBase {
   CANSparkMax m_ILeftSparkMax;
   CANSparkMax m_IRightSparkMax;
   SparkPIDController m_SparkPIDController;
+
+  NoteProximitySensor m_NoteProximitySensor;
 
   /** Creates a new Intake. */
   private Intake() {
@@ -52,6 +55,8 @@ public class Intake extends SubsystemBase {
       m_SparkPIDController.setP(m_P.get());
       m_SparkPIDController.setI(m_I.get());
       m_SparkPIDController.setD(m_D.get());
+
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR);
     }
   }
 
@@ -84,6 +89,10 @@ public class Intake extends SubsystemBase {
   public void spinStop() {
     if (m_ILeftSparkMax != null)
       m_ILeftSparkMax.set(0);
+  }
+
+  public boolean hasNote() {
+    return m_NoteProximitySensor.hasNote();
   }
 
   @Override

@@ -13,6 +13,7 @@ import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TDNumber;
+import frc.robot.utils.NoteProximitySensor;
 
 public class Shooter extends SubsystemBase {
   private static Shooter m_shooter;
@@ -25,6 +26,8 @@ public class Shooter extends SubsystemBase {
   CANSparkMax m_SRightSparkMax;
   SparkPIDController m_LeftSparkPIDController;
   SparkPIDController m_RightSparkPIDController;
+
+  NoteProximitySensor m_NoteProximitySensor;
 
   /** Creates a new Intake. */
   private Shooter() {
@@ -54,6 +57,8 @@ public class Shooter extends SubsystemBase {
       m_RightSparkPIDController.setP(m_P.get());
       m_RightSparkPIDController.setI(m_I.get());
       m_RightSparkPIDController.setD(m_D.get());
+
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR);
     }
   }
 
@@ -94,6 +99,10 @@ public class Shooter extends SubsystemBase {
       m_SLeftSparkMax.set(0);
       m_SRightSparkMax.set(0);
     }
+  }
+
+  public boolean hasNote() {
+    return m_NoteProximitySensor.hasNote();
   }
 
   @Override

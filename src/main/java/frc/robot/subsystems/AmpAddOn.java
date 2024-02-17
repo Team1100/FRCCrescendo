@@ -9,11 +9,14 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.utils.NoteProximitySensor;
 
 public class AmpAddOn extends SubsystemBase {
   private static AmpAddOn m_AmpAddOn;
   CANSparkMax m_CanSparkMax;
   CANSparkMax m_PivotCanSparkMax;
+
+  NoteProximitySensor m_NoteProximitySensor;
   
   /** Creates a new AmpAddOn. */
   private AmpAddOn() {
@@ -27,6 +30,8 @@ public class AmpAddOn extends SubsystemBase {
 
       m_CanSparkMax.setInverted(false);
       m_PivotCanSparkMax.setInverted(false);
+
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR);
     }
   }
 
@@ -53,6 +58,10 @@ public class AmpAddOn extends SubsystemBase {
     if (m_CanSparkMax != null) {
       m_CanSparkMax.set(0);
     }
+  }
+
+  public boolean hasNote() {
+    return m_NoteProximitySensor.hasNote();
   }
 
   @Override
