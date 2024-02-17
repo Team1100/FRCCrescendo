@@ -28,11 +28,17 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TestingDashboard;
+import frc.robot.utils.FieldUtils;
+import frc.robot.utils.SwerveDriveInputs;
+
+import java.util.function.Supplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -54,10 +60,25 @@ public class RobotContainer {
   private final Lights m_lights;
   private final Shooter m_shooter;
 
+  private SwerveDriveInputs m_driveInputs;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // load configuration
     RobotMap.init();
+
+    //Set up drive translation and rotation inputs
+    XboxController driveController = OI.getInstance().getDriverXboxController();
+    Supplier<Double> xInput;
+    Supplier<Double> yInput;
+    if(RobotBase.isReal()){
+      xInput = ()->driveController.getLeftY();
+      yInput = ()->driveController.getLeftX();
+    } else {
+      xInput = ()->-driveController.getLeftX();
+      yInput = ()->driveController.getLeftY();
+    }
+    m_driveInputs = new SwerveDriveInputs(xInput, yInput, ()->driveController.getRightX());
 
     // Instantiate parameterized commands to register them with the testing dashboard.
     // The first instance of a Command registers itself. No need to store the resulting
@@ -66,7 +87,7 @@ public class RobotContainer {
 
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
-    m_robotDrive.setDefaultCommand(new SwerveDrive());
+    m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
     m_intake = Intake.getInstance();
 
@@ -84,7 +105,7 @@ public class RobotContainer {
     TestingDashboard.getInstance().createTestingDashboard();
   }
 
-  private static void registerCommands() {
+  private void registerCommands() {
     // Barrel commands
     new SpinForward();
     new SpinBackward();
@@ -112,8 +133,8 @@ public class RobotContainer {
     new TurnToTarget(targetPose);
 
     new TargetDrive(()->{
-      return new Pose2d(testX.get(), testY.get(), new Rotation2d());
-    });
+      return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
+    }, m_driveInputs);
 
   }
 
