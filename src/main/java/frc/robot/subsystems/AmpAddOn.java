@@ -38,15 +38,21 @@ public class AmpAddOn extends SubsystemBase {
   }
 
   public void spinIn(double speed) {
-    m_CanSparkMax.set(-speed);
+    if (m_CanSparkMax != null) {
+      m_CanSparkMax.set(-speed);
+    }
   }
 
   public void spinOut(double speed) {
-    m_CanSparkMax.set(speed);
+    if (m_CanSparkMax != null) {
+      m_CanSparkMax.set(speed);
+    }
   }
 
   public void spinStop() {
-    m_CanSparkMax.set(0);
+    if (m_CanSparkMax != null) {
+      m_CanSparkMax.set(0);
+    }
   }
 
   @Override

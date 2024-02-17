@@ -5,15 +5,25 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.testingdashboard.SubsystemBase;;
+import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDNumber;
 
 public class Elevator extends SubsystemBase {
   private static Elevator m_Elevator;
+
+  TDNumber m_P;
+  TDNumber m_I;
+  TDNumber m_D;
+
   CANSparkMax m_LeftCanSparkMax;
   CANSparkMax m_RightCanSparkMax;
+  SparkPIDController m_SparkPIDController;
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -27,6 +37,13 @@ public class Elevator extends SubsystemBase {
 
       m_LeftCanSparkMax.setInverted(false);
       m_RightCanSparkMax.follow(m_LeftCanSparkMax, true);
+
+      m_SparkPIDController = m_LeftCanSparkMax.getPIDController();
+
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
+
     }
   }
 
@@ -37,24 +54,42 @@ public class Elevator extends SubsystemBase {
     return m_Elevator;
   }
 
+  public void setSpeed(double RPM, boolean backwards) {
+    if (!backwards) {
+      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
+    }
+    else {
+      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    }
+  }
+
   public void climb(double speed) {
-    m_LeftCanSparkMax.set(speed);
-    m_RightCanSparkMax.set(speed);
+    if (m_LeftCanSparkMax != null) {
+      m_LeftCanSparkMax.set(speed);
+    }
   }
 
   public void unClimb(double speed) {
-    m_LeftCanSparkMax.set(-speed);
-    m_RightCanSparkMax.set(-speed);
+    if (m_LeftCanSparkMax != null) {
+      m_LeftCanSparkMax.set(-speed);
+    }
   }
 
   public void doNotMove() {
+    if (m_LeftCanSparkMax != null) {
     m_LeftCanSparkMax.set(0);
-    m_RightCanSparkMax.set(0);
+    }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (Constants.kEnableElevatorPivotPIDTuning && m_LeftCanSparkMax != null) {
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
+    }
+    
     super.periodic();
   }
 }

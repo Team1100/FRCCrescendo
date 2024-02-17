@@ -57,6 +57,12 @@ public final class Constants {
 
     // Defines Elevator constants
     public static final double ELEVATOR_SPEED = 0.2;
+    public static final double ELEVATOR_SPEED_RPM = 0;
+
+    public static final boolean kEnableElevatorPivotPIDTuning = false;
+    public static final double kElevatorPivotP = 0;
+    public static final double kElevatorPivotI = 0;
+    public static final double kElevatorPivotD = 0;
 
     // Chassis configuration
     // Distance between centers of right and left wheels on robot
