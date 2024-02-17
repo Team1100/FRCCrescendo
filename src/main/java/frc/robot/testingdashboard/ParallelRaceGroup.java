@@ -15,7 +15,7 @@ public class ParallelRaceGroup extends edu.wpi.first.wpilibj2.command.ParallelRa
                                String groupName,
                                String name,
                                boolean registerNamedCommand,
-                               Command... commands) {
+                               edu.wpi.first.wpilibj2.command.Command... commands) {
     super(commands);
     setName(name);
     TestingDashboard.getInstance().registerCommand(subsystem.getName(), groupName, this);
@@ -24,7 +24,8 @@ public class ParallelRaceGroup extends edu.wpi.first.wpilibj2.command.ParallelRa
     }
   }
 
-  public ParallelRaceGroup(SubsystemBase subsystem, String groupName, String name, Command... commands) {
+  public ParallelRaceGroup(SubsystemBase subsystem, String groupName, String name,
+                           edu.wpi.first.wpilibj2.command.Command... commands) {
     this(subsystem, groupName, name, true, commands);
   }
 }
