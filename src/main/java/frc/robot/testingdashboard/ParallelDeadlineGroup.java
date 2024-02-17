@@ -15,8 +15,8 @@ public class ParallelDeadlineGroup extends edu.wpi.first.wpilibj2.command.Parall
                                String groupName,
                                String name,
                                boolean registerNamedCommand,
-                               Command deadline,
-                               Command... otherCommands) {
+                               edu.wpi.first.wpilibj2.command.Command deadline,
+                               edu.wpi.first.wpilibj2.command.Command... otherCommands) {
     super(deadline, otherCommands);
     setName(name);
     TestingDashboard.getInstance().registerCommand(subsystem.getName(), groupName, this);
@@ -25,7 +25,9 @@ public class ParallelDeadlineGroup extends edu.wpi.first.wpilibj2.command.Parall
     }
   }
 
-  public ParallelDeadlineGroup(SubsystemBase subsystem, String groupName, String name, Command deadline, Command...otherCommands) {
+  public ParallelDeadlineGroup(SubsystemBase subsystem, String groupName, String name, 
+                               edu.wpi.first.wpilibj2.command.Command deadline,
+                               edu.wpi.first.wpilibj2.command.Command... otherCommands) {
     this(subsystem, groupName, name, true, deadline, otherCommands);
   }
 }

@@ -11,8 +11,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ParallelCommandGroup extends edu.wpi.first.wpilibj2.command.ParallelCommandGroup {
 
-  public ParallelCommandGroup(SubsystemBase subsystem, String groupName, String name, boolean registerNamedCommand) {
-    super();
+  public ParallelCommandGroup(SubsystemBase subsystem, String groupName, String name, boolean registerNamedCommand, 
+                              edu.wpi.first.wpilibj2.command.Command... commands) {
+    super(commands);
     setName(name);
     TestingDashboard.getInstance().registerCommand(subsystem.getName(), groupName, this);
     if (registerNamedCommand) {
@@ -20,8 +21,9 @@ public class ParallelCommandGroup extends edu.wpi.first.wpilibj2.command.Paralle
     }
   }
 
-  public ParallelCommandGroup(SubsystemBase subsystem, String groupName, String name) {
-    this(subsystem, groupName, name, true);
+  public ParallelCommandGroup(SubsystemBase subsystem, String groupName, String name,
+                              edu.wpi.first.wpilibj2.command.Command... commands) {
+    this(subsystem, groupName, name, true, commands);
   }
 }
 
