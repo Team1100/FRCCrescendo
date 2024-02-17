@@ -23,6 +23,7 @@ import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
+import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
 import frc.robot.commands.Drive.TurnToTarget;
 
 /**
@@ -60,6 +61,7 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new ShooterIngestNote());
 
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
+    new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new SetZeroAsCurrentPosition());
     // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).toggleOnTrue(new MakeRainbow());
     // new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).toggleOnTrue(new DisableLights());
     // new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new BlinkLights());

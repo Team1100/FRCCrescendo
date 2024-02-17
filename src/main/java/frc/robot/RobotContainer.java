@@ -10,6 +10,8 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
+import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
+import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Drive.TurnToRotation;
@@ -94,6 +96,9 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
     m_barrelPivot = BarrelPivot.getInstance();
+    if (RobotMap.BP_ENABLED) {
+      m_barrelPivot.setDefaultCommand(new PivotRelativeAngleControl());
+    }
 
     m_intake = Intake.getInstance();
 
@@ -115,7 +120,10 @@ public class RobotContainer {
     // Barrel commands
     new SpinForward();
     new SpinBackward();
-    
+
+    // BarrelPivot commands
+    new SetZeroAsCurrentPosition();
+
     // Intake commands
     new Consume();
     new Expel();

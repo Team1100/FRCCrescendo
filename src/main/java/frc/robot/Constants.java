@@ -29,9 +29,11 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final double DEGREES_PER_REVOLUTION = 360;
+
     // Defines AmpAddOn constants
     public static final double AMP_SPEED = 0.2;
-
+    
     // Defines Barrel constants
     public static final boolean kEnableBarrelPIDTuning = false;
     public static final double kBarrelP = 0;
@@ -43,9 +45,14 @@ public final class Constants {
 
     // Defines Barrel Pivot constants
     public static final boolean kEnableBarrelPivotPIDTuning = false;
-    public static final double kBarrelPivotP = 0;
+    public static final double kBarrelPivotP = 0.01;
     public static final double kBarrelPivotI = 0;
     public static final double kBarrelPivotD = 0;
+
+    public static final double kBPEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
+
+    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.2;
+    public static final double kBPDeadband = 0.05;
 
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
