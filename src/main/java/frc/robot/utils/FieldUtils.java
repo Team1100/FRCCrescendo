@@ -30,7 +30,7 @@ public class FieldUtils{
     private FieldUtils(){}
 
     public AllianceAprilTags getAllianceAprilTags(){
-        AllianceAprilTags tags = null;
+        AllianceAprilTags tags = BlueTags;
         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
         if(alliance.isPresent()){
             if(alliance.get() == DriverStation.Alliance.Red){
@@ -45,7 +45,7 @@ public class FieldUtils{
     public Pose3d getSpeakerPose(){
         var aprilTags = getAllianceAprilTags();
         if(aprilTags == null){
-            throw new RuntimeException("Attempted to get alliance specific info without a valid alliance");
+            aprilTags = BlueTags;
         }
 
         return Constants.kTagLayout.getTagPose(aprilTags.speakerMiddle).get();
@@ -54,7 +54,7 @@ public class FieldUtils{
     public Pose3d getAmpPose(){
         var aprilTags = getAllianceAprilTags();
         if(aprilTags == null){
-            throw new RuntimeException("Attempted to get alliance specific info without a valid alliance");
+            aprilTags = BlueTags;
         }
 
         return Constants.kTagLayout.getTagPose(aprilTags.amp).get();
