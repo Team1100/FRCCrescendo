@@ -13,6 +13,7 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDNumber;
+import frc.robot.utils.NoteProximitySensor;
 
 public class Barrel extends SubsystemBase {
   private static Barrel m_barrel;
@@ -23,6 +24,8 @@ public class Barrel extends SubsystemBase {
 
   CANSparkMax m_CanSparkMax;
   SparkPIDController m_SparkPIDController;
+
+  NoteProximitySensor m_NoteProximitySensor;
 
   /** Creates a new Barrel. */
   private Barrel() {
@@ -42,6 +45,8 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setP(m_P.get());
       m_SparkPIDController.setI(m_I.get());
       m_SparkPIDController.setD(m_D.get());
+
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR);
     }
   }
 
@@ -77,6 +82,10 @@ public class Barrel extends SubsystemBase {
     if (m_CanSparkMax != null) {
       m_CanSparkMax.set(0);
     }
+  }
+
+  public boolean hasNote() {
+    return m_NoteProximitySensor.hasNote();
   }
 
   @Override

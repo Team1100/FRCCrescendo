@@ -99,10 +99,12 @@ public class RobotMap {
   public static boolean A_ENABLED = false;
   public static int A_MOTOR = RoboRioMap.CAN_16;
   public static int A_PIVOT_MOTOR = RoboRioMap.CAN_17;
+  public static int A_NOTE_SENSOR = RoboRioMap.DIO_3;
 
-  // [B]arrel
+  // [B]arrel 
   public static boolean B_ENABLED = true;
   public static int B_MOTOR = RoboRioMap.CAN_15;
+  public static int B_NOTE_SENSOR = RoboRioMap.DIO_1;
 
   // [B]arrel [P]ivot
   public static boolean BP_ENABLED = true;
@@ -130,6 +132,7 @@ public class RobotMap {
   public static boolean I_INTAKE_ENABLED = true;
   public static int I_MOTOR_LEFT = RoboRioMap.CAN_10;
   public static int I_MOTOR_RIGHT = RoboRioMap.CAN_9;
+  public static int I_NOTE_SENSOR = RoboRioMap.DIO_0;
 
   // [L]ights
   public static int L_LEDS = RoboRioMap.PWM_0;
@@ -138,6 +141,7 @@ public class RobotMap {
   public static boolean S_SHOOTER_ENABLED = true;
   public static int S_MOTOR_LEFT = RoboRioMap.CAN_11;
   public static int S_MOTOR_RIGHT = RoboRioMap.CAN_12;
+  public static int S_NOTE_SENSOR = RoboRioMap.DIO_2;
 
   //[U]ser Input
 	public static int U_DRIVER_XBOX_CONTROLLER = 0;
