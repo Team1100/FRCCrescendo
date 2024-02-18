@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -84,6 +87,13 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
+    public static final HolonomicPathFollowerConfig kPathFollowerConfig =
+       new HolonomicPathFollowerConfig(
+         new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+         new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+         Constants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
+         Constants.kBaseRadius, // Drive base radius in meters
+         new ReplanningConfig()); // Default path replanning config. See the API for the options here
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
