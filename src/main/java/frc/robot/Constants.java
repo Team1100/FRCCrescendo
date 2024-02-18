@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -19,6 +22,9 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Vision;
+import frc.robot.testingdashboard.TDNumber;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -84,6 +90,13 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
+    public static final HolonomicPathFollowerConfig kPathFollowerConfig =
+       new HolonomicPathFollowerConfig(
+         new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+         new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+         Constants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
+         Constants.kBaseRadius, // Drive base radius in meters
+         new ReplanningConfig()); // Default path replanning config. See the API for the options here
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
