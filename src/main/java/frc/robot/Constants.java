@@ -22,9 +22,6 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Vision;
-import frc.robot.testingdashboard.TDNumber;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
