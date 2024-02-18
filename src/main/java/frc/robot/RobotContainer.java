@@ -32,6 +32,7 @@ import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.testingdashboard.TDNumber;
+import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.utils.FieldUtils;
 import frc.robot.utils.SwerveDriveInputs;
@@ -44,6 +45,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -65,6 +67,7 @@ public class RobotContainer {
   private final Lights m_lights;
   private final Shooter m_shooter;
   private final BarrelPivot m_barrelPivot;
+  private final SendableChooser<Command> m_autoChooser;
 
   private SwerveDriveInputs m_driveInputs;
 
@@ -109,6 +112,10 @@ public class RobotContainer {
 
     m_Vision = Vision.getInstance();
 
+    // Build the auto commands and add them to the chooser
+    m_autoChooser = AutoBuilder.buildAutoChooser("3NotePaths");
+    new TDSendable(Drive.getInstance(), "Auto Commands", "Chooser", m_autoChooser);
+    
     // Configure the trigger/button bindings
     configureBindings();
 
@@ -178,7 +185,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return AutoBuilder.buildAuto("3NotePaths");
+    return m_autoChooser.getSelected();
   }
 }
