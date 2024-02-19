@@ -12,6 +12,7 @@ import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
 import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
+import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Drive.TurnToRotation;
@@ -163,6 +164,9 @@ public class RobotContainer {
       return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
     }, m_driveInputs);
 
+    new DriveToPose(()->{
+      return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
+    });
   }
 
   /**
