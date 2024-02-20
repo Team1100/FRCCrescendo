@@ -5,6 +5,8 @@
 package frc.robot.utils;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDString;
 
 /** Add your docs here. */
 public class NoteProximitySensor {
@@ -17,9 +19,13 @@ public class NoteProximitySensor {
     private DigitalInput m_sensorDIO;
     private State m_state;
 
-    public NoteProximitySensor(int dioPort) {
+    private TDString m_tdState;
+
+    public NoteProximitySensor(int dioPort, SubsystemBase subsystem) {
         m_sensorDIO = new DigitalInput(dioPort);
         m_state = State.c_State_No_Note;
+        String sensorName = subsystem.getName() + "NoteSensor";
+        m_tdState = new TDString(subsystem, "Sensors", sensorName);
     }
 
     public void update(){
@@ -64,10 +70,31 @@ public class NoteProximitySensor {
         }
 
         m_state = nextState;
+        updateTD();
     }
 
     public boolean hasNote() {
         return m_state != State.c_State_No_Note;
+    }
+
+    public void updateTD(){
+        switch (m_state) {
+            case c_State_No_Note:
+                m_tdState.set("No Note Detected");
+                break;
+            case c_State_First_Leg:
+                m_tdState.set("HasNote:FirstLeg");
+                break;
+            case c_State_Middle_Hole:
+                m_tdState.set("HasNote:CenterHole");
+                break;
+            case c_State_Second_Leg:
+                m_tdState.set("HasNote:SecondLeg");
+                break;
+            default:
+                m_tdState.set("Unknown State");
+                break;
+        }
     }
 
     public boolean noteIsCentered() { return m_state == State.c_State_Middle_Hole; }

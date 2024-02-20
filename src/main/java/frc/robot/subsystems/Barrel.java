@@ -46,7 +46,7 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setI(m_I.get());
       m_SparkPIDController.setD(m_D.get());
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR);
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR, this);
     }
   }
 
@@ -104,5 +104,6 @@ public class Barrel extends SubsystemBase {
     }
 
     super.periodic();
+    m_NoteProximitySensor.update();
   }
 }

@@ -67,7 +67,7 @@ public class Shooter extends SubsystemBase {
       m_RightSparkPIDController.setI(m_I.get());
       m_RightSparkPIDController.setD(m_D.get());
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR);
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR, this);
     }
   }
 
@@ -148,5 +148,6 @@ public class Shooter extends SubsystemBase {
     }
 
     super.periodic();
+    m_NoteProximitySensor.update();
   }
 }
