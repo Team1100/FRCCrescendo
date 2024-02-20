@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.math.MathUtil;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.SparkPIDController;
@@ -29,6 +32,9 @@ public class Shooter extends SubsystemBase {
 
   NoteProximitySensor m_NoteProximitySensor;
 
+  private double m_leftSpeedSetpoint;
+  private double m_rightSpeedSetpoint;
+
   /** Creates a new Intake. */
   private Shooter() {
     super("Shooter");
@@ -45,6 +51,9 @@ public class Shooter extends SubsystemBase {
 
       m_LeftSparkPIDController = m_SLeftSparkMax.getPIDController();
       m_RightSparkPIDController = m_SRightSparkMax.getPIDController();
+
+      m_leftSpeedSetpoint = 0;
+      m_rightSpeedSetpoint = 0;
 
       m_P = new TDNumber(this, "ShooterPID", "P", Constants.kShooterP);
       m_I = new TDNumber(this, "ShooterPID", "I", Constants.kShooterI);
@@ -71,10 +80,14 @@ public class Shooter extends SubsystemBase {
 
   public void setSpeeds(double LeftRPM, double RightRPM, boolean backwards) {
     if (!backwards) {
+      m_leftSpeedSetpoint = LeftRPM;
+      m_rightSpeedSetpoint = RightRPM;
       m_LeftSparkPIDController.setReference(LeftRPM, ControlType.kVelocity);
       m_RightSparkPIDController.setReference(RightRPM, ControlType.kVelocity);
     }
     else {
+      m_leftSpeedSetpoint = -LeftRPM;
+      m_rightSpeedSetpoint = -RightRPM;
       m_LeftSparkPIDController.setReference(-LeftRPM, ControlType.kVelocity);
       m_RightSparkPIDController.setReference(-RightRPM, ControlType.kVelocity);
     }
@@ -98,6 +111,16 @@ public class Shooter extends SubsystemBase {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
       m_SLeftSparkMax.set(0);
       m_SRightSparkMax.set(0);
+    }
+  }
+
+  public boolean isAtSetSpeed() {
+    if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
+      return 
+        MathUtil.isNear(m_leftSpeedSetpoint, m_SLeftSparkMax.getEncoder().getVelocity(), Constants.SHOOTER_SPEED_TOLERANCE) &&
+        MathUtil.isNear(m_rightSpeedSetpoint, m_SRightSparkMax.getEncoder().getVelocity(), Constants.SHOOTER_SPEED_TOLERANCE);
+    } else {
+      return true;
     }
   }
 
