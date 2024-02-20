@@ -5,7 +5,9 @@
 package frc.robot.utils;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TDString;
 
 /** Add your docs here. */
@@ -20,16 +22,21 @@ public class NoteProximitySensor {
     private State m_state;
 
     private TDString m_tdState;
+    private TDNumber m_testingState;
 
     public NoteProximitySensor(int dioPort, SubsystemBase subsystem) {
         m_sensorDIO = new DigitalInput(dioPort);
         m_state = State.c_State_No_Note;
         String sensorName = subsystem.getName() + "NoteSensor";
         m_tdState = new TDString(subsystem, "Sensors", sensorName);
+        m_testingState = new TDNumber(subsystem, "Sensors", "SensorValue", 0);
     }
 
     public void update(){
         boolean val = m_sensorDIO.get();
+        if(RobotBase.isSimulation()){
+            val = m_testingState.get()!=0;
+        }
         State nextState = State.c_State_No_Note;
 
         switch (m_state) {
@@ -55,6 +62,7 @@ public class NoteProximitySensor {
                 } else {
                     nextState = State.c_State_Middle_Hole;
                 }
+                break;
 
             case c_State_Second_Leg:
                 if(val){
@@ -62,6 +70,7 @@ public class NoteProximitySensor {
                 } else {
                     nextState = State.c_State_No_Note;
                 }
+                break;
 
             default:
                 System.out.println("Note Proximity Sensor has invalid state");
