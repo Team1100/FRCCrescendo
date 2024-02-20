@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.76,
+      "y": 6.68
+    },
+    "rotation": -120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "First Note Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "First To Second Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Second To Third Blue"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
