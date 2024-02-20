@@ -88,6 +88,11 @@ public class Barrel extends SubsystemBase {
     return m_NoteProximitySensor.hasNote();
   }
 
+  public boolean noteCenteredOnSensor() {
+    return m_NoteProximitySensor.noteIsCentered();
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

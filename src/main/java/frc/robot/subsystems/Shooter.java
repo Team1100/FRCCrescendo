@@ -105,6 +105,11 @@ public class Shooter extends SubsystemBase {
     return m_NoteProximitySensor.hasNote();
   }
 
+  public boolean noteCenteredOnSensor() {
+    return m_NoteProximitySensor.noteIsCentered();
+  }
+
+
   @Override
   public void periodic() {
     if (Constants.kEnableShooterPIDTuning && 

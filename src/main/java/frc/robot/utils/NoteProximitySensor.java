@@ -69,4 +69,6 @@ public class NoteProximitySensor {
     public boolean hasNote() {
         return m_state != State.c_State_No_Note;
     }
+
+    public boolean noteIsCentered() { return m_state == State.c_State_Middle_Hole; }
 }
