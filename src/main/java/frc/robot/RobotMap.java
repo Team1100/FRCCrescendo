@@ -19,7 +19,14 @@ public class RobotMap {
   public static void init()
   {
     try {
-      File f = new File("/home/lvuser/1100_Config");
+      String home = java.lang.System.getenv("HOME");
+      if (home == null || home.isEmpty()) {
+        home = "/home/lvuser";
+      }
+      else {
+        System.out.println("$HOME is " + home);
+      }
+      File f = new File(home + "/1100_Config");
       if (f.exists())
       {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
