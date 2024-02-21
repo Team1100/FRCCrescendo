@@ -99,6 +99,17 @@ public class TestingDashboard {
       tab.dataTable.addDefaultNumberValue(dataName, defaultValue);
   }
 
+  void registerBoolean(String tabName, String dataGrpName, String dataName, boolean defaultValue) {
+    TestingDashboardTab tab = getTab(tabName);
+    if (tab == null) {
+      System.out.println("WARNING: Subsystem for data does not exist!");
+      return;
+    }
+    System.out.println("Adding data " + dataName);
+    if (tab.dataTable.addName(dataGrpName, dataName))
+      tab.dataTable.addDefaultBooleanValue(dataName, defaultValue);
+  }
+
   void registerString(String tabName, String dataGrpName, String dataName, String defaultValue) {
     TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
@@ -130,7 +141,16 @@ public class TestingDashboard {
     tab.dataTable.getEntry(dataName).setDouble(value);
   }
 
-   void updateString(String tabName, String dataName, String value) {
+  void updateBoolean(String tabName, String dataName, boolean value) {
+    TestingDashboardTab tab = getTab(tabName);
+    if (tab == null) {
+      System.out.println("WARNING: Subsystem for data does not exist!");
+      return;
+    }
+    tab.dataTable.getEntry(dataName).setBoolean(value);
+  }
+
+  void updateString(String tabName, String dataName, String value) {
     TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
@@ -152,7 +172,20 @@ public class TestingDashboard {
     }
   }
 
-   String getString(String tabName, String dataName) {
+  boolean getBoolean(String tabName, String dataName) {
+    TestingDashboardTab tab = getTab(tabName);
+    if (tab == null) {
+      System.out.println("WARNING: Subsystem for data does not exist!");
+      return false;
+    }
+    if (initialized) {
+      return tab.dataTable.getEntry(dataName).getBoolean(false);
+    } else {
+      return tab.dataTable.getDefaultBooleanValue(dataName);
+    }
+  }
+
+  String getString(String tabName, String dataName) {
     TestingDashboardTab tab = getTab(tabName);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");

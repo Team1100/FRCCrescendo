@@ -46,7 +46,9 @@ public class TDNumber implements TDValue {
      * @return current value
      */
     public double get() {
-      m_val = TestingDashboard.getInstance().getNumber(m_tabName, m_dataName);
+      if (!m_needsPost) {
+        m_val = TestingDashboard.getInstance().getNumber(m_tabName, m_dataName);
+      }
       return m_val;
     }
 
