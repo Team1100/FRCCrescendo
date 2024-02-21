@@ -31,7 +31,7 @@ public class AmpAddOn extends SubsystemBase {
       m_CanSparkMax.setInverted(false);
       m_PivotCanSparkMax.setInverted(false);
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR);
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
     }
   }
 
@@ -64,9 +64,14 @@ public class AmpAddOn extends SubsystemBase {
     return m_NoteProximitySensor.hasNote();
   }
 
+  public boolean noteCenteredOnSensor() {
+    return m_NoteProximitySensor.noteIsCentered();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     super.periodic();
+    m_NoteProximitySensor.update();
   }
 }

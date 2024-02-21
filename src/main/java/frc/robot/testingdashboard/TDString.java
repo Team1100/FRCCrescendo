@@ -17,6 +17,7 @@ public class TDString implements TDValue {
       m_tabName = subsystem.getName();
       m_groupName = groupName;
       m_dataName = dataName;
+      m_val = "";
       TestingDashboard.getInstance().registerString(m_tabName, groupName, dataName, m_val);
       subsystem.registerValue(this);
       get();

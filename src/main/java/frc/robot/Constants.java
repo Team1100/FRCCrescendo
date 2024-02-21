@@ -177,6 +177,7 @@ public final class Constants {
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
     public static final double LEFT_SHOOTER_SPEED_RPM = 0;
     public static final double RIGHT_SHOOTER_SPEED_RPM = 0;
+    public static final double SHOOTER_SPEED_TOLERANCE = 30;//RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 0;

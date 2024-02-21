@@ -56,7 +56,7 @@ public class Intake extends SubsystemBase {
       m_SparkPIDController.setI(m_I.get());
       m_SparkPIDController.setD(m_D.get());
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR);
+      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR, this);
     }
   }
 
@@ -95,6 +95,11 @@ public class Intake extends SubsystemBase {
     return m_NoteProximitySensor.hasNote();
   }
 
+  public boolean noteCenteredOnSensor() {
+    return m_NoteProximitySensor.noteIsCentered();
+  }
+
+
   @Override
   public void periodic() {
     if (Constants.kEnableIntakePIDTuning && 
@@ -105,5 +110,6 @@ public class Intake extends SubsystemBase {
     }
     
     super.periodic();
+    m_NoteProximitySensor.update();
   }
 }
