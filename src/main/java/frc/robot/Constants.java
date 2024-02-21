@@ -36,7 +36,21 @@ public final class Constants {
 
     // Defines AmpAddOn constants
     public static final double AMP_SPEED = 0.2;
+    public static final double AMP_SPEED_RPM = 0;
+
+    public static final boolean kEnableAmpAddOnPIDTuning = false;
+    public static final double kAmpP = 0;
+    public static final double kAmpI = 0;
+    public static final double kAmpD = 0;
+    public static final double kAmpPivotP = 0.01;
+    public static final double kAmpPivotI = 0;
+    public static final double kAmpPivotD = 0;
+
+    public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     
+    public static final double A_ANGLE_INCREMENT_DEGREES = 0.2;
+    public static final double kADeadband = 0.05;
+
     // Defines Barrel constants
     public static final boolean kEnableBarrelPIDTuning = false;
     public static final double kBarrelP = 0;

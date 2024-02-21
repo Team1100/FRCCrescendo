@@ -2,26 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.BarrelPivot;
+package frc.robot.commands.AmpAddOn;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.testingdashboard.Command;
 import frc.robot.Constants;
 import frc.robot.OI;
-import frc.robot.subsystems.BarrelPivot;
-import frc.robot.testingdashboard.Command;;
+import frc.robot.subsystems.AmpAddOn;
 
-public class PivotRelativeAngleControl extends Command {
-  BarrelPivot m_barrelPivot;
+public class AmpPivotRelativeAngleControl extends Command {
+  AmpAddOn m_ampAddOn;
   XboxController m_operatorController;
 
-  /** Creates a new PivotRelativeAngleControl. */
-  public PivotRelativeAngleControl() {
-    super(BarrelPivot.getInstance(), "Basic", "PivotRelativeAngleControl");
-    m_barrelPivot = BarrelPivot.getInstance();
+  /** Creates a new AmpPivotRelativeAngleControl. */
+  public AmpPivotRelativeAngleControl() {
+    super(AmpAddOn.getInstance(), "Basic", "AmpPivotRelativeAngleControl");
+    m_ampAddOn = AmpAddOn.getInstance();
     m_operatorController = OI.getInstance().getOperatorXboxController();
     
-    addRequirements(m_barrelPivot);
+    addRequirements(m_ampAddOn);
   }
 
   // Called when the command is initially scheduled.
@@ -31,12 +31,12 @@ public class PivotRelativeAngleControl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angle = m_barrelPivot.getTargetAngle();
-    double input = MathUtil.applyDeadband(m_operatorController.getLeftY(), Constants.kBPDeadband);
+    double angle = m_ampAddOn.getTargetAngle();
+    double input = MathUtil.applyDeadband(m_operatorController.getRightY(), Constants.kADeadband);
 
-    angle += input * Constants.BP_ANGLE_INCREMENT_DEGREES;
+    angle += input * Constants.A_ANGLE_INCREMENT_DEGREES;
 
-    m_barrelPivot.setTargetAngle(angle);
+    m_ampAddOn.setTargetAngle(angle);
   }
 
   // Called once the command ends or is interrupted.
