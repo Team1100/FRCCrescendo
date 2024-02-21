@@ -29,6 +29,7 @@ public class TestingDashboardDataTable {
   Hashtable<String, GenericEntry> entries;
   Hashtable<String, String> defaultString;
   Hashtable<String, Double> defaultDouble;
+  Hashtable<String, Boolean> defaultBoolean;
   Hashtable<String, Object> defaultSendable;
   public TestingDashboardDataTable() {
     table = new Hashtable<String, ArrayList<String>>();
@@ -37,6 +38,7 @@ public class TestingDashboardDataTable {
     type = new Hashtable<String, Integer>();
     defaultString = new Hashtable<String, String>();
     defaultDouble = new Hashtable<String, Double>();
+    defaultBoolean = new Hashtable<String, Boolean>();
     defaultSendable = new Hashtable<String, Object>();
   }
 
@@ -76,6 +78,13 @@ public class TestingDashboardDataTable {
     }
   }
 
+  public void addDefaultBooleanValue(String name, boolean value) {
+    if (names.contains(name)) {
+        type.put(name,Integer.valueOf(TYPE_NUMBER));
+        defaultBoolean.put(name,Boolean.valueOf(value));
+    }
+  }
+  
   public void addDefaultSendableValue(String name, Sendable sendable) {
     if (names.contains(name)) {
         type.put(name,TYPE_SENDABLE);
@@ -89,6 +98,10 @@ public class TestingDashboardDataTable {
 
   public double getDefaultNumberValue(String name) {
     return defaultDouble.get(name).doubleValue();
+  }
+
+  public boolean getDefaultBooleanValue(String name) {
+    return defaultBoolean.get(name).booleanValue();
   }
 
   public Sendable getDefaultSendableValue(String name) {

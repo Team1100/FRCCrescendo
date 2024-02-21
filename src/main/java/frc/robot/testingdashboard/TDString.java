@@ -46,7 +46,9 @@ public class TDString implements TDValue {
      * @return current value
      */
     public String get() {
-      m_val = TestingDashboard.getInstance().getString(m_tabName, m_dataName);
+      if (!m_needsPost) {
+        m_val = TestingDashboard.getInstance().getString(m_tabName, m_dataName);
+      }
       return m_val;
     }
 
