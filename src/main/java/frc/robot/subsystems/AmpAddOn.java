@@ -72,6 +72,8 @@ public class AmpAddOn extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     super.periodic();
-    m_NoteProximitySensor.update();
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.update();
+    }
   }
 }
