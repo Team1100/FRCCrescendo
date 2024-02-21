@@ -104,6 +104,8 @@ public class Barrel extends SubsystemBase {
     }
 
     super.periodic();
-    m_NoteProximitySensor.update();
+    if(m_NoteProximitySensor != null){
+      m_NoteProximitySensor.update();
+    }
   }
 }

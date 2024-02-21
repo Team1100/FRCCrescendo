@@ -139,6 +139,8 @@ public class AmpAddOn extends SubsystemBase {
       m_encoderValueAngleDegrees.set(getAngle());
     }
     super.periodic();
-    m_NoteProximitySensor.update();
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.update();
+    }
   }
 }
