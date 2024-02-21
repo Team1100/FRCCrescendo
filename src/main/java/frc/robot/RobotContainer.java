@@ -9,6 +9,9 @@ import frc.robot.commands.IngestNote;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
 import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpSetZeroAsCurrentPosition;
+import frc.robot.commands.AmpAddOn.ScoreAmp;
+import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBackward;
 import frc.robot.commands.Barrel.SpinForward;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
@@ -133,6 +136,11 @@ public class RobotContainer {
   }
 
   private void registerCommands() {
+    // Amp Add-On commands
+    new ScoreAmp();
+    new UNScoreAmp();
+    new AmpSetZeroAsCurrentPosition();
+
     // Barrel commands
     new SpinForward();
     new SpinBackward();

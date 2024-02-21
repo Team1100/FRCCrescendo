@@ -21,16 +21,21 @@ import frc.robot.utils.NoteProximitySensor;
 public class AmpAddOn extends SubsystemBase {
   private static AmpAddOn m_AmpAddOn;
 
-  double m_targetAngle;
-
   TDNumber m_P;
   TDNumber m_I;
   TDNumber m_D;
+
+  double m_targetAngle;
+
+  TDNumber m_PivotP;
+  TDNumber m_PivotI;
+  TDNumber m_PivotD;
   TDNumber m_encoderValueRotations;
   TDNumber m_encoderValueAngleDegrees;
 
   CANSparkMax m_CanSparkMax;
   CANSparkMax m_PivotCanSparkMax;
+  SparkPIDController m_SparkPIDController;
   SparkPIDController m_PivotSparkPIDController;
   AbsoluteEncoder m_absoluteEncoder;
 
@@ -50,16 +55,26 @@ public class AmpAddOn extends SubsystemBase {
 
       m_CanSparkMax.setInverted(false);
       m_PivotCanSparkMax.setInverted(false);
+      
+      m_SparkPIDController = m_CanSparkMax.getPIDController();
+
+      m_P = new TDNumber(this, "Amp Roller PID", "P", Constants.kAmpP);
+      m_I = new TDNumber(this, "Amp Roller PID", "I", Constants.kAmpI);
+      m_D = new TDNumber(this, "Amp Roller PID", "D", Constants.kAmpD);
+
+      m_SparkPIDController.setP(m_P.get());
+      m_SparkPIDController.setI(m_I.get());
+      m_SparkPIDController.setD(m_D.get());
 
       m_PivotSparkPIDController = m_PivotCanSparkMax.getPIDController();
 
-      m_P = new TDNumber(this, "Amp Pivot PID", "P", Constants.kAmpPivotP);
-      m_I = new TDNumber(this, "Amp Pivot PID", "I", Constants.kAmpPivotI);
-      m_D = new TDNumber(this, "Amp Pivot PID", "D", Constants.kAmpPivotD);
+      m_PivotP = new TDNumber(this, "Amp Pivot PID", "P", Constants.kAmpPivotP);
+      m_PivotI = new TDNumber(this, "Amp Pivot PID", "I", Constants.kAmpPivotI);
+      m_PivotD = new TDNumber(this, "Amp Pivot PID", "D", Constants.kAmpPivotD);
 
-      m_PivotSparkPIDController.setP(m_P.get());
-      m_PivotSparkPIDController.setI(m_I.get());
-      m_PivotSparkPIDController.setD(m_D.get());
+      m_PivotSparkPIDController.setP(m_PivotP.get());
+      m_PivotSparkPIDController.setI(m_PivotI.get());
+      m_PivotSparkPIDController.setD(m_PivotD.get());
 
       m_absoluteEncoder = m_PivotCanSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
       m_PivotSparkPIDController.setFeedbackDevice(m_absoluteEncoder);
@@ -80,6 +95,15 @@ public class AmpAddOn extends SubsystemBase {
       m_AmpAddOn = new AmpAddOn();
     }
     return m_AmpAddOn;
+  }
+
+  public void setSpeed(double RPM, boolean backwards) {
+    if (!backwards) {
+      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
+    }
+    else {
+      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    }
   }
 
   public void spinIn(double speed) {
@@ -130,9 +154,13 @@ public class AmpAddOn extends SubsystemBase {
   public void periodic() {
     if (RobotMap.A_ENABLED) {
       if (Constants.kEnableAmpAddOnPIDTuning) {
-        m_PivotSparkPIDController.setP(m_P.get());
-        m_PivotSparkPIDController.setI(m_I.get());
-        m_PivotSparkPIDController.setD(m_D.get());
+        m_SparkPIDController.setP(m_P.get());
+        m_SparkPIDController.setI(m_I.get());
+        m_SparkPIDController.setD(m_D.get());
+
+        m_PivotSparkPIDController.setP(m_PivotP.get());
+        m_PivotSparkPIDController.setI(m_PivotI.get());
+        m_PivotSparkPIDController.setD(m_PivotD.get());
       }
 
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
