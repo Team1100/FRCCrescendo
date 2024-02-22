@@ -48,7 +48,7 @@ public class BarrelPivot extends SubsystemBase {
       m_BPLeftSparkMax.setIdleMode(IdleMode.kBrake);
       m_BPRightSparkMax.setIdleMode(IdleMode.kBrake);
 
-      m_BPLeftSparkMax.setInverted(false);
+      m_BPLeftSparkMax.setInverted(true);
       // Motors are set opposite of each other, but they want to spin in the same direction
       m_BPRightSparkMax.follow(m_BPLeftSparkMax, true);
 
@@ -87,7 +87,7 @@ public class BarrelPivot extends SubsystemBase {
 
   public void setTargetAngle(double angle) {
     m_targetAngle = angle;
-    m_SparkPIDController.setReference(m_targetAngle, ControlType.kVelocity);
+    m_SparkPIDController.setReference(m_targetAngle, ControlType.kPosition);
   }
 
   public double getTargetAngle() {
