@@ -130,7 +130,7 @@ public class AmpAddOn extends SubsystemBase {
 
   public void setTargetAngle(double angle) {
     m_targetAngle = angle;
-    m_PivotSparkPIDController.setReference(m_targetAngle, ControlType.kVelocity);
+    m_PivotSparkPIDController.setReference(m_targetAngle, ControlType.kPosition);
   }
 
   public double getTargetAngle() {

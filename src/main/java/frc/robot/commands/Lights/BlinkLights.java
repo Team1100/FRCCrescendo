@@ -34,7 +34,7 @@ public class BlinkLights extends Command {
   @Override
   public void execute() {
     m_lights.blinkLights(hue);
-    m_lights.getLED().setData(m_lights.getLEDBuffer());
+    m_lights.setData();
   }
 
   // Called once the command ends or is interrupted.
