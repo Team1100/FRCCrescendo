@@ -192,12 +192,11 @@ public class RobotContainer {
     new GroundIntake();
     new ShootSpeaker();
 
-    // TDNumber turnTestAngle = new TDNumber(Drive.getInstance(), "Test Inputs", "Turn Angle");
-    // new TurnToRotation(()->new Rotation2d(turnTestAngle.get()));
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
     TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");
-    Pose2d targetPose = new Pose2d(testX.get(), testY.get(), new Rotation2d());
-    new TurnToTarget(targetPose);
+    new TurnToTarget(()->{
+      return new Pose2d(testX.get(), testY.get(), new Rotation2d());
+    });
 
     new TargetDrive(()->{
       return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
