@@ -214,10 +214,16 @@ public final class Constants {
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 
-    //Autonomous driving constants
+    //Driver control rate limits
     public static final double kMaxAccelerationMetersPerSecondSquared = 10;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = 4*Math.PI;
+
+    //Autonomous control rate limits(Driver control limits are applied after so should be <=)
+    public static final double kAutoMaxAccelerationMpSS = 2;
+    public static final double kAutoMaxSpeedMpS = 2;
+    public static final double kAutoMaxAngularAccelRpSS = 2 * Math.PI;
+    public static final double kAutoMaxAngularSpeedRpS = Math.PI;
 
     public static final double kPXController = 1;
     public static final double kPYController = 1;
