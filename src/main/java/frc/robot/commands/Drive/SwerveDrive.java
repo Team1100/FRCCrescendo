@@ -35,7 +35,10 @@ public class SwerveDrive extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_operatorRotating = false;
+    m_TDheading.set(m_drive.getHeading());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
