@@ -9,7 +9,7 @@ import frc.robot.subsystems.Barrel;
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;
 
-public class SpinForward extends Command {
+public class SpinBarrelForward extends Command {
   Barrel m_barrel;
 
   TDNumber m_RPM;
@@ -17,9 +17,9 @@ public class SpinForward extends Command {
 
   TDNumber m_BarrelSpeed;
 
-  /** Creates a new SpinForward. */
-  public SpinForward() {
-    super(Barrel.getInstance(), "Basic", "SpinForward");
+  /** Creates a new SpinBarrelForward. */
+  public SpinBarrelForward() {
+    super(Barrel.getInstance(), "Basic", "SpinBarrelForward");
     m_barrel = Barrel.getInstance();
 
     m_RPM = new TDNumber(m_barrel, "Barrel Speed (RPM)", "RPM", Constants.BARREL_SPEED_RPM);
