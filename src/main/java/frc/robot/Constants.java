@@ -71,6 +71,8 @@ public final class Constants {
     public static final double BP_ANGLE_INCREMENT_DEGREES = 0.2;
     public static final double kBPDeadband = 0.05;
 
+    public static final double BP_SPEED = 0.1;
+
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
