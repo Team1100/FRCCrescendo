@@ -12,8 +12,8 @@ import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
 import frc.robot.commands.AmpAddOn.AmpSetZeroAsCurrentPosition;
 import frc.robot.commands.AmpAddOn.ScoreAmp;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
-import frc.robot.commands.Barrel.SpinBackward;
-import frc.robot.commands.Barrel.SpinForward;
+import frc.robot.commands.Barrel.SpinBarrelBackward;
+import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
 import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
 import frc.robot.commands.Drive.DriveToPose;
@@ -142,8 +142,8 @@ public class RobotContainer {
     new AmpSetZeroAsCurrentPosition();
 
     // Barrel commands
-    new SpinForward();
-    new SpinBackward();
+    new SpinBarrelForward();
+    new SpinBarrelBackward();
 
     // BarrelPivot commands
     new SetZeroAsCurrentPosition();

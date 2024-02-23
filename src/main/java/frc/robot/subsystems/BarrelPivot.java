@@ -21,7 +21,7 @@ import frc.robot.testingdashboard.TDNumber;
 public class BarrelPivot extends SubsystemBase {
   private static BarrelPivot m_barrelPivot;
 
-  double m_targetAngle;
+  TDNumber m_targetAngle;
 
   TDNumber m_P;
   TDNumber m_I;
@@ -67,7 +67,7 @@ public class BarrelPivot extends SubsystemBase {
 
       m_absoluteEncoder.setInverted(false);
       m_absoluteEncoder.setPositionConversionFactor(Constants.kBPEncoderPositionFactorDegrees);
-      m_targetAngle = getAngle();
+      m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
 
       m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
@@ -86,17 +86,35 @@ public class BarrelPivot extends SubsystemBase {
   }
 
   public void setTargetAngle(double angle) {
-    m_targetAngle = angle;
-    m_SparkPIDController.setReference(m_targetAngle, ControlType.kPosition);
+    m_targetAngle.set(angle);
+    m_SparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
   }
 
   public double getTargetAngle() {
-    return m_targetAngle;
+    return m_targetAngle.get();
   }
 
   public void setZeroAsCurrentPosition() {
     m_absoluteEncoder.setZeroOffset(getAngle());
-    m_targetAngle = 0;
+    m_targetAngle.set(0);
+  }
+
+  public void pivotUpwards() {
+    if (m_BPLeftSparkMax != null) {
+      m_BPLeftSparkMax.set(Constants.BP_SPEED);
+    }
+  }
+
+  public void pivotDownwards() {
+    if (m_BPLeftSparkMax != null) {
+      m_BPLeftSparkMax.set(-Constants.BP_SPEED);
+    }
+  }
+
+  public void stopPivot() {
+    if (m_BPLeftSparkMax != null) {
+      m_BPLeftSparkMax.set(0);
+    }
   }
 
   @Override
@@ -111,6 +129,7 @@ public class BarrelPivot extends SubsystemBase {
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees.set(getAngle());
     }
+
     super.periodic();
   }
 }

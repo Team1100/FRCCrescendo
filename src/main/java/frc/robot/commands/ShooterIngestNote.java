@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.testingdashboard.ParallelCommandGroup;
-import frc.robot.commands.Barrel.SpinBackward;
+import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.subsystems.Shooter;
 
@@ -18,6 +18,6 @@ public class ShooterIngestNote extends ParallelCommandGroup {
     super(Shooter.getInstance(), "ParallelCommands", "ShooterIngestNote");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeFromShooter(), new SpinBackward());
+    addCommands(new IntakeFromShooter(), new SpinBarrelBackward());
   }
 }
