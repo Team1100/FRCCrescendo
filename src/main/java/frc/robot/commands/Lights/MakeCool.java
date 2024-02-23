@@ -30,7 +30,7 @@ public class MakeCool extends Command {
   @Override
   public void execute() {
     m_lights.makeCool();
-    m_lights.getLED().setData(m_lights.getLEDBuffer());
+    m_lights.setData();
   }
 
   // Called once the command ends or is interrupted.
