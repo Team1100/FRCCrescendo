@@ -21,6 +21,7 @@ import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.Lights.EnableLights;
+import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
 import frc.robot.commands.Lights.MoveLights;
 import frc.robot.commands.Shooter.IntakeFromShooter;
@@ -141,6 +142,7 @@ public class RobotContainer {
     new EnableLights();
     new MakeRainbow();
     new MoveLights();
+    new MakeCool();
 
     // Shooter commands
     new IntakeFromShooter();
