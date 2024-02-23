@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -362,10 +361,10 @@ public class Drive extends SubsystemBase {
   /**
    * Returns the heading of the robot.
    *
-   * @return the robot's heading in degrees, from -180 to 180
+   * @return the robot's heading in degrees.
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)).getDegrees();
+    return getPose().getRotation().getDegrees();
   }
 
   /**
@@ -397,7 +396,8 @@ public class Drive extends SubsystemBase {
     double linearSpeed = Math.hypot(commandedSpeeds.vxMetersPerSecond, commandedSpeeds.vyMetersPerSecond);
     Rotation2d direction = new Rotation2d(commandedSpeeds.vxMetersPerSecond, commandedSpeeds.vyMetersPerSecond);
     double limitedSpeed = Math.min(linearSpeed, Constants.kMaxSpeedMetersPerSecond);
-    double limitedTheta = Math.min(commandedSpeeds.omegaRadiansPerSecond, Constants.kMaxAngularSpeed);
+    double limitedTheta = MathUtil.clamp(commandedSpeeds.omegaRadiansPerSecond,
+                                         -Constants.kMaxAngularSpeed, Constants.kMaxAngularSpeed);
 
     Translation2d linearVelocity = new Pose2d(new Translation2d(), direction)
                   .transformBy(new Transform2d(new Translation2d(limitedSpeed, 0.0), new Rotation2d()))

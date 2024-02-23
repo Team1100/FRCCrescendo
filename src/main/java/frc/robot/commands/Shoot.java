@@ -7,7 +7,7 @@ package frc.robot.commands;
 import frc.robot.testingdashboard.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Barrel.SpinForward;
+import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.Shooter;
 
@@ -24,7 +24,7 @@ public class Shoot extends ParallelCommandGroup {
       new SpinUpShooter(),
       new ParallelDeadlineGroup(
         new WaitCommand(0.7053), 
-        new SpinForward()
+        new SpinBarrelForward()
       )
     );
   }

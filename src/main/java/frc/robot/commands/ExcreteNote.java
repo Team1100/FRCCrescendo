@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.testingdashboard.ParallelCommandGroup;
-import frc.robot.commands.Barrel.SpinBackward;
+import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.subsystems.Intake;
 
@@ -18,6 +18,6 @@ public class ExcreteNote extends ParallelCommandGroup {
     super(Intake.getInstance(), "ParallelCommands", "ExcreteNote");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Expel(), new SpinBackward());
+    addCommands(new Expel(), new SpinBarrelBackward());
   }
 }

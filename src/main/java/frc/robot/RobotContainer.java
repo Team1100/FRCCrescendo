@@ -8,10 +8,15 @@ import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
-import frc.robot.commands.Barrel.SpinBackward;
-import frc.robot.commands.Barrel.SpinForward;
+import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpSetZeroAsCurrentPosition;
+import frc.robot.commands.AmpAddOn.ScoreAmp;
+import frc.robot.commands.AmpAddOn.UNScoreAmp;
+import frc.robot.commands.Barrel.SpinBarrelBackward;
+import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
 import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
+import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Drive.TurnToRotation;
@@ -26,6 +31,7 @@ import frc.robot.commands.Lights.MakeRainbow;
 import frc.robot.commands.Lights.MoveLights;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
+import frc.robot.subsystems.AmpAddOn;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
@@ -68,6 +74,7 @@ public class RobotContainer {
   private final Lights m_lights;
   private final Shooter m_shooter;
   private final BarrelPivot m_barrelPivot;
+  private final AmpAddOn m_ampAddOn;
   private final SendableChooser<Command> m_autoChooser;
 
   private SwerveDriveInputs m_driveInputs;
@@ -99,6 +106,11 @@ public class RobotContainer {
     m_robotDrive = Drive.getInstance();
     m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
+    m_ampAddOn = AmpAddOn.getInstance();
+    if (RobotMap.A_ENABLED) {
+      m_ampAddOn.setDefaultCommand(new AmpPivotRelativeAngleControl());
+    }
+
     m_barrelPivot = BarrelPivot.getInstance();
     if (RobotMap.BP_ENABLED) {
       m_barrelPivot.setDefaultCommand(new PivotRelativeAngleControl());
@@ -125,9 +137,14 @@ public class RobotContainer {
   }
 
   private void registerCommands() {
+    // Amp Add-On commands
+    new ScoreAmp();
+    new UNScoreAmp();
+    new AmpSetZeroAsCurrentPosition();
+
     // Barrel commands
-    new SpinForward();
-    new SpinBackward();
+    new SpinBarrelForward();
+    new SpinBarrelBackward();
 
     // BarrelPivot commands
     new SetZeroAsCurrentPosition();
@@ -165,6 +182,9 @@ public class RobotContainer {
       return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
     }, m_driveInputs);
 
+    new DriveToPose(()->{
+      return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
+    });
   }
 
   /**

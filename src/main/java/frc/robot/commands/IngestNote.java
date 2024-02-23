@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.testingdashboard.ParallelCommandGroup;
-import frc.robot.commands.Barrel.SpinForward;
+import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.subsystems.Intake;
 
@@ -18,6 +18,6 @@ public class IngestNote extends ParallelCommandGroup {
     super(Intake.getInstance(), "ParallelCommands", "IngestNote");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Consume(), new SpinForward());
+    addCommands(new Consume(), new SpinBarrelForward());
   }
 }

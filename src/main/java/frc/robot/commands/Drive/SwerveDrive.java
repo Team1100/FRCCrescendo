@@ -4,18 +4,20 @@
 
 package frc.robot.commands.Drive;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants;
-import frc.robot.OI;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.Command;
+import frc.robot.testingdashboard.TDNumber;
+import frc.robot.testingdashboard.TDSendable;
 import frc.robot.utils.SwerveDriveInputs;
 
 public class SwerveDrive extends Command {
   private SwerveDriveInputs m_DriveInputs;
+  private PIDController m_headingController;
+  private TDNumber m_TDheading;
+  private boolean m_operatorRotating;
   Drive m_drive;
 
   /** Creates a new SwerveDrive. */
@@ -23,21 +25,42 @@ public class SwerveDrive extends Command {
     super(Drive.getInstance(), "Basic", "SwerveDrive");
     m_drive = Drive.getInstance();
     m_DriveInputs = driveInputs;
-
+    m_operatorRotating = false;
+    m_headingController = new PIDController(0.01, 0.0, 0.0);
+    m_headingController.enableContinuousInput(-180, 180);
+    new TDSendable(m_drive, "Swerve Drive", "Heading Controller", m_headingController);
+    m_TDheading = new TDNumber(m_drive, "Swerve Drive", "Target Heading", 0);
     addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_operatorRotating = false;
+    m_TDheading.set(m_drive.getHeading());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    var rotationPower = -MathUtil.applyDeadband(m_DriveInputs.getRotation(), Constants.kDriveDeadband);
+    if (rotationPower == 0) {
+      if (m_operatorRotating &&
+          MathUtil.isNear(0, m_drive.getMeasuredSpeeds().omegaRadiansPerSecond, 0.1)) {
+        m_operatorRotating = false;
+        m_TDheading.set(m_drive.getHeading());
+      }
+      if (!m_operatorRotating) {
+        rotationPower = m_headingController.calculate(m_drive.getHeading(), m_TDheading.get());
+      }
+    }
+    else {
+      m_operatorRotating = true;
+    }
     m_drive.drive(
       -MathUtil.applyDeadband(m_DriveInputs.getX(), Constants.kDriveDeadband),
       -MathUtil.applyDeadband(m_DriveInputs.getY(), Constants.kDriveDeadband),
-      -MathUtil.applyDeadband(m_DriveInputs.getRotation(), Constants.kDriveDeadband),
+      rotationPower,
       true, false);
   }
 

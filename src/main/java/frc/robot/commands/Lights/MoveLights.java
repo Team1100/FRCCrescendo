@@ -34,7 +34,7 @@ public class MoveLights extends Command {
   @Override
   public void execute() {
     m_lights.moveLights(hue);
-    m_lights.getLED().setData(m_lights.getLEDBuffer());
+    m_lights.setData();
   }
 
   // Called once the command ends or is interrupted.

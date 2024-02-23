@@ -29,9 +29,9 @@ public class Lights extends SubsystemBase {
     m_LED = new AddressableLED(RobotMap.L_LEDS);
 
     m_LEDBuffer = new AddressableLEDBuffer(Constants.LED_LENGTH);
-    m_LED.setLength(m_LEDBuffer.getLength());
+    m_LED.setLength(Constants.LED_LENGTH);
 
-    m_LED.setData(m_LEDBuffer);
+    setData();
     m_LED.start();
 
     m_rainbowFirstPixelHue = 0;
@@ -49,36 +49,32 @@ public class Lights extends SubsystemBase {
     return m_lights;
   }
 
-  public AddressableLED getLED() {
-    return m_LED;
-  }
-
-  public AddressableLEDBuffer getLEDBuffer() {
-    return m_LEDBuffer;
+  public void setData() {
+    m_LED.setData(m_LEDBuffer);
   }
 
   public void enableLights(int hue) {
-    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
+    for (var i = 0; i < Constants.LED_LENGTH; i++) {
       m_LEDBuffer.setHSV(i, hue, 255, 122);
     }
 
-    m_LED.setData(m_LEDBuffer);
+    setData();
   }
 
   public void disableLights() {
-    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
+    for (var i = 0; i < Constants.LED_LENGTH; i++) {
       m_LEDBuffer.setLED(i, Color.kBlack);
     }
 
-    m_LED.setData(m_LEDBuffer);
+    setData();
   }
 
   public void makeRainbow() {
     // For every pixel
-    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
+    for (var i = 0; i < Constants.LED_LENGTH; i++) {
       // Calculate the hue - hue is easier for rainbows because the color
       // shape is a circle so only one value needs to precess
-      final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_LEDBuffer.getLength())) % 180;
+      final var hue = (m_rainbowFirstPixelHue + (i * 180 / Constants.LED_LENGTH)) % 180;
       // Set the value
       m_LEDBuffer.setHSV(i, hue, 255, 128);
     }
@@ -104,8 +100,8 @@ public class Lights extends SubsystemBase {
   }
 
   public void moveLights(int hue) {
-    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
-      final var value = (m_firstPixelValue + (i * 255 / m_LEDBuffer.getLength())) % 255;
+    for (var i = 0; i < Constants.LED_LENGTH; i++) {
+      final var value = (m_firstPixelValue + (i * 255 / Constants.LED_LENGTH)) % 255;
       m_LEDBuffer.setHSV(i, hue, 255, value);
     }
     
@@ -115,7 +111,7 @@ public class Lights extends SubsystemBase {
   }
 
   public void blinkLights(int hue) {
-    for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
+    for (var i = 0; i < Constants.LED_LENGTH; i++) {
       m_LEDBuffer.setHSV(i, hue, 255, m_firstPixelValue);
     }
 

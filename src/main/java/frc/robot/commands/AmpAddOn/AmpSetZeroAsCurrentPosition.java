@@ -2,40 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Lights;
+package frc.robot.commands.AmpAddOn;
 
 import frc.robot.testingdashboard.Command;
-import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.AmpAddOn;
 
-public class BlinkLights extends Command {
-  Lights m_lights;
-  int hue;
-
-  /** Creates a new BlinkLights. */
-  public BlinkLights() {
-    super(Lights.getInstance(), "Basic", "BlinkLights");
-    m_lights = Lights.getInstance();
-
-    int hue = 10; // Orange
-
-    addRequirements(m_lights);
-  }
-  
-  @Override
-  public boolean runsWhenDisabled() {
-    return true;
+public class AmpSetZeroAsCurrentPosition extends Command {
+  AmpAddOn m_ampAddOn;
+  /** Creates a new AmpSetZeroAsCurrentPosition. */
+  public AmpSetZeroAsCurrentPosition() {
+    super(AmpAddOn.getInstance(), "Basic", "AmpSetZeroAsCurrentPosition");
+    m_ampAddOn = AmpAddOn.getInstance();
+    
+    addRequirements(m_ampAddOn);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_ampAddOn.setZeroAsCurrentPosition();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_lights.blinkLights(hue);
-    m_lights.setData();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -44,6 +34,6 @@ public class BlinkLights extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -2,28 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Lights;
+package frc.robot.commands.BarrelPivot;
 
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.testingdashboard.Command;
-import frc.robot.subsystems.Lights;
 
-public class BlinkLights extends Command {
-  Lights m_lights;
-  int hue;
+public class PivotUpwards extends Command {
+  BarrelPivot m_barrelPivot;
 
-  /** Creates a new BlinkLights. */
-  public BlinkLights() {
-    super(Lights.getInstance(), "Basic", "BlinkLights");
-    m_lights = Lights.getInstance();
-
-    int hue = 10; // Orange
-
-    addRequirements(m_lights);
-  }
-  
-  @Override
-  public boolean runsWhenDisabled() {
-    return true;
+  /** Creates a new PivotUpwards. */
+  public PivotUpwards() {
+    super(BarrelPivot.getInstance(), "Power Testing", "PivotUpwards");
+    m_barrelPivot = BarrelPivot.getInstance();
+    addRequirements(m_barrelPivot);
   }
 
   // Called when the command is initially scheduled.
@@ -33,13 +24,14 @@ public class BlinkLights extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_lights.blinkLights(hue);
-    m_lights.setData();
+    m_barrelPivot.pivotUpwards();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_barrelPivot.stopPivot();
+  }
 
   // Returns true when the command should end.
   @Override
