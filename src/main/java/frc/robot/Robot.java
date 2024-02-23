@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
 
 /**
@@ -18,6 +19,7 @@ import frc.robot.commands.Lights.MakeRainbow;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private MakeRainbow m_makeRainbow;
+  private MakeCool m_makeCool;
 
   private RobotContainer m_robotContainer;
 
@@ -53,27 +55,39 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     m_makeRainbow = new MakeRainbow();
-    m_makeRainbow.schedule();
+
+    if (m_makeCool != null) {
+      m_makeCool.cancel();
+    }
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    m_makeRainbow.schedule();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_makeRainbow.schedule();
+    m_makeCool = new MakeCool();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    if (m_makeRainbow != null) {
+      m_makeRainbow.cancel();
+    }
+
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    m_makeCool.schedule();
+  }
 
   @Override
   public void teleopInit() {
@@ -87,6 +101,10 @@ public class Robot extends TimedRobot {
 
     if (m_makeRainbow != null) {
       m_makeRainbow.cancel();
+    }
+
+    if (m_makeCool != null) {
+      m_makeCool.cancel();
     }
   }
 
