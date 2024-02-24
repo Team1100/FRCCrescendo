@@ -7,8 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.subsystems.Barrel;
+import frc.robot.subsystems.BarrelPivot;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,6 +23,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private MakeRainbow m_makeRainbow;
   private MakeCool m_makeCool;
+  private ResetTargetAngle m_resetTargetAngle;
 
   private RobotContainer m_robotContainer;
 
@@ -32,7 +36,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
     m_makeRainbow = new MakeRainbow();
+    m_makeCool = new MakeCool();
+    m_resetTargetAngle = new ResetTargetAngle();
   }
 
   /**
@@ -54,8 +61,6 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_makeRainbow = new MakeRainbow();
-
     if (m_makeCool != null) {
       m_makeCool.cancel();
     }
@@ -70,7 +75,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_makeCool = new MakeCool();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -105,6 +109,8 @@ public class Robot extends TimedRobot {
     if (m_makeCool != null) {
       m_makeCool.cancel();
     }
+
+    m_resetTargetAngle.schedule();
   }
 
   /** This function is called periodically during operator control. */

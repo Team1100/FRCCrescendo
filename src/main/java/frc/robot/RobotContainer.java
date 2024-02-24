@@ -18,7 +18,7 @@ import frc.robot.commands.BarrelPivot.PivotDownwards;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
 import frc.robot.commands.BarrelPivot.PivotUpwards;
 import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
-import frc.robot.commands.BarrelPivot.resetTargetAngle;
+import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Drive.TargetDrive;
@@ -154,7 +154,7 @@ public class RobotContainer {
 
     // BarrelPivot commands
     new SetZeroAsCurrentPosition();
-    new resetTargetAngle();
+    new ResetTargetAngle();
     new PivotRelativeAngleControl();
     new PivotUpwards();
     new PivotDownwards();

@@ -61,7 +61,7 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new ShooterIngestNote());
 
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
-    new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new SetZeroAsCurrentPosition());
+    // new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new SetZeroAsCurrentPosition());
     // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).toggleOnTrue(new MakeRainbow());
     // new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).toggleOnTrue(new DisableLights());
     // new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new BlinkLights());
