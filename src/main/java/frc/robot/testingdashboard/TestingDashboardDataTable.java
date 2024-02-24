@@ -23,6 +23,7 @@ public class TestingDashboardDataTable {
   public static final int TYPE_NUMBER = 0;
   public static final int TYPE_STRING = 1;
   public static final int TYPE_SENDABLE = 2;
+  public static final int TYPE_BOOLEAN = 3;
   Hashtable<String, ArrayList<String>> table;
   ArrayList<String> names;
   Hashtable<String, Integer> type;
@@ -80,7 +81,7 @@ public class TestingDashboardDataTable {
 
   public void addDefaultBooleanValue(String name, boolean value) {
     if (names.contains(name)) {
-        type.put(name,Integer.valueOf(TYPE_NUMBER));
+        type.put(name,Integer.valueOf(TYPE_BOOLEAN));
         defaultBoolean.put(name,Boolean.valueOf(value));
     }
   }

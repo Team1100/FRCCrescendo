@@ -9,17 +9,22 @@ import java.util.ArrayList;
 public class SubsystemBase extends edu.wpi.first.wpilibj2.command.SubsystemBase {
 
   ArrayList<TDValue> m_values;
+  TDBoolean m_enabled;
   /** Creates a new Subsystem and registers it with the TestingDashboard. */
   public SubsystemBase(String name)
   {
     m_values = new ArrayList<TDValue>();
     setName(name);
     TestingDashboard.getInstance().registerTab(name);
+    // must do this after the subsystem is registered
+    m_enabled = new TDBoolean(this, "TestingDashboard", "Enabled", true);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
+    if (!m_enabled.get()) return;
+
     for(TDValue value : m_values)
     {
       value.post();
