@@ -59,12 +59,12 @@ public class Robot extends TimedRobot {
     if (m_makeCool != null) {
       m_makeCool.cancel();
     }
+
+    m_makeRainbow.schedule();
   }
 
   @Override
-  public void disabledPeriodic() {
-    m_makeRainbow.schedule();
-  }
+  public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -80,14 +80,13 @@ public class Robot extends TimedRobot {
     if (m_makeRainbow != null) {
       m_makeRainbow.cancel();
     }
-
+    
+    m_makeCool.schedule();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    m_makeCool.schedule();
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
