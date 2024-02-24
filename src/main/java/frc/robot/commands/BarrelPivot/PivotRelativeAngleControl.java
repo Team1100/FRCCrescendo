@@ -32,7 +32,8 @@ public class PivotRelativeAngleControl extends Command {
   @Override
   public void execute() {
     double angle = m_barrelPivot.getTargetAngle();
-    double input = MathUtil.applyDeadband(m_operatorController.getLeftY(), Constants.kBPDeadband);
+    // upward input on joystick will move Barrel Pivot upwards and vice versa
+    double input = -MathUtil.applyDeadband(m_operatorController.getLeftY(), Constants.kBPDeadband);
 
     angle += input * Constants.BP_ANGLE_INCREMENT_DEGREES;
 

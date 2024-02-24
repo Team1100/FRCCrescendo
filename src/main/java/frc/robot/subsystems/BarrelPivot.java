@@ -22,7 +22,6 @@ public class BarrelPivot extends SubsystemBase {
   private static BarrelPivot m_barrelPivot;
 
   TDNumber m_targetAngle;
-
   TDNumber m_P;
   TDNumber m_I;
   TDNumber m_D;
@@ -33,6 +32,9 @@ public class BarrelPivot extends SubsystemBase {
   CANSparkMax m_BPRightSparkMax;
   SparkPIDController m_SparkPIDController;
   AbsoluteEncoder m_absoluteEncoder;
+
+  TDNumber m_motorTemperature;
+  TDNumber m_currentOutput;
 
   /** Creates a new BarrelPivot. */
   private BarrelPivot() {
@@ -69,8 +71,16 @@ public class BarrelPivot extends SubsystemBase {
       m_absoluteEncoder.setPositionConversionFactor(Constants.kBPEncoderPositionFactorDegrees);
       m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
 
+      m_SparkPIDController.setPositionPIDWrappingEnabled(true);
+      m_SparkPIDController.setPositionPIDWrappingMinInput(0);
+      m_SparkPIDController.setPositionPIDWrappingMaxInput(Constants.DEGREES_PER_REVOLUTION);
+
       m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
+
+      // for SPARK w/absolute encoder
+      m_motorTemperature = new TDNumber(this, "Safety", "Motor Temperature (fahrenheit)", getMotorTemperature());
+      m_currentOutput = new TDNumber(this, "Safety", "Current Output", getCurrentOutput());
     }
   }
 
@@ -86,8 +96,12 @@ public class BarrelPivot extends SubsystemBase {
   }
 
   public void setTargetAngle(double angle) {
-    m_targetAngle.set(angle);
+    m_targetAngle.set(angle % Constants.DEGREES_PER_REVOLUTION);
     m_SparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
+  }
+
+  public void resetTargetAngle() {
+    setTargetAngle(getAngle());
   }
 
   public double getTargetAngle() {
@@ -96,7 +110,7 @@ public class BarrelPivot extends SubsystemBase {
 
   public void setZeroAsCurrentPosition() {
     m_absoluteEncoder.setZeroOffset(getAngle());
-    m_targetAngle.set(0);
+    resetTargetAngle(); 
   }
 
   public void pivotUpwards() {
@@ -117,6 +131,25 @@ public class BarrelPivot extends SubsystemBase {
     }
   }
 
+  public double getMotorTemperature() {
+    if (m_BPLeftSparkMax != null) {
+      // Converting Celsius to Fahrenheit
+      return (m_BPLeftSparkMax.getMotorTemperature() * 9/5) + 32;
+    }
+    else {
+      return 0;
+    }
+  }
+
+  public double getCurrentOutput() {
+    if (m_BPLeftSparkMax != null) {
+      return m_BPLeftSparkMax.getOutputCurrent();
+    }
+    else {
+      return 0;
+    }
+  }
+
   @Override
   public void periodic() {
     if (RobotMap.BP_ENABLED) {
@@ -128,6 +161,9 @@ public class BarrelPivot extends SubsystemBase {
 
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees.set(getAngle());
+
+      m_motorTemperature.set(getMotorTemperature());
+      m_currentOutput.set(getCurrentOutput());
     }
 
     super.periodic();
