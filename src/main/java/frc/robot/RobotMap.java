@@ -102,10 +102,9 @@ public class RobotMap {
   public static double R_BASE_RADIUS_INCHES = 11.25 * Math.sqrt(2);
   
   // [A]mp Add-On
-  // determine CAN IDs
   public static boolean A_ENABLED = false;
-  public static int A_MOTOR = RoboRioMap.CAN_16;
-  public static int A_PIVOT_MOTOR = RoboRioMap.CAN_17;
+  public static int A_MOTOR = RoboRioMap.CAN_17;
+  public static int A_PIVOT_MOTOR = RoboRioMap.CAN_16;
   public static int A_NOTE_SENSOR = RoboRioMap.DIO_3;
 
   // [B]arrel 
@@ -130,7 +129,7 @@ public class RobotMap {
   public static int D_BACK_RIGHT_TURNING = RoboRioMap.CAN_8;
 
   //[E]levator
-  // determine CAN IDs
+  // TODO: determine CAN IDs
   public static boolean E_ELEVATOR_ENABLED = false;
   public static int E_MOTOR_LEFT = RoboRioMap.CAN_18;
   public static int E_MOTOR_RIGHT = RoboRioMap.CAN_19;
