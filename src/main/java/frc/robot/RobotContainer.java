@@ -14,13 +14,18 @@ import frc.robot.commands.AmpAddOn.ScoreAmp;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.BarrelPivot.PivotDownwards;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
+import frc.robot.commands.BarrelPivot.PivotUpwards;
 import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
+import frc.robot.commands.BarrelPivot.resetTargetAngle;
 import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Drive.TurnToRotation;
 import frc.robot.commands.Drive.TurnToTarget;
+import frc.robot.commands.Elevator.Climb;
+import frc.robot.commands.Elevator.UNClimb;
 import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Intake.Expel;
 import frc.robot.commands.Lights.BlinkLights;
@@ -107,9 +112,9 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
     m_ampAddOn = AmpAddOn.getInstance();
-    if (RobotMap.A_ENABLED) {
-      m_ampAddOn.setDefaultCommand(new AmpPivotRelativeAngleControl());
-    }
+    // if (RobotMap.A_ENABLED) {
+    //   m_ampAddOn.setDefaultCommand(new AmpPivotRelativeAngleControl());
+    // }
 
     m_barrelPivot = BarrelPivot.getInstance();
     if (RobotMap.BP_ENABLED) {
@@ -141,6 +146,7 @@ public class RobotContainer {
     new ScoreAmp();
     new UNScoreAmp();
     new AmpSetZeroAsCurrentPosition();
+    new AmpPivotRelativeAngleControl();
 
     // Barrel commands
     new SpinBarrelForward();
@@ -148,6 +154,14 @@ public class RobotContainer {
 
     // BarrelPivot commands
     new SetZeroAsCurrentPosition();
+    new resetTargetAngle();
+    new PivotRelativeAngleControl();
+    new PivotUpwards();
+    new PivotDownwards();
+
+    // Elevator commands
+    new Climb();
+    new UNClimb();
 
     // Intake commands
     new Consume();
