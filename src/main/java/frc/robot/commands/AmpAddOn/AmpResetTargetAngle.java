@@ -4,17 +4,17 @@
 
 package frc.robot.commands.AmpAddOn;
 
-import frc.robot.testingdashboard.Command;
 import frc.robot.subsystems.AmpAddOn;
+import frc.robot.testingdashboard.Command;
 
-public class AmpSetZeroAsCurrentPosition extends Command {
-  AmpAddOn m_ampAddOn;
-  /** Creates a new AmpSetZeroAsCurrentPosition. */
-  public AmpSetZeroAsCurrentPosition() {
-    super(AmpAddOn.getInstance(), "Basic", "AmpSetZeroAsCurrentPosition");
-    m_ampAddOn = AmpAddOn.getInstance();
-    
-    addRequirements(m_ampAddOn);
+public class AmpResetTargetAngle extends Command {
+  AmpAddOn m_AmpAddOn;
+
+  /** Creates a new AmpResetTargetAngle. */
+  public AmpResetTargetAngle() {
+    super(AmpAddOn.getInstance(), "Basic", "AmpResetTargetAngle");
+    m_AmpAddOn = AmpAddOn.getInstance();
+    addRequirements(m_AmpAddOn);
   }
 
   @Override
@@ -25,7 +25,7 @@ public class AmpSetZeroAsCurrentPosition extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ampAddOn.setZeroAsCurrentPosition();
+    m_AmpAddOn.resetTargetAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

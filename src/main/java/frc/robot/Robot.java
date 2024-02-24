@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
 import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
@@ -24,6 +26,7 @@ public class Robot extends TimedRobot {
   private MakeRainbow m_makeRainbow;
   private MakeCool m_makeCool;
   private ResetTargetAngle m_resetTargetAngle;
+  private AmpResetTargetAngle m_ampResetTargetAngle;
 
   private RobotContainer m_robotContainer;
 
@@ -40,6 +43,7 @@ public class Robot extends TimedRobot {
     m_makeRainbow = new MakeRainbow();
     m_makeCool = new MakeCool();
     m_resetTargetAngle = new ResetTargetAngle();
+    m_ampResetTargetAngle = new AmpResetTargetAngle();
   }
 
   /**
@@ -111,6 +115,7 @@ public class Robot extends TimedRobot {
     }
 
     m_resetTargetAngle.schedule();
+    m_ampResetTargetAngle.schedule();
   }
 
   /** This function is called periodically during operator control. */
