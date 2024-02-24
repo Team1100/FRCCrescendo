@@ -239,6 +239,7 @@ public class TestingDashboard {
           String entryName = dataList.get(j);
           double defaultNumberValue = 0;
           String defaultStringValue = "";
+          boolean defaultBooleanValue = false;
           Sendable sendable;
           GenericEntry entry;
           int type = tdt.dataTable.getType(entryName);
@@ -257,8 +258,13 @@ public class TestingDashboard {
               sendable = tdt.dataTable.getDefaultSendableValue(entryName);
               layout.add(entryName, sendable);
               break;
+            case TestingDashboardDataTable.TYPE_BOOLEAN:
+              defaultBooleanValue = tdt.dataTable.getDefaultBooleanValue(entryName);
+              entry = layout.add(entryName, defaultBooleanValue).getEntry();
+              tdt.dataTable.addEntry(entryName, entry);
+              break;
             default:
-              System.out.println("ERROR: Type is " + type + "for data item \"" + entryName);
+              System.out.println("ERROR: Type is " + type + " for data item \"" + entryName + "\"");
               break;
           }
         }
