@@ -69,6 +69,10 @@ public class BarrelPivot extends SubsystemBase {
       m_absoluteEncoder.setPositionConversionFactor(Constants.kBPEncoderPositionFactorDegrees);
       m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
 
+      m_SparkPIDController.setPositionPIDWrappingEnabled(true);
+      m_SparkPIDController.setPositionPIDWrappingMinInput(0);
+      m_SparkPIDController.setPositionPIDWrappingMaxInput(Constants.DEGREES_PER_REVOLUTION);
+
       m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
     }
@@ -86,7 +90,7 @@ public class BarrelPivot extends SubsystemBase {
   }
 
   public void setTargetAngle(double angle) {
-    m_targetAngle.set(angle);
+    m_targetAngle.set(angle % Constants.DEGREES_PER_REVOLUTION);
     m_SparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
   }
 
