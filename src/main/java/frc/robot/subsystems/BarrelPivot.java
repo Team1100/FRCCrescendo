@@ -94,13 +94,17 @@ public class BarrelPivot extends SubsystemBase {
     m_SparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
   }
 
+  public void resetTargetAngle() {
+    setTargetAngle(getAngle());
+  }
+
   public double getTargetAngle() {
     return m_targetAngle.get();
   }
 
   public void setZeroAsCurrentPosition() {
     m_absoluteEncoder.setZeroOffset(getAngle());
-    m_targetAngle.set(0);
+    resetTargetAngle(); 
   }
 
   public void pivotUpwards() {
