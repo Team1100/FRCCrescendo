@@ -17,6 +17,11 @@ public class resetTargetAngle extends Command {
     addRequirements(m_barrelPivot);
   }
 
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
