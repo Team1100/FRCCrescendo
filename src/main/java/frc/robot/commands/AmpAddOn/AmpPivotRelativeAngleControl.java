@@ -32,7 +32,7 @@ public class AmpPivotRelativeAngleControl extends Command {
   @Override
   public void execute() {
     double angle = m_ampAddOn.getTargetAngle();
-    double input = MathUtil.applyDeadband(m_operatorController.getRightY(), Constants.kADeadband);
+    double input = -MathUtil.applyDeadband(m_operatorController.getRightY(), Constants.kADeadband);
 
     angle += input * Constants.A_ANGLE_INCREMENT_DEGREES;
 

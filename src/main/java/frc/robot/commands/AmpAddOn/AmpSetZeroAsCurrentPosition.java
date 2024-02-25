@@ -17,6 +17,11 @@ public class AmpSetZeroAsCurrentPosition extends Command {
     addRequirements(m_ampAddOn);
   }
 
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {

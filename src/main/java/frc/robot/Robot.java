@@ -7,8 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
+import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.subsystems.Barrel;
+import frc.robot.subsystems.BarrelPivot;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,6 +25,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private MakeRainbow m_makeRainbow;
   private MakeCool m_makeCool;
+  private ResetTargetAngle m_resetTargetAngle;
+  private AmpResetTargetAngle m_ampResetTargetAngle;
 
   private RobotContainer m_robotContainer;
 
@@ -32,7 +39,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
     m_makeRainbow = new MakeRainbow();
+    m_makeCool = new MakeCool();
+    m_resetTargetAngle = new ResetTargetAngle();
+    m_ampResetTargetAngle = new AmpResetTargetAngle();
   }
 
   /**
@@ -54,23 +65,20 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_makeRainbow = new MakeRainbow();
-
     if (m_makeCool != null) {
       m_makeCool.cancel();
     }
+
+    m_makeRainbow.schedule();
   }
 
   @Override
-  public void disabledPeriodic() {
-    m_makeRainbow.schedule();
-  }
+  public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_makeCool = new MakeCool();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -80,14 +88,13 @@ public class Robot extends TimedRobot {
     if (m_makeRainbow != null) {
       m_makeRainbow.cancel();
     }
-
+    
+    m_makeCool.schedule();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    m_makeCool.schedule();
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -106,6 +113,9 @@ public class Robot extends TimedRobot {
     if (m_makeCool != null) {
       m_makeCool.cancel();
     }
+
+    m_resetTargetAngle.schedule();
+    m_ampResetTargetAngle.schedule();
   }
 
   /** This function is called periodically during operator control. */

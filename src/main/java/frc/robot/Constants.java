@@ -177,11 +177,11 @@ public final class Constants {
     public static final double kIntakeI = 0;
     public static final double kIntakeD = 0;
 
-    public static final double kIntakeSpeed = 0.3;
+    public static final double kIntakeSpeed = 0.6;
     public static final double INTAKE_SPEED_RPM = 0;
 
     // Defines Lights constants
-    public static final int LED_LENGTH = 35; // number of LEDs
+    public static final int LED_LENGTH = 42; // number of LEDs
 
     // Defines Shooter constants
     public static final boolean kEnableShooterPIDTuning = false;

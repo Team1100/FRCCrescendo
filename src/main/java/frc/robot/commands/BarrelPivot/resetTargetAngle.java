@@ -7,14 +7,19 @@ package frc.robot.commands.BarrelPivot;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.testingdashboard.Command;
 
-public class resetTargetAngle extends Command {
+public class ResetTargetAngle extends Command {
   BarrelPivot m_barrelPivot;
 
-  /** Creates a new resetTargetAngle. */
-  public resetTargetAngle() {
-    super(BarrelPivot.getInstance(), "Basic", "resetTargetAngle");
+  /** Creates a new ResetTargetAngle. */
+  public ResetTargetAngle() {
+    super(BarrelPivot.getInstance(), "Basic", "ResetTargetAngle");
     m_barrelPivot = BarrelPivot.getInstance();
     addRequirements(m_barrelPivot);
+  }
+
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
   }
 
   // Called when the command is initially scheduled.

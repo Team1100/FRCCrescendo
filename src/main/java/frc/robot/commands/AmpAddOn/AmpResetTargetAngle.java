@@ -2,21 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.BarrelPivot;
+package frc.robot.commands.AmpAddOn;
 
+import frc.robot.subsystems.AmpAddOn;
 import frc.robot.testingdashboard.Command;
-import frc.robot.subsystems.Barrel;
-import frc.robot.subsystems.BarrelPivot;
 
-public class SetZeroAsCurrentPosition extends Command {
-  BarrelPivot m_barrelPivot;
+public class AmpResetTargetAngle extends Command {
+  AmpAddOn m_AmpAddOn;
 
-  /** Creates a new setZeroAsCurrentPosition. */
-  public SetZeroAsCurrentPosition() {
-    super(Barrel.getInstance(), "Basic", "SetZeroAsCurrentPosition");
-    m_barrelPivot = BarrelPivot.getInstance();
-    
-    addRequirements(m_barrelPivot);
+  /** Creates a new AmpResetTargetAngle. */
+  public AmpResetTargetAngle() {
+    super(AmpAddOn.getInstance(), "Basic", "AmpResetTargetAngle");
+    m_AmpAddOn = AmpAddOn.getInstance();
+    addRequirements(m_AmpAddOn);
   }
 
   @Override
@@ -27,7 +25,7 @@ public class SetZeroAsCurrentPosition extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_barrelPivot.setZeroAsCurrentPosition();
+    m_AmpAddOn.resetTargetAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
