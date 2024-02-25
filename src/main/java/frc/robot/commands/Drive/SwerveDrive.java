@@ -18,6 +18,10 @@ public class SwerveDrive extends Command {
   private PIDController m_headingController;
   private TDNumber m_TDheading;
   private boolean m_operatorRotating;
+  private double kPheading = 0.01;
+  private double kIheading = 0;
+  private double kDheading = 0;
+  private double kHeadingTolerance = 0.1;
   Drive m_drive;
 
   /** Creates a new SwerveDrive. */
@@ -26,7 +30,7 @@ public class SwerveDrive extends Command {
     m_drive = Drive.getInstance();
     m_DriveInputs = driveInputs;
     m_operatorRotating = false;
-    m_headingController = new PIDController(0.01, 0.0, 0.0);
+    m_headingController = new PIDController(kPheading, kIheading, kDheading);
     m_headingController.enableContinuousInput(-180, 180);
     new TDSendable(m_drive, "Swerve Drive", "Heading Controller", m_headingController);
     m_TDheading = new TDNumber(m_drive, "Swerve Drive", "Target Heading", 0);
@@ -46,7 +50,7 @@ public class SwerveDrive extends Command {
     var rotationPower = -MathUtil.applyDeadband(m_DriveInputs.getRotation(), Constants.kDriveDeadband);
     if (rotationPower == 0) {
       if (m_operatorRotating &&
-          MathUtil.isNear(0, m_drive.getMeasuredSpeeds().omegaRadiansPerSecond, 0.1)) {
+          MathUtil.isNear(0, m_drive.getMeasuredSpeeds().omegaRadiansPerSecond, kHeadingTolerance)) {
         m_operatorRotating = false;
         m_TDheading.set(m_drive.getHeading());
       }
