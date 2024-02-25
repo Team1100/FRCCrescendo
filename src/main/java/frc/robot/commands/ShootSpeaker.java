@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.subsystems.Barrel;
 import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 
@@ -20,6 +21,7 @@ public class ShootSpeaker extends Command {
   SpinBarrelForward m_spinBarrelForward;
   
   Shooter m_shooter;
+  Barrel m_barrel;
 
   private boolean m_isFinished;
   private State m_state;
@@ -32,6 +34,7 @@ public class ShootSpeaker extends Command {
     m_isFinished = false;
 
     m_shooter = Shooter.getInstance();
+    m_barrel = Barrel.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -48,6 +51,9 @@ public class ShootSpeaker extends Command {
       case INIT:
         if (m_shooter.isAtSetSpeed()) {
           m_state = State.SCHEDULE_SPIN_BARREL_FORWARD;
+        }
+        else if (!m_barrel.hasNote()) {
+          m_state = State.DONE;
         }
         break;
 
