@@ -103,6 +103,7 @@ public class RobotMap {
   
   // [A]mp Add-On
   public static boolean A_ENABLED = false;
+  public static boolean A_PIVOT_ENABLED = false;
   public static int A_MOTOR = RoboRioMap.CAN_17;
   public static int A_PIVOT_MOTOR = RoboRioMap.CAN_16;
   public static int A_NOTE_SENSOR = RoboRioMap.DIO_3;
