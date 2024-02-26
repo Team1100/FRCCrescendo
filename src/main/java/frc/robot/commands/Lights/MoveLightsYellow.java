@@ -7,25 +7,26 @@ package frc.robot.commands.Lights;
 import frc.robot.testingdashboard.Command;
 import frc.robot.subsystems.Lights;
 
-public class MoveLights extends Command {
+public class MoveLightsYellow extends Command {
   Lights m_lights;
   int hue;
 
-  /** Creates a new BlinkLights. */
-  public MoveLights() {
-    super(Lights.getInstance(), "Basic", "MoveLights");
+  /** Creates a new MoveLightsYellow. */
+  public MoveLightsYellow() {
+    super(Lights.getInstance(), "Basic", "MoveLightsYellow");
     m_lights = Lights.getInstance();
 
-    hue = 115; // Blue
+    hue = 30; // Dandelion
 
     addRequirements(m_lights);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
+
 
   @Override
-  public boolean runsWhenDisabled() {
-    return true;
-  }
-
+public boolean runsWhenDisabled() {
+  return true;
+}
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -36,7 +37,6 @@ public class MoveLights extends Command {
     m_lights.moveLights(hue);
     m_lights.setData();
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
