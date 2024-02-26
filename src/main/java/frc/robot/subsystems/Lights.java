@@ -89,7 +89,7 @@ public class Lights extends SubsystemBase {
     for (var i = 0; i < m_LEDBuffer.getLength(); i++) {
       // Calculate the hue - hue is easier for rainbows because the color
       // shape is a circle so only one value needs to precess
-      final var hue = 60 + (m_rainbowFirstPixelHue + (i * 60 / m_LEDBuffer.getLength())) % 60;
+      final var hue = 60 + (m_rainbowFirstPixelHue + (i * 120 / m_LEDBuffer.getLength())) % 82;
       // Set the value
       m_LEDBuffer.setHSV(i, hue, 255, 128);
     }

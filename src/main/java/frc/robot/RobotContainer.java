@@ -36,7 +36,11 @@ import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
-import frc.robot.commands.Lights.MoveLights;
+import frc.robot.commands.Lights.MoveLightsBlue;
+import frc.robot.commands.Lights.MoveLightsColor;
+import frc.robot.commands.Lights.MoveLightsGreen;
+import frc.robot.commands.Lights.MoveLightsPurple;
+import frc.robot.commands.Lights.MoveLightsYellow;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.AmpAddOn;
@@ -127,7 +131,7 @@ public class RobotContainer {
     m_intake = Intake.getInstance();
 
     m_lights = Lights.getInstance();
-    m_lights.setDefaultCommand(new MoveLights());
+    m_lights.setDefaultCommand(new MoveLightsBlue());
 
     m_shooter = Shooter.getInstance();
 
@@ -176,8 +180,12 @@ public class RobotContainer {
     new DisableLights();
     new EnableLights();
     new MakeRainbow();
-    new MoveLights();
+    new MoveLightsBlue();
     new MakeCool();
+    new MoveLightsGreen();
+    new MoveLightsYellow();
+    new MoveLightsPurple();
+    new MoveLightsColor();
 
     // Shooter commands
     new IntakeFromShooter();

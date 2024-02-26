@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
-import frc.robot.commands.Lights.MoveLights;
+import frc.robot.commands.Lights.MoveLightsBlue;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.subsystems.Drive;
 import frc.robot.commands.Lights.DisableLights;
