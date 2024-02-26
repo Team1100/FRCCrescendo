@@ -5,36 +5,47 @@
 package frc.robot.commands;
 
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.Intake.Consume;
+import frc.robot.subsystems.AmpAddOn;
 import frc.robot.subsystems.Barrel;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 
-public class ShootSpeaker extends Command {
+public class GroundIntake extends Command {
   enum State {
     INIT,
-    SCHEDULE_SPIN_BARREL_FORWARD,
-    WAIT_FOR_SHOOTER_NOTE_DETECTION,
-    SPIN_BARREL_FORWARD_UNTIL_RELEASE,
+    CHECK_NOTE_LOCATION,
+    SPIN_SUBSYSTEMS_IN,
+    WAIT_FOR_BARREL_NOTE_DETECTION,
     DONE
   }
 
+  Consume m_consume;
   SpinBarrelForward m_spinBarrelForward;
-  
-  Shooter m_shooter;
+
+  Intake m_intake;
   Barrel m_barrel;
+  Shooter m_shooter;
+  AmpAddOn m_ampAddOn;
 
   private boolean m_isFinished;
   private State m_state;
 
-  /** Creates a new ShootSpeaker. */
-  public ShootSpeaker() {
-    super(Shooter.getInstance(), "", "ShootSpeaker");
+  /** Creates a new GroundIntake. */
+  public GroundIntake() {
+    super(Intake.getInstance(), "", "GroundIntake");
 
     m_state = State.INIT;
     m_isFinished = false;
+    
+    m_consume = new Consume();
+    m_spinBarrelForward = new SpinBarrelForward();
 
-    m_shooter = Shooter.getInstance();
+    m_intake = Intake.getInstance();
     m_barrel = Barrel.getInstance();
+    m_shooter = Shooter.getInstance();
+    m_ampAddOn = AmpAddOn.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -49,27 +60,29 @@ public class ShootSpeaker extends Command {
   public void execute() {
     switch (m_state) {
       case INIT:
-        if (m_shooter.isAtSetSpeed()) {
-          m_state = State.SCHEDULE_SPIN_BARREL_FORWARD;
+        m_state = State.CHECK_NOTE_LOCATION;
+        break;
+
+      case CHECK_NOTE_LOCATION:
+        if (!m_intake.hasNote() && !m_barrel.hasNote() && !m_shooter.hasNote() && !m_ampAddOn.hasNote()) {
+          m_state = State.SPIN_SUBSYSTEMS_IN;
         }
-        else if (!m_barrel.hasNote()) {
+        else if (m_intake.hasNote()) {
+          m_state = State.SPIN_SUBSYSTEMS_IN;
+        }
+        else {
           m_state = State.DONE;
         }
         break;
 
-      case SCHEDULE_SPIN_BARREL_FORWARD:
+      case SPIN_SUBSYSTEMS_IN:
+        m_consume.schedule();
         m_spinBarrelForward.schedule();
-        m_state = State.WAIT_FOR_SHOOTER_NOTE_DETECTION;
+        m_state = State.WAIT_FOR_BARREL_NOTE_DETECTION;
         break;
-
-      case WAIT_FOR_SHOOTER_NOTE_DETECTION:
-        if (m_shooter.hasNote()) {
-          m_state = State.SPIN_BARREL_FORWARD_UNTIL_RELEASE;
-        }
-        break;
-
-      case SPIN_BARREL_FORWARD_UNTIL_RELEASE:
-        if (!m_shooter.hasNote()) {
+      
+      case WAIT_FOR_BARREL_NOTE_DETECTION:
+        if (m_barrel.hasNote() && !m_intake.hasNote()) {
           m_state = State.DONE;
         }
         break;
@@ -77,7 +90,7 @@ public class ShootSpeaker extends Command {
       case DONE:
         m_isFinished = true;
         break;
-      
+
       default:
         break;
     }
@@ -86,9 +99,14 @@ public class ShootSpeaker extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    if (m_consume.isScheduled()) {
+      m_consume.cancel();
+    }
     if (m_spinBarrelForward.isScheduled()) {
       m_spinBarrelForward.cancel();
     }
+
+    m_isFinished = true;
   }
 
   // Returns true when the command should end.

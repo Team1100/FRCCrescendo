@@ -114,8 +114,12 @@ public class Robot extends TimedRobot {
       m_makeCool.cancel();
     }
 
-    m_resetTargetAngle.schedule();
-    m_ampResetTargetAngle.schedule();
+    if (RobotMap.BP_ENABLED) {
+      m_resetTargetAngle.schedule();
+    }
+    if (RobotMap.A_PIVOT_ENABLED) {
+      m_ampResetTargetAngle.schedule();
+    }
   }
 
   /** This function is called periodically during operator control. */

@@ -5,10 +5,13 @@
 package frc.robot;
 
 import frc.robot.commands.ExcreteNote;
+import frc.robot.commands.GroundIntake;
 import frc.robot.commands.IngestNote;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.ShootSpeaker;
 import frc.robot.commands.ShooterIngestNote;
 import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
 import frc.robot.commands.AmpAddOn.AmpSetZeroAsCurrentPosition;
 import frc.robot.commands.AmpAddOn.ScoreAmp;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
@@ -112,9 +115,9 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
 
     m_ampAddOn = AmpAddOn.getInstance();
-    // if (RobotMap.A_ENABLED) {
-    //   m_ampAddOn.setDefaultCommand(new AmpPivotRelativeAngleControl());
-    // }
+    if (RobotMap.A_PIVOT_ENABLED) {
+      m_ampAddOn.setDefaultCommand(new AmpPivotRelativeAngleControl());
+    }
 
     m_barrelPivot = BarrelPivot.getInstance();
     if (RobotMap.BP_ENABLED) {
@@ -147,6 +150,7 @@ public class RobotContainer {
     new UNScoreAmp();
     new AmpSetZeroAsCurrentPosition();
     new AmpPivotRelativeAngleControl();
+    new AmpResetTargetAngle();
 
     // Barrel commands
     new SpinBarrelForward();
@@ -184,6 +188,9 @@ public class RobotContainer {
 
     new IngestNote();
     new ExcreteNote();
+
+    new GroundIntake();
+    new ShootSpeaker();
 
     // TDNumber turnTestAngle = new TDNumber(Drive.getInstance(), "Test Inputs", "Turn Angle");
     // new TurnToRotation(()->new Rotation2d(turnTestAngle.get()));
