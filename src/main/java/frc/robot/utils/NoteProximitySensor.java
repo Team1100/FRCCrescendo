@@ -33,7 +33,7 @@ public class NoteProximitySensor {
     }
 
     public void update(){
-        boolean val = m_sensorDIO.get();
+        boolean val = !m_sensorDIO.get();
         if(RobotBase.isSimulation()){
             val = m_testingState.get()!=0;
         }
