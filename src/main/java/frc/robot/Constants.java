@@ -127,6 +127,7 @@ public final class Constants {
 
     //Sensor Constants
     public static final int kSensorDebounceCycles = 6;
+    public static final double kConfusedSensorTimeoutSeconds = 1.5;
 
     // Defines Swerve Module constants
     public static final int kDrivingMotorPinionTeeth = 14;

@@ -23,6 +23,7 @@ import frc.robot.utils.FieldUtils;
 import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
+import frc.robot.commands.MoveNoteToAmp;
 import frc.robot.commands.MoveNoteToBarrel;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
@@ -74,7 +75,8 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
     // new JoystickButton(m_DriverXboxController, Button.kY.value).onTrue(new TurnToTarget(new Pose2d(0,0, new Rotation2d())));
 
-    // new JoystickButton(m_OperatorXboxController, Button.kA.value).onTrue(new MoveNoteToBarrel());
+    new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new MoveNoteToBarrel());
+    new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteToAmp());
     new JoystickButton(m_DriverXboxController, Button.kA.value).onTrue(new DriveToPose(()->{
         Pose2d ampPose = FieldUtils.getInstance().getAmpPose().toPose2d();
         return new Pose2d(ampPose.getX(), ampPose.getY(), new Rotation2d(Units.degreesToRadians(90)));
