@@ -57,7 +57,9 @@ public class OI {
     // TODO: Tune deadband
     m_DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER);
     m_OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER);
-    
+  }
+
+  public void bindControls() {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////

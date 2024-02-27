@@ -25,7 +25,6 @@ import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.SwerveDrive;
 import frc.robot.commands.Drive.TargetDrive;
-import frc.robot.commands.Drive.TurnToRotation;
 import frc.robot.commands.Drive.TurnToTarget;
 import frc.robot.commands.Elevator.Climb;
 import frc.robot.commands.Elevator.UNClimb;
@@ -229,8 +228,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_oi = OI.getInstance();
-    m_oi.getDriverXboxController().getAButton();
+    OI.getInstance().bindControls();
   }
 
   /**
