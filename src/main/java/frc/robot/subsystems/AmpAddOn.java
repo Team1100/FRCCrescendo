@@ -42,6 +42,7 @@ public class AmpAddOn extends SubsystemBase {
 
   TDNumber m_encoderValueRotations;
   TDNumber m_encoderValueAngleDegrees;
+  TDNumber m_rollerSpeedRPM;
 
   CANSparkMax m_CanSparkMax;
   CANSparkMax m_PivotCanSparkMax;
@@ -100,6 +101,7 @@ public class AmpAddOn extends SubsystemBase {
 
     m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
     m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
+    m_rollerSpeedRPM = new TDNumber(this, "Encoder Values", "Measured Roller Speed RPM");
 
     m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
   }
@@ -241,6 +243,7 @@ public class AmpAddOn extends SubsystemBase {
 
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees.set(getAngle());
+      m_rollerSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
     }
     super.periodic();
     if(m_NoteProximitySensor != null) {
