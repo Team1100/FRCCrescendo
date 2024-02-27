@@ -40,6 +40,7 @@ import frc.robot.commands.Lights.MoveLightsColor;
 import frc.robot.commands.Lights.MoveLightsGreen;
 import frc.robot.commands.Lights.MoveLightsPurple;
 import frc.robot.commands.Lights.MoveLightsYellow;
+import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.AmpAddOn;
@@ -202,6 +203,8 @@ public class RobotContainer {
 
     new GroundIntake();
     new ShootSpeaker();
+
+    new ResetAllSensors();
 
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
     TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");
