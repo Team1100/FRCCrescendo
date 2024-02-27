@@ -88,11 +88,19 @@ public class Barrel extends SubsystemBase {
   }
 
   public boolean hasNote() {
-    return m_NoteProximitySensor.hasNote();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.hasNote();
+    } else {
+      return false;
+    }
   }
 
   public boolean noteCenteredOnSensor() {
-    return m_NoteProximitySensor.noteIsCentered();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.noteIsCentered();  
+    } else {
+      return false;
+    }
   }
 
 
