@@ -6,6 +6,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
+
+import edu.wpi.first.math.MathUtil;
+
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -148,6 +151,22 @@ public class AmpAddOn extends SubsystemBase {
   public void setZeroAsCurrentPosition() {
     m_absoluteEncoder.setZeroOffset(getAngle());
     resetTargetAngle();
+  }
+
+  public boolean pivotAtTargetAngle() {
+    return MathUtil.isNear(m_targetAngle.get(), getAngle(), Constants.kAPivotToleranceDegrees);
+  }
+
+  public boolean pivotAtIntake() {
+    return MathUtil.isNear(Constants.kAPivotIntakePositionDegrees, getAngle(), Constants.kAPivotToleranceDegrees);
+  }
+
+  public boolean pivotUp() {
+    return MathUtil.isNear(Constants.kAPivotUpPositionDegrees, getAngle(), Constants.kAPivotToleranceDegrees);
+  }
+
+  public boolean pivotAtDeliverPosition() {
+    return MathUtil.isNear(Constants.kAPivotDeliverAmpPositionDegrees, getAngle(), Constants.kAPivotToleranceDegrees);
   }
 
   public boolean hasNote() {

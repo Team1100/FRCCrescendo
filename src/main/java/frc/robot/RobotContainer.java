@@ -48,6 +48,7 @@ import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.SensorMonitor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.testingdashboard.TDNumber;
@@ -85,6 +86,7 @@ public class RobotContainer {
   private final Intake m_intake;
   private final Lights m_lights;
   private final Shooter m_shooter;
+  private final SensorMonitor m_SensorMonitor;
   private final BarrelPivot m_barrelPivot;
   private final AmpAddOn m_ampAddOn;
   private final SendableChooser<Command> m_autoChooser;
@@ -136,6 +138,8 @@ public class RobotContainer {
     m_shooter = Shooter.getInstance();
 
     m_Vision = Vision.getInstance();
+
+    m_SensorMonitor = SensorMonitor.getInstance();
 
     // Build the auto commands and add them to the chooser
     m_autoChooser = AutoBuilder.buildAutoChooser("3NotePaths");
@@ -200,12 +204,11 @@ public class RobotContainer {
     new GroundIntake();
     new ShootSpeaker();
 
-    // TDNumber turnTestAngle = new TDNumber(Drive.getInstance(), "Test Inputs", "Turn Angle");
-    // new TurnToRotation(()->new Rotation2d(turnTestAngle.get()));
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
     TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");
-    Pose2d targetPose = new Pose2d(testX.get(), testY.get(), new Rotation2d());
-    new TurnToTarget(targetPose);
+    new TurnToTarget(()->{
+      return new Pose2d(testX.get(), testY.get(), new Rotation2d());
+    });
 
     new TargetDrive(()->{
       return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//

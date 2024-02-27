@@ -41,7 +41,10 @@ public class DriveToPose extends Command {
     if (m_currentPathCommand == null || m_currentTarget == null || !m_currentTarget.equals(targetPose))
     {
       m_currentPathCommand = new PathfindHolonomic(targetPose,
-                                                   new PathConstraints(10.0, 10.0, 10.0, 10.0),
+                                                   new PathConstraints(Constants.kAutoMaxSpeedMpS,
+                                                                       Constants.kAutoMaxAccelerationMpSS,
+                                                                       Constants.kAutoMaxAngularSpeedRpS,
+                                                                       Constants.kAutoMaxAngularAccelRpSS),
                                                    m_Drive::getPose,
                                                    m_Drive::getMeasuredSpeeds,
                                                    m_Drive::drive,

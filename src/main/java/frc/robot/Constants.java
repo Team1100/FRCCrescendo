@@ -47,6 +47,10 @@ public final class Constants {
     public static final double kAmpPivotD = 0;
 
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
+    public static final double kAPivotToleranceDegrees = 5;
+    public static final double kAPivotIntakePositionDegrees = 0;
+    public static final double kAPivotUpPositionDegrees = 0;
+    public static final double kAPivotDeliverAmpPositionDegrees = 0;
     
     public static final double A_ANGLE_INCREMENT_DEGREES = 0.2;
     public static final double kADeadband = 0.05;
@@ -120,6 +124,10 @@ public final class Constants {
 
     // Defines Neo Motor constant
     public static final double kFreeSpeedRpm = 5676;
+
+    //Sensor Constants
+    public static final int kSensorDebounceCycles = 6;
+    public static final double kConfusedSensorTimeoutSeconds = 1.5;
 
     // Defines Swerve Module constants
     public static final int kDrivingMotorPinionTeeth = 14;
@@ -214,10 +222,16 @@ public final class Constants {
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 
-    //Autonomous driving constants
+    //Driver control rate limits
     public static final double kMaxAccelerationMetersPerSecondSquared = 10;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = 4*Math.PI;
+
+    //Autonomous control rate limits(Driver control limits are applied after so should be <=)
+    public static final double kAutoMaxAccelerationMpSS = 2;
+    public static final double kAutoMaxSpeedMpS = 2;
+    public static final double kAutoMaxAngularAccelRpSS = 2 * Math.PI;
+    public static final double kAutoMaxAngularSpeedRpS = Math.PI;
 
     public static final double kPXController = 1;
     public static final double kPYController = 1;
