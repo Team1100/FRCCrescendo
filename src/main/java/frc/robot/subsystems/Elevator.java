@@ -17,9 +17,12 @@ import frc.robot.testingdashboard.TDNumber;
 public class Elevator extends SubsystemBase {
   private static Elevator m_Elevator;
 
-  TDNumber m_P;
-  TDNumber m_I;
-  TDNumber m_D;
+  TDNumber m_TDclimbP;
+  TDNumber m_TDclimbI;
+  TDNumber m_TDclimbD;
+  double   m_climbP = Constants.kElevatorPivotP;
+  double   m_climbI = Constants.kElevatorPivotI;
+  double   m_climbD = Constants.kElevatorPivotD;
 
   CANSparkMax m_LeftCanSparkMax;
   CANSparkMax m_RightCanSparkMax;
@@ -29,6 +32,10 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     super("Elevator");
     if(RobotMap.E_ELEVATOR_ENABLED) {
+
+      m_TDclimbP = new TDNumber(this, "Climber PID", "P", Constants.kElevatorPivotP);
+      m_TDclimbI = new TDNumber(this, "Climber PID", "I", Constants.kElevatorPivotI);
+      m_TDclimbD = new TDNumber(this, "Climber PID", "D", Constants.kElevatorPivotD);
       m_LeftCanSparkMax = new CANSparkMax(RobotMap.E_MOTOR_LEFT, MotorType.kBrushless);
       m_RightCanSparkMax = new CANSparkMax(RobotMap.E_MOTOR_RIGHT, MotorType.kBrushless);
 
@@ -40,9 +47,9 @@ public class Elevator extends SubsystemBase {
 
       m_SparkPIDController = m_LeftCanSparkMax.getPIDController();
 
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+      m_SparkPIDController.setP(m_climbP);
+      m_SparkPIDController.setI(m_climbI);
+      m_SparkPIDController.setD(m_climbD);
 
     }
   }
@@ -85,9 +92,21 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (Constants.kEnableElevatorPivotPIDTuning && m_LeftCanSparkMax != null) {
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+      double tmp = m_TDclimbP.get();
+      if (tmp != m_climbP) {
+        m_SparkPIDController.setP(tmp);
+        m_climbP = tmp;
+      }
+      tmp = m_TDclimbI.get();
+      if (tmp != m_climbI) {
+        m_SparkPIDController.setI(tmp);
+        m_climbI = tmp;
+      }
+      tmp = m_TDclimbD.get();
+      if (tmp != m_climbD) {
+        m_SparkPIDController.setD(tmp);
+        m_climbD = tmp;
+      }
     }
     
     super.periodic();

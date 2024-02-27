@@ -21,9 +21,12 @@ import frc.robot.utils.NoteProximitySensor;
 public class Shooter extends SubsystemBase {
   private static Shooter m_shooter;
 
-  TDNumber m_P;
-  TDNumber m_I;
-  TDNumber m_D;
+  TDNumber m_TDshootP;
+  TDNumber m_TDshootI;
+  TDNumber m_TDshootD;
+  double   m_shootP = Constants.kShooterP;
+  double   m_shootI = Constants.kShooterI;
+  double   m_shootD = Constants.kShooterD;
   
   CANSparkMax m_SLeftSparkMax;
   CANSparkMax m_SRightSparkMax;
@@ -55,17 +58,17 @@ public class Shooter extends SubsystemBase {
       m_leftSpeedSetpoint = 0;
       m_rightSpeedSetpoint = 0;
 
-      m_P = new TDNumber(this, "ShooterPID", "P", Constants.kShooterP);
-      m_I = new TDNumber(this, "ShooterPID", "I", Constants.kShooterI);
-      m_D = new TDNumber(this, "ShooterPID", "D", Constants.kShooterD);
+      m_TDshootP = new TDNumber(this, "ShooterPID", "P", Constants.kShooterP);
+      m_TDshootI = new TDNumber(this, "ShooterPID", "I", Constants.kShooterI);
+      m_TDshootD = new TDNumber(this, "ShooterPID", "D", Constants.kShooterD);
 
-      m_LeftSparkPIDController.setP(m_P.get());
-      m_LeftSparkPIDController.setI(m_I.get());
-      m_LeftSparkPIDController.setD(m_D.get());
+      m_LeftSparkPIDController.setP(m_shootP);
+      m_LeftSparkPIDController.setI(m_shootI);
+      m_LeftSparkPIDController.setD(m_shootD);
 
-      m_RightSparkPIDController.setP(m_P.get());
-      m_RightSparkPIDController.setI(m_I.get());
-      m_RightSparkPIDController.setD(m_D.get());
+      m_RightSparkPIDController.setP(m_shootP);
+      m_RightSparkPIDController.setI(m_shootI);
+      m_RightSparkPIDController.setD(m_shootD);
 
       m_NoteProximitySensor = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR, this);
     }
@@ -138,13 +141,32 @@ public class Shooter extends SubsystemBase {
     if (Constants.kEnableShooterPIDTuning && 
         m_LeftSparkPIDController != null &&
         m_RightSparkPIDController != null) {
-      m_LeftSparkPIDController.setP(m_P.get());
-      m_LeftSparkPIDController.setI(m_I.get());
-      m_LeftSparkPIDController.setD(m_D.get());
+      m_LeftSparkPIDController.setP(m_shootP);
+      m_LeftSparkPIDController.setI(m_shootI);
+      m_LeftSparkPIDController.setD(m_shootD);
 
-      m_RightSparkPIDController.setP(m_P.get());
-      m_RightSparkPIDController.setI(m_I.get());
-      m_RightSparkPIDController.setD(m_D.get());
+      m_RightSparkPIDController.setP(m_shootP);
+      m_RightSparkPIDController.setI(m_shootI);
+      m_RightSparkPIDController.setD(m_shootD);
+
+      double tmp = m_TDshootP.get();
+      if (tmp != m_shootP) {
+        m_LeftSparkPIDController.setP(tmp);
+        m_RightSparkPIDController.setP(tmp);
+        m_shootP = tmp;
+      }
+      tmp = m_TDshootI.get();
+      if (tmp != m_shootI) {
+        m_LeftSparkPIDController.setI(tmp);
+        m_RightSparkPIDController.setI(tmp);
+        m_shootI = tmp;
+      }
+      tmp = m_TDshootD.get();
+      if (tmp != m_shootD) {
+        m_LeftSparkPIDController.setD(tmp);
+        m_RightSparkPIDController.setD(tmp);
+        m_shootD = tmp;
+      }      
     }
 
     super.periodic();
