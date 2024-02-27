@@ -96,12 +96,12 @@ public class AmpAddOn extends SubsystemBase {
       m_SparkPIDController.setPositionPIDWrappingEnabled(true);
       m_SparkPIDController.setPositionPIDWrappingMinInput(0);
       m_SparkPIDController.setPositionPIDWrappingMaxInput(Constants.DEGREES_PER_REVOLUTION);
-
-      m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
-      m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
-
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
     }
+
+    m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
+    m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
+
+    m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
   }
 
   public static AmpAddOn getInstance() {
@@ -112,6 +112,9 @@ public class AmpAddOn extends SubsystemBase {
   }
 
   public void setSpeed(double RPM, boolean backwards) {
+
+    if (m_SparkPIDController == null) return;
+
     if (!backwards) {
       m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
     }
@@ -139,12 +142,17 @@ public class AmpAddOn extends SubsystemBase {
   }
 
   public double getAngle() {
-    return m_absoluteEncoder.getPosition();
+    if (m_absoluteEncoder != null) {
+      return m_absoluteEncoder.getPosition();
+    }
+    return 45;
   }
 
   public void setTargetAngle(double angle) {
     m_targetAngle.set(angle % Constants.DEGREES_PER_REVOLUTION);
-    m_PivotSparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
+    if (m_PivotSparkPIDController != null) {
+      m_PivotSparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
+    }
   }
 
   public void resetTargetAngle() {
@@ -156,7 +164,9 @@ public class AmpAddOn extends SubsystemBase {
   }
 
   public void setZeroAsCurrentPosition() {
-    m_absoluteEncoder.setZeroOffset(getAngle());
+    if (m_absoluteEncoder != null) {
+      m_absoluteEncoder.setZeroOffset(getAngle());
+    }
     resetTargetAngle();
   }
 
