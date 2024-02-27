@@ -18,9 +18,12 @@ import frc.robot.utils.NoteProximitySensor;
 public class Barrel extends SubsystemBase {
   private static Barrel m_barrel;
 
-  TDNumber m_P;
-  TDNumber m_I;
-  TDNumber m_D;
+  TDNumber m_TDrollerP;
+  TDNumber m_TDrollerI;
+  TDNumber m_TDrollerD;
+  double m_rollerP = Constants.kBarrelP;
+  double m_rollerI = Constants.kBarrelI;
+  double m_rollerD = Constants.kBarrelD;
 
   CANSparkMax m_CanSparkMax;
   SparkPIDController m_SparkPIDController;
@@ -38,13 +41,13 @@ public class Barrel extends SubsystemBase {
 
       m_SparkPIDController = m_CanSparkMax.getPIDController();
 
-      m_P = new TDNumber(this, "BarrelPID", "P", Constants.kBarrelP);
-      m_I = new TDNumber(this, "BarrelPID", "I", Constants.kBarrelI);
-      m_D = new TDNumber(this, "BarrelPID", "D", Constants.kBarrelD);
+      m_TDrollerP = new TDNumber(this, "BarrelPID", "P", Constants.kBarrelP);
+      m_TDrollerI = new TDNumber(this, "BarrelPID", "I", Constants.kBarrelI);
+      m_TDrollerD = new TDNumber(this, "BarrelPID", "D", Constants.kBarrelD);
 
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+      m_SparkPIDController.setP(m_rollerP);
+      m_SparkPIDController.setI(m_rollerI);
+      m_SparkPIDController.setD(m_rollerD);
 
       m_NoteProximitySensor = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR, this);
     }
@@ -98,9 +101,22 @@ public class Barrel extends SubsystemBase {
     // This method will be called once per scheduler run
     if (Constants.kEnableBarrelPIDTuning && 
         m_CanSparkMax != null) {
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+
+      double tmp = m_TDrollerP.get();
+      if (tmp != m_rollerP) {
+        m_SparkPIDController.setP(tmp);
+        m_rollerP = tmp;
+      }
+      tmp = m_TDrollerI.get();
+      if (tmp != m_rollerI) {
+        m_SparkPIDController.setI(tmp);
+        m_rollerI = tmp;
+      }
+      tmp = m_TDrollerD.get();
+      if (tmp != m_rollerD) {
+        m_SparkPIDController.setD(tmp);
+        m_rollerD = tmp;
+      }
     }
 
     super.periodic();

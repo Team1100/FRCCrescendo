@@ -19,9 +19,12 @@ import frc.robot.utils.NoteProximitySensor;
 public class Intake extends SubsystemBase {
   private static Intake m_intake;
 
-  TDNumber m_P;
-  TDNumber m_I;
-  TDNumber m_D;
+  TDNumber m_TDintakeP;
+  TDNumber m_TDintakeI;
+  TDNumber m_TDintakeD;
+  double   m_intakeP = Constants.kIntakeP;
+  double   m_intakeI = Constants.kIntakeI;
+  double   m_intakeD = Constants.kIntakeD;
   
   CANSparkMax m_ILeftSparkMax;
   CANSparkMax m_IRightSparkMax;
@@ -48,13 +51,13 @@ public class Intake extends SubsystemBase {
 
       m_SparkPIDController = m_ILeftSparkMax.getPIDController();
 
-      m_P = new TDNumber(this, "IntakePID", "P", Constants.kIntakeP);
-      m_I = new TDNumber(this, "IntakePID", "I", Constants.kIntakeI);
-      m_D = new TDNumber(this, "IntakePID", "D", Constants.kIntakeD);
+      m_TDintakeP = new TDNumber(this, "IntakePID", "P", Constants.kIntakeP);
+      m_TDintakeI = new TDNumber(this, "IntakePID", "I", Constants.kIntakeI);
+      m_TDintakeD = new TDNumber(this, "IntakePID", "D", Constants.kIntakeD);
 
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+      m_SparkPIDController.setP(m_intakeP);
+      m_SparkPIDController.setI(m_intakeI);
+      m_SparkPIDController.setD(m_intakeD);
 
       m_NoteProximitySensor = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR, this);
     }
@@ -104,9 +107,21 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     if (Constants.kEnableIntakePIDTuning && 
         m_SparkPIDController != null) {
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+          double tmp = m_TDintakeP.get();
+          if (tmp != m_intakeP) {
+            m_SparkPIDController.setP(tmp);
+            m_intakeP = tmp;
+          }
+          tmp = m_TDintakeI.get();
+          if (tmp != m_intakeI) {
+            m_SparkPIDController.setI(tmp);
+            m_intakeI = tmp;
+          }
+          tmp = m_TDintakeD.get();
+          if (tmp != m_intakeD) {
+            m_SparkPIDController.setD(tmp);
+            m_intakeD = tmp;
+          }
     }
     
     super.periodic();

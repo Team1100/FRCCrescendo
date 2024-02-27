@@ -56,7 +56,7 @@ public final class Constants {
     public static final double kADeadband = 0.05;
 
     // Defines Barrel constants
-    public static final boolean kEnableBarrelPIDTuning = false;
+    public static final boolean kEnableBarrelPIDTuning = true;
     public static final double kBarrelP = 0;
     public static final double kBarrelI = 0;
     public static final double kBarrelD = 0;
@@ -89,7 +89,7 @@ public final class Constants {
     public static final double ELEVATOR_SPEED = 0.2;
     public static final double ELEVATOR_SPEED_RPM = 0;
 
-    public static final boolean kEnableElevatorPivotPIDTuning = false;
+    public static final boolean kEnableElevatorPivotPIDTuning = true;
     public static final double kElevatorPivotP = 0;
     public static final double kElevatorPivotI = 0;
     public static final double kElevatorPivotD = 0;
@@ -180,7 +180,7 @@ public final class Constants {
     public static final double kDriveDeadband = 0.2;
 
     // Defines Intake constants
-    public static final boolean kEnableIntakePIDTuning = false;
+    public static final boolean kEnableIntakePIDTuning = true;
     public static final double kIntakeP = 0;
     public static final double kIntakeI = 0;
     public static final double kIntakeD = 0;
@@ -192,7 +192,7 @@ public final class Constants {
     public static final int LED_LENGTH = 42; // number of LEDs
 
     // Defines Shooter constants
-    public static final boolean kEnableShooterPIDTuning = false;
+    public static final boolean kEnableShooterPIDTuning = true;
     public static final double kShooterP = 0;
     public static final double kShooterI = 0;
     public static final double kShooterD = 0;

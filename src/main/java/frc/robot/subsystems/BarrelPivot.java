@@ -22,9 +22,12 @@ public class BarrelPivot extends SubsystemBase {
   private static BarrelPivot m_barrelPivot;
 
   TDNumber m_targetAngle;
-  TDNumber m_P;
-  TDNumber m_I;
-  TDNumber m_D;
+  TDNumber m_TDangleP;
+  TDNumber m_TDangleI;
+  TDNumber m_TDangleD;
+  double   m_angleP = Constants.kBarrelPivotP;
+  double   m_angleI = Constants.kBarrelPivotI;
+  double   m_angleD = Constants.kBarrelPivotD;
   TDNumber m_encoderValueRotations;
   TDNumber m_encoderValueAngleDegrees;
   
@@ -56,13 +59,13 @@ public class BarrelPivot extends SubsystemBase {
 
       m_SparkPIDController = m_BPLeftSparkMax.getPIDController();
 
-      m_P = new TDNumber(this, "Barrel Pivot PID", "P", Constants.kBarrelPivotP);
-      m_I = new TDNumber(this, "Barrel Pivot PID", "I", Constants.kBarrelPivotI);
-      m_D = new TDNumber(this, "Barrel Pivot PID", "D", Constants.kBarrelPivotD);
+      m_TDangleP = new TDNumber(this, "Barrel Pivot PID", "P", Constants.kBarrelPivotP);
+      m_TDangleI = new TDNumber(this, "Barrel Pivot PID", "I", Constants.kBarrelPivotI);
+      m_TDangleD = new TDNumber(this, "Barrel Pivot PID", "D", Constants.kBarrelPivotD);
 
-      m_SparkPIDController.setP(m_P.get());
-      m_SparkPIDController.setI(m_I.get());
-      m_SparkPIDController.setD(m_D.get());
+      m_SparkPIDController.setP(m_angleP);
+      m_SparkPIDController.setI(m_angleI);
+      m_SparkPIDController.setD(m_angleD);
 
       m_absoluteEncoder = m_BPLeftSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
       m_SparkPIDController.setFeedbackDevice(m_absoluteEncoder);
@@ -154,9 +157,21 @@ public class BarrelPivot extends SubsystemBase {
   public void periodic() {
     if (RobotMap.BP_ENABLED) {
       if (Constants.kEnableBarrelPivotPIDTuning) {
-        m_SparkPIDController.setP(m_P.get());
-        m_SparkPIDController.setI(m_I.get());
-        m_SparkPIDController.setD(m_D.get());
+        double tmp = m_TDangleP.get();
+        if (tmp != m_angleP) {
+          m_SparkPIDController.setP(tmp);
+          m_angleP = tmp;
+        }
+        tmp = m_TDangleI.get();
+        if (tmp != m_angleI) {
+          m_SparkPIDController.setI(tmp);
+          m_angleI = tmp;
+        }
+        tmp = m_TDangleD.get();
+        if (tmp != m_angleD) {
+          m_SparkPIDController.setD(tmp);
+          m_angleD = tmp;
+        }
       }
 
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
