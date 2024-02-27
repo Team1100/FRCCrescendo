@@ -59,6 +59,13 @@ public class SensorMonitor extends SubsystemBase {
     return true;
   }
 
+  public void resetAllSensors() {
+    m_intake.resetSensor();
+    m_barrel.resetSensor();
+    m_shooter.resetSensor();
+    m_amp.resetSensor();
+  }
+
   @Override
   public void periodic() {
     NoteLocation currentLocation = determineLocation();

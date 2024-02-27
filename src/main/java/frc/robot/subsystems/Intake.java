@@ -112,6 +112,11 @@ public class Intake extends SubsystemBase {
     }
   }
 
+  public void resetSensor() {
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.reset();
+    }
+  }
 
   @Override
   public void periodic() {
