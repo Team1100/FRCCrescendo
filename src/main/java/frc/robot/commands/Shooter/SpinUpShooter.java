@@ -51,12 +51,7 @@ public class SpinUpShooter extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (m_enablePID.get() == 1) {
-      m_shooter.setSpeeds(0, 0, false);
-    }
-    else {
       m_shooter.spinStop();
-    }
   }
 
   // Returns true when the command should end.
