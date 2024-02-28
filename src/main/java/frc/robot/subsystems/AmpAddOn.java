@@ -64,7 +64,7 @@ public class AmpAddOn extends SubsystemBase {
 
       m_PivotCanSparkMax.setIdleMode(IdleMode.kBrake);
 
-      m_CanSparkMax.setInverted(false);
+      m_CanSparkMax.setInverted(true);
       m_PivotCanSparkMax.setInverted(true);
       
       m_SparkPIDController = m_CanSparkMax.getPIDController();
@@ -93,10 +93,6 @@ public class AmpAddOn extends SubsystemBase {
       m_absoluteEncoder.setInverted(false);
       m_absoluteEncoder.setPositionConversionFactor(Constants.kAEncoderPositionFactorDegrees);
       m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
-
-      m_SparkPIDController.setPositionPIDWrappingEnabled(true);
-      m_SparkPIDController.setPositionPIDWrappingMinInput(0);
-      m_SparkPIDController.setPositionPIDWrappingMaxInput(Constants.DEGREES_PER_REVOLUTION);
     }
 
     m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
