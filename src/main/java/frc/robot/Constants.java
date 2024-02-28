@@ -13,6 +13,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -216,6 +217,12 @@ public final class Constants {
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
             AprilTagFields.kDefaultField.loadAprilTagLayoutField();
+
+    //Determine these Poses on a real field
+    public static final Pose2d kSourceIntake1Pose = new Pose2d();
+    public static final Pose2d kSourceIntake3Pose = new Pose2d();
+    public static final Pose2d kAmpScorePose = new Pose2d();
+    public static final Pose2d kSpeakerScorePose = new Pose2d();
 
     // The standard deviations of our vision estimated poses, which affect correction rate
     // (Fake values. Experiment and determine estimation noise on an actual robot.)
