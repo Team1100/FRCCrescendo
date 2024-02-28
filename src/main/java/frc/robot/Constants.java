@@ -219,10 +219,15 @@ public final class Constants {
             AprilTagFields.kDefaultField.loadAprilTagLayoutField();
 
     //Determine these Poses on a real field
-    public static final Pose2d kSourceIntake1Pose = new Pose2d();
-    public static final Pose2d kSourceIntake3Pose = new Pose2d();
-    public static final Pose2d kAmpScorePose = new Pose2d();
-    public static final Pose2d kSpeakerScorePose = new Pose2d();
+    public static final Pose2d kSource1RedPose = new Pose2d();
+    public static final Pose2d kSource3RedPose = new Pose2d();
+    public static final Pose2d kAmpScoreRedPose = new Pose2d();
+    public static final Pose2d kSpeakerScoreRedPose = new Pose2d();
+
+    public static final Pose2d kSource1BluePose = new Pose2d();
+    public static final Pose2d kSource3BluePose = new Pose2d();
+    public static final Pose2d kAmpScoreBluePose = new Pose2d();
+    public static final Pose2d kSpeakerScoreBluePose = new Pose2d();
 
     // The standard deviations of our vision estimated poses, which affect correction rate
     // (Fake values. Experiment and determine estimation noise on an actual robot.)

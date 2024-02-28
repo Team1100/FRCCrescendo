@@ -76,4 +76,41 @@ public class FieldUtils{
         Translation2d toTarget = targetTrans.minus(curTrans);
         return toTarget.getAngle();
     }
+
+    //Robot poses on field for driving
+    public Pose2d getSource1Pose() {
+        if(DriverStation.getAlliance().isPresent() &&
+         (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)) {
+            return Constants.kSource1RedPose;
+         } else {
+            return Constants.kSource1BluePose;
+         }
+    }
+
+    public Pose2d getSource3Pose() {
+        if(DriverStation.getAlliance().isPresent() &&
+         (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)) {
+            return Constants.kSource3RedPose;
+         } else {
+            return Constants.kSource3BluePose;
+         }
+    }
+
+    public Pose2d getAmpScorePose() {
+        if(DriverStation.getAlliance().isPresent() &&
+          (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)) {
+            return Constants.kAmpScoreRedPose;
+        } else {
+            return Constants.kAmpScoreBluePose;
+        }
+    }
+
+    public Pose2d getSpeakerScorePose() {
+        if(DriverStation.getAlliance().isPresent() &&
+          (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)) {
+            return Constants.kSpeakerScoreRedPose;
+        } else {
+            return Constants.kSpeakerScoreBluePose;
+        }
+    }
 }
