@@ -45,6 +45,7 @@ import frc.robot.commands.Lights.MoveLightsGreen;
 import frc.robot.commands.Lights.MoveLightsPurple;
 import frc.robot.commands.Lights.MoveLightsYellow;
 import frc.robot.commands.Sensors.ResetAllSensors;
+import frc.robot.commands.Sensors.ToggleSensorsOnOff;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.AmpAddOn;
@@ -197,6 +198,9 @@ public class RobotContainer {
     new MoveLightsYellow();
     new MoveLightsPurple();
     new MoveLightsColor();
+
+    // Sensor commands
+    new ToggleSensorsOnOff();
 
     // Shooter commands
     new IntakeFromShooter();

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 
 import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDBoolean;
 import frc.robot.testingdashboard.TDString;
 
 public class SensorMonitor extends SubsystemBase {
@@ -25,10 +26,12 @@ public class SensorMonitor extends SubsystemBase {
     c_ShooterAndAmp,
     c_Amp,
     c_NoNote,
-    c_Invalid
+    c_Invalid,
+    c_SensorsDisabled
   }
 
   private TDString m_noteLocation;
+  private TDBoolean m_sensorsEnabled;
 
   public static SensorMonitor getInstance(){
     if(m_instance == null){
@@ -46,6 +49,12 @@ public class SensorMonitor extends SubsystemBase {
     m_amp = AmpAddOn.getInstance();
 
     m_noteLocation = new TDString(this, "", "Note Location", "No Note In Robot");
+    m_sensorsEnabled = new TDBoolean(this, "Toggle Sensors", "Sensors Enabled", true);
+  }
+
+  /** Flips the value of sensorsEnabled boolean */
+  public void toggleSensorsOnOff() {
+    m_sensorsEnabled.set(!m_sensorsEnabled.get());
   }
 
   public boolean isValidState() {
@@ -55,6 +64,8 @@ public class SensorMonitor extends SubsystemBase {
       return (!m_amp.hasNote() && !(m_shooter.hasNote() && m_intake.hasNote()));
     } else if(m_shooter.hasNote()){
       return (!m_intake.hasNote() && !(m_barrel.hasNote() && m_amp.hasNote()));
+    } else if(!m_sensorsEnabled.get()) {
+      return false;
     }
     return true;
   }
@@ -94,6 +105,8 @@ public class SensorMonitor extends SubsystemBase {
         return "No Note In Robot";
       case c_Invalid:
         return "Invalid Sensor State";
+      case c_SensorsDisabled:
+        return "Sensors Disabled";
     
       default:
         return "Invalid Sensor State";
@@ -102,7 +115,12 @@ public class SensorMonitor extends SubsystemBase {
 
   public NoteLocation determineLocation() {
     if(!isValidState()){
-      return NoteLocation.c_Invalid;
+      if (!m_sensorsEnabled.get()) {
+        return NoteLocation.c_SensorsDisabled;
+      }
+      else {
+        return NoteLocation.c_Invalid;
+      }
     }
 
     if(m_intake.hasNote()){
