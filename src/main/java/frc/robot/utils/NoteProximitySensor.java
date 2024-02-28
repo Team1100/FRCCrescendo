@@ -19,52 +19,34 @@ public class NoteProximitySensor {
         c_State_Middle_Hole,
         c_State_Second_Leg
     };
-    private DigitalInput m_sensorDIO;
+    private DebouncedDioSensor m_sensor;
     private State m_state;
 
     private TDString m_tdState;
-    private TDNumber m_testingState;
-    private TDNumber m_debounceIncrementer;
 
     public NoteProximitySensor(int dioPort, SubsystemBase subsystem) {
-        m_sensorDIO = new DigitalInput(dioPort);
+        m_sensor = new DebouncedDioSensor(dioPort, subsystem);
         m_state = State.c_State_No_Note;
         String sensorName = subsystem.getName() + "NoteSensor";
         m_tdState = new TDString(subsystem, "Sensors", sensorName);
-        m_testingState = new TDNumber(subsystem, "Sensors", "SensorValue", 0);
-        m_debounceIncrementer = new TDNumber(subsystem, "Sensors", sensorName+"Debounce");
     }
 
     public void update(){
-        boolean val = !m_sensorDIO.get();
-        if(RobotBase.isSimulation()){
-            val = m_testingState.get()!=0;
-        }
+        m_sensor.update();
+        boolean val = m_sensor.get();
         State nextState = State.c_State_No_Note;
 
         switch (m_state) {
             case c_State_No_Note:
                 nextState = State.c_State_No_Note;
                 if(val){
-                    incrementDebounce();
-                } else {
-                    resetDebounce();
-                }
-                if(debounceComplete()) {
-                    resetDebounce();
                     nextState = State.c_State_First_Leg;
                 }
                 break;
 
             case c_State_First_Leg:
                 nextState = State.c_State_First_Leg;
-                if(val){
-                    resetDebounce();
-                } else {
-                    incrementDebounce();
-                }
-                if(debounceComplete()) {
-                    resetDebounce();
+                if(!val){
                     nextState = State.c_State_Middle_Hole;
                 }
                 break;
@@ -72,26 +54,14 @@ public class NoteProximitySensor {
             case c_State_Middle_Hole:
                 nextState = State.c_State_Middle_Hole;
                 if(val){
-                    incrementDebounce();
-                } else {
-                    resetDebounce();
-                }
-                if(debounceComplete()) {
                     nextState = State.c_State_Second_Leg;
-                    resetDebounce();
                 }
                 break;
 
             case c_State_Second_Leg:
                 nextState = State.c_State_Second_Leg;
-                if(val){
-                    resetDebounce();
-                } else {
-                    incrementDebounce();
-                }
-                if(debounceComplete()) {
+                if(!val){
                     nextState = State.c_State_No_Note;
-                    resetDebounce();
                 }
                 break;
 
@@ -131,17 +101,5 @@ public class NoteProximitySensor {
                 m_tdState.set("Unknown State");
                 break;
         }
-    }
-
-    private void incrementDebounce(){
-        m_debounceIncrementer.set(m_debounceIncrementer.get() + 1);
-    }
-
-    private boolean debounceComplete(){
-        return m_debounceIncrementer.get() >= Constants.kSensorDebounceCycles;
-    }
-
-    private void resetDebounce(){
-        m_debounceIncrementer.set(0);
     }
 }
