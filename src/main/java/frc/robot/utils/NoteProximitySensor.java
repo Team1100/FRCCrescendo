@@ -111,6 +111,8 @@ public class NoteProximitySensor {
 
     public boolean noteIsCentered() { return m_state == State.c_State_Middle_Hole; }
 
+    public void reset() { m_state = State.c_State_No_Note; }
+
     public void updateTD(){
         switch (m_state) {
             case c_State_No_Note:

@@ -42,6 +42,7 @@ public class AmpAddOn extends SubsystemBase {
 
   TDNumber m_encoderValueRotations;
   TDNumber m_encoderValueAngleDegrees;
+  TDNumber m_rollerSpeedRPM;
 
   CANSparkMax m_CanSparkMax;
   CANSparkMax m_PivotCanSparkMax;
@@ -63,7 +64,7 @@ public class AmpAddOn extends SubsystemBase {
 
       m_PivotCanSparkMax.setIdleMode(IdleMode.kBrake);
 
-      m_CanSparkMax.setInverted(false);
+      m_CanSparkMax.setInverted(true);
       m_PivotCanSparkMax.setInverted(true);
       
       m_SparkPIDController = m_CanSparkMax.getPIDController();
@@ -92,14 +93,11 @@ public class AmpAddOn extends SubsystemBase {
       m_absoluteEncoder.setInverted(false);
       m_absoluteEncoder.setPositionConversionFactor(Constants.kAEncoderPositionFactorDegrees);
       m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
-
-      m_SparkPIDController.setPositionPIDWrappingEnabled(true);
-      m_SparkPIDController.setPositionPIDWrappingMinInput(0);
-      m_SparkPIDController.setPositionPIDWrappingMaxInput(Constants.DEGREES_PER_REVOLUTION);
     }
 
     m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
     m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
+    m_rollerSpeedRPM = new TDNumber(this, "Encoder Values", "Measured Roller Speed RPM");
 
     m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
   }
@@ -187,11 +185,25 @@ public class AmpAddOn extends SubsystemBase {
   }
 
   public boolean hasNote() {
-    return m_NoteProximitySensor.hasNote();
+    if(m_NoteProximitySensor != null){
+      return m_NoteProximitySensor.hasNote();
+    } else {
+      return false;
+    }
   }
 
   public boolean noteCenteredOnSensor() {
-    return m_NoteProximitySensor.noteIsCentered();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.noteIsCentered();
+    } else {
+      return false;
+    }
+  }
+
+  public void resetSensor() {
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.reset();
+    }
   }
 
   @Override
@@ -233,6 +245,7 @@ public class AmpAddOn extends SubsystemBase {
 
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees.set(getAngle());
+      m_rollerSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
     }
     super.periodic();
     if(m_NoteProximitySensor != null) {

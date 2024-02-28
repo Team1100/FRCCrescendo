@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeRainbow;
 import frc.robot.commands.Lights.MoveLightsBlue;
+import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.subsystems.Drive;
 import frc.robot.utils.FieldUtils;
@@ -63,26 +64,31 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
+
+    //Driver Mapping
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new IngestNote());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new ExcreteNote());
     new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new ShooterIngestNote());
 
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
-    // new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new SetZeroAsCurrentPosition());
+    new JoystickButton(m_DriverXboxController, Button.kA.value).onTrue(new DriveToPose(()->{
+      Pose2d ampPose = FieldUtils.getInstance().getAmpPose().toPose2d();
+      return new Pose2d(ampPose.getX(), ampPose.getY(), new Rotation2d(Units.degreesToRadians(90)));
+    }));
+
+    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
+    // new JoystickButton(m_DriverXboxController, Button.kY.value).onTrue(new TurnToTarget(new Pose2d(0,0, new Rotation2d())));
+
     // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).toggleOnTrue(new MakeRainbow());
     // new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).toggleOnTrue(new DisableLights());
     // new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new BlinkLights());
     // new JoystickButton(m_DriverXboxController, Button.kY.value).toggleOnTrue(new MoveLights());
 
-    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
-    // new JoystickButton(m_DriverXboxController, Button.kY.value).onTrue(new TurnToTarget(new Pose2d(0,0, new Rotation2d())));
-
+    //Operator Mapping
     new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new MoveNoteToBarrel());
     new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteToAmp());
-    new JoystickButton(m_DriverXboxController, Button.kA.value).onTrue(new DriveToPose(()->{
-        Pose2d ampPose = FieldUtils.getInstance().getAmpPose().toPose2d();
-        return new Pose2d(ampPose.getX(), ampPose.getY(), new Rotation2d(Units.degreesToRadians(90)));
-      }));
+    new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ResetAllSensors());
+    // new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new SetZeroAsCurrentPosition());
   }
 
   /**

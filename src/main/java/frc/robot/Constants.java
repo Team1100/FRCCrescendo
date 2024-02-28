@@ -42,17 +42,17 @@ public final class Constants {
     public static final double kAmpP = 0;
     public static final double kAmpI = 0;
     public static final double kAmpD = 0;
-    public static final double kAmpPivotP = 0.01;
+    public static final double kAmpPivotP = 0.001;
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
-    public static final double kAPivotToleranceDegrees = 5;
-    public static final double kAPivotIntakePositionDegrees = 0;
-    public static final double kAPivotUpPositionDegrees = 0;
-    public static final double kAPivotDeliverAmpPositionDegrees = 0;
+    public static final double kAPivotToleranceDegrees = 2;
+    public static final double kAPivotIntakePositionDegrees = 53;
+    public static final double kAPivotUpPositionDegrees = 230;
+    public static final double kAPivotDeliverAmpPositionDegrees = 150;
     
-    public static final double A_ANGLE_INCREMENT_DEGREES = 0.2;
+    public static final double A_ANGLE_INCREMENT_DEGREES = 0.5;
     public static final double kADeadband = 0.05;
 
     // Defines Barrel constants
@@ -126,7 +126,7 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
 
     //Sensor Constants
-    public static final int kSensorDebounceCycles = 6;
+    public static final int kSensorDebounceCycles = 3;
     public static final double kConfusedSensorTimeoutSeconds = 1.5;
 
     // Defines Swerve Module constants
@@ -193,9 +193,9 @@ public final class Constants {
 
     // Defines Shooter constants
     public static final boolean kEnableShooterPIDTuning = true;
-    public static final double kShooterP = 0;
-    public static final double kShooterI = 0;
-    public static final double kShooterD = 0;
+    public static final double kShooterP = 0.000550;
+    public static final double kShooterI = 0.000001;
+    public static final double kShooterD = 0.001000;
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;

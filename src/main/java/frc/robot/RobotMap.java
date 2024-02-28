@@ -102,8 +102,8 @@ public class RobotMap {
   public static double R_BASE_RADIUS_INCHES = 11.25 * Math.sqrt(2);
   
   // [A]mp Add-On
-  public static boolean A_ENABLED = false;
-  public static boolean A_PIVOT_ENABLED = false;
+  public static boolean A_ENABLED = true;
+  public static boolean A_PIVOT_ENABLED = true;
   public static int A_MOTOR = RoboRioMap.CAN_17;
   public static int A_PIVOT_MOTOR = RoboRioMap.CAN_16;
   public static int A_NOTE_SENSOR = RoboRioMap.DIO_3;

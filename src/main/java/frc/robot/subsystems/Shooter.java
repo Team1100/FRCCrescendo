@@ -27,6 +27,9 @@ public class Shooter extends SubsystemBase {
   double   m_shootP = Constants.kShooterP;
   double   m_shootI = Constants.kShooterI;
   double   m_shootD = Constants.kShooterD;
+
+  TDNumber m_rightMeasuredSpeed;
+  TDNumber m_leftMeasuredSpeed;
   
   CANSparkMax m_SLeftSparkMax;
   CANSparkMax m_SRightSparkMax;
@@ -61,6 +64,9 @@ public class Shooter extends SubsystemBase {
       m_TDshootP = new TDNumber(this, "ShooterPID", "P", Constants.kShooterP);
       m_TDshootI = new TDNumber(this, "ShooterPID", "I", Constants.kShooterI);
       m_TDshootD = new TDNumber(this, "ShooterPID", "D", Constants.kShooterD);
+
+      m_leftMeasuredSpeed = new TDNumber(this, "Shooter Speed (RPM)", "Measured Speed Left");
+      m_rightMeasuredSpeed = new TDNumber(this, "Shooter Speed (RPM)", "Measured Speed Right");
 
       m_LeftSparkPIDController.setP(m_shootP);
       m_LeftSparkPIDController.setI(m_shootI);
@@ -128,13 +134,26 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean hasNote() {
-    return m_NoteProximitySensor.hasNote();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.hasNote();
+    } else {
+      return false;
+    }
   }
 
   public boolean noteCenteredOnSensor() {
-    return m_NoteProximitySensor.noteIsCentered();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.noteIsCentered();
+    } else {
+      return false;
+    }
   }
 
+  public void resetSensor() {
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.reset();
+    }
+  }
 
   @Override
   public void periodic() {
@@ -168,6 +187,9 @@ public class Shooter extends SubsystemBase {
         m_shootD = tmp;
       }      
     }
+
+    m_leftMeasuredSpeed.set(m_SLeftSparkMax.getEncoder().getVelocity());
+    m_rightMeasuredSpeed.set(m_SRightSparkMax.getEncoder().getVelocity());
 
     super.periodic();
     if(m_NoteProximitySensor != null) {

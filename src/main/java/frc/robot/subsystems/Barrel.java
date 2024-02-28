@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants;
@@ -25,6 +26,8 @@ public class Barrel extends SubsystemBase {
   double m_rollerI = Constants.kBarrelI;
   double m_rollerD = Constants.kBarrelD;
 
+  TDNumber m_barrelSpeedRPM;
+
   CANSparkMax m_CanSparkMax;
   SparkPIDController m_SparkPIDController;
 
@@ -38,12 +41,15 @@ public class Barrel extends SubsystemBase {
 
       m_CanSparkMax.restoreFactoryDefaults();
       m_CanSparkMax.setInverted(true);
+      m_CanSparkMax.setIdleMode(IdleMode.kBrake);
 
       m_SparkPIDController = m_CanSparkMax.getPIDController();
 
       m_TDrollerP = new TDNumber(this, "BarrelPID", "P", Constants.kBarrelP);
       m_TDrollerI = new TDNumber(this, "BarrelPID", "I", Constants.kBarrelI);
       m_TDrollerD = new TDNumber(this, "BarrelPID", "D", Constants.kBarrelD);
+
+      m_barrelSpeedRPM = new TDNumber(this, "", "Measured Barrel Speed RPM");
 
       m_SparkPIDController.setP(m_rollerP);
       m_SparkPIDController.setI(m_rollerI);
@@ -88,13 +94,26 @@ public class Barrel extends SubsystemBase {
   }
 
   public boolean hasNote() {
-    return m_NoteProximitySensor.hasNote();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.hasNote();
+    } else {
+      return false;
+    }
   }
 
   public boolean noteCenteredOnSensor() {
-    return m_NoteProximitySensor.noteIsCentered();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.noteIsCentered();  
+    } else {
+      return false;
+    }
   }
 
+  public void resetSensor() {
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.reset();
+    }
+  }
 
   @Override
   public void periodic() {
@@ -118,6 +137,8 @@ public class Barrel extends SubsystemBase {
         m_rollerD = tmp;
       }
     }
+
+    m_barrelSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
 
     super.periodic();
     if(m_NoteProximitySensor != null){

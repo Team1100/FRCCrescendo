@@ -10,7 +10,11 @@ import frc.robot.commands.IngestNote;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootSpeaker;
 import frc.robot.commands.ShooterIngestNote;
+import frc.robot.commands.Shooter.ShooterSlowOut;
 import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
+import frc.robot.commands.AmpAddOn.AmpPivotToScoringPosition;
+import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
 import frc.robot.commands.AmpAddOn.AmpSetZeroAsCurrentPosition;
 import frc.robot.commands.AmpAddOn.ScoreAmp;
@@ -40,6 +44,7 @@ import frc.robot.commands.Lights.MoveLightsColor;
 import frc.robot.commands.Lights.MoveLightsGreen;
 import frc.robot.commands.Lights.MoveLightsPurple;
 import frc.robot.commands.Lights.MoveLightsYellow;
+import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.AmpAddOn;
@@ -158,6 +163,9 @@ public class RobotContainer {
     new AmpSetZeroAsCurrentPosition();
     new AmpPivotRelativeAngleControl();
     new AmpResetTargetAngle();
+    new AmpPivotToIntake();
+    new AmpPivotToScoringPosition();
+    new AmpPivotUp();
 
     // Barrel commands
     new SpinBarrelForward();
@@ -193,6 +201,7 @@ public class RobotContainer {
     // Shooter commands
     new IntakeFromShooter();
     new SpinUpShooter();
+    new ShooterSlowOut();
 
     new Shoot();
     new ShooterIngestNote();
@@ -202,6 +211,8 @@ public class RobotContainer {
 
     new GroundIntake();
     new ShootSpeaker();
+
+    new ResetAllSensors();
 
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
     TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");

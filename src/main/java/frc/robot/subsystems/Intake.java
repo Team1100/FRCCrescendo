@@ -22,6 +22,7 @@ public class Intake extends SubsystemBase {
   TDNumber m_TDintakeP;
   TDNumber m_TDintakeI;
   TDNumber m_TDintakeD;
+  TDNumber m_measuredSpeed;
   double   m_intakeP = Constants.kIntakeP;
   double   m_intakeI = Constants.kIntakeI;
   double   m_intakeD = Constants.kIntakeD;
@@ -54,6 +55,7 @@ public class Intake extends SubsystemBase {
       m_TDintakeP = new TDNumber(this, "IntakePID", "P", Constants.kIntakeP);
       m_TDintakeI = new TDNumber(this, "IntakePID", "I", Constants.kIntakeI);
       m_TDintakeD = new TDNumber(this, "IntakePID", "D", Constants.kIntakeD);
+      m_measuredSpeed = new TDNumber(this, "Intake Speed (RPM)", "Measured Speed");
 
       m_SparkPIDController.setP(m_intakeP);
       m_SparkPIDController.setI(m_intakeI);
@@ -95,13 +97,26 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean hasNote() {
-    return m_NoteProximitySensor.hasNote();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.hasNote();
+    } else {
+      return false;
+    }
   }
 
   public boolean noteCenteredOnSensor() {
-    return m_NoteProximitySensor.noteIsCentered();
+    if(m_NoteProximitySensor != null) {
+      return m_NoteProximitySensor.noteIsCentered();
+    } else {
+      return false;
+    }
   }
 
+  public void resetSensor() {
+    if(m_NoteProximitySensor != null) {
+      m_NoteProximitySensor.reset();
+    }
+  }
 
   @Override
   public void periodic() {
@@ -123,6 +138,7 @@ public class Intake extends SubsystemBase {
             m_intakeD = tmp;
           }
     }
+    m_measuredSpeed.set(m_ILeftSparkMax.getEncoder().getVelocity());
     
     super.periodic();
     if(m_NoteProximitySensor != null) {
