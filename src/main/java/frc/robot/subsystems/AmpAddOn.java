@@ -100,6 +100,7 @@ public class AmpAddOn extends SubsystemBase {
     m_rollerSpeedRPM = new TDNumber(this, "Encoder Values", "Measured Roller Speed RPM");
 
     m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
+    m_NoteProximitySensor.start();
   }
 
   public static AmpAddOn getInstance() {
@@ -248,8 +249,5 @@ public class AmpAddOn extends SubsystemBase {
       m_rollerSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
     }
     super.periodic();
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.update();
-    }
   }
 }

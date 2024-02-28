@@ -62,6 +62,7 @@ public class Intake extends SubsystemBase {
       m_SparkPIDController.setD(m_intakeD);
 
       m_NoteProximitySensor = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR, this);
+      m_NoteProximitySensor.start();
     }
   }
 
@@ -141,8 +142,5 @@ public class Intake extends SubsystemBase {
     m_measuredSpeed.set(m_ILeftSparkMax.getEncoder().getVelocity());
     
     super.periodic();
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.update();
-    }
   }
 }

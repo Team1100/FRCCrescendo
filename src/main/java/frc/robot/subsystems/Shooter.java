@@ -77,6 +77,7 @@ public class Shooter extends SubsystemBase {
       m_RightSparkPIDController.setD(m_shootD);
 
       m_NoteProximitySensor = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR, this);
+      m_NoteProximitySensor.start();
     }
   }
 
@@ -192,8 +193,5 @@ public class Shooter extends SubsystemBase {
     m_rightMeasuredSpeed.set(m_SRightSparkMax.getEncoder().getVelocity());
 
     super.periodic();
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.update();
-    }
   }
 }
