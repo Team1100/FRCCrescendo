@@ -10,7 +10,11 @@ import frc.robot.commands.IngestNote;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootSpeaker;
 import frc.robot.commands.ShooterIngestNote;
+import frc.robot.commands.Shooter.ShooterSlowOut;
 import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
+import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
+import frc.robot.commands.AmpAddOn.AmpPivotToScoringPosition;
+import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
 import frc.robot.commands.AmpAddOn.AmpSetZeroAsCurrentPosition;
 import frc.robot.commands.AmpAddOn.ScoreAmp;
@@ -159,6 +163,9 @@ public class RobotContainer {
     new AmpSetZeroAsCurrentPosition();
     new AmpPivotRelativeAngleControl();
     new AmpResetTargetAngle();
+    new AmpPivotToIntake();
+    new AmpPivotToScoringPosition();
+    new AmpPivotUp();
 
     // Barrel commands
     new SpinBarrelForward();
@@ -194,6 +201,7 @@ public class RobotContainer {
     // Shooter commands
     new IntakeFromShooter();
     new SpinUpShooter();
+    new ShooterSlowOut();
 
     new Shoot();
     new ShooterIngestNote();
