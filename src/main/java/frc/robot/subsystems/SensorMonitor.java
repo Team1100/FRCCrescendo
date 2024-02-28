@@ -57,6 +57,48 @@ public class SensorMonitor extends SubsystemBase {
     m_sensorsEnabled.set(!m_sensorsEnabled.get());
   }
 
+  public boolean intakeHasNote() {
+    if (determineLocation() == NoteLocation.c_Intake || 
+          determineLocation() == NoteLocation.c_IntakeAndBarrel) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public boolean shooterHasNote() {
+    if (determineLocation() == NoteLocation.c_Shooter || 
+          determineLocation() == NoteLocation.c_ShooterAndAmp || 
+          determineLocation() == NoteLocation.c_BarrelAndShooter) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public boolean ampHasNote() {
+    if (determineLocation() == NoteLocation.c_Amp ||
+          determineLocation() == NoteLocation.c_ShooterAndAmp) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public boolean barrelHasNote() {
+    if (determineLocation() == NoteLocation.c_Barrel || 
+          determineLocation() == NoteLocation.c_IntakeAndBarrel ||
+          determineLocation() == NoteLocation.c_BarrelAndShooter) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   public boolean isValidState() {
     if(m_intake.hasNote()){
       return !(m_shooter.hasNote() || m_amp.hasNote());
