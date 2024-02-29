@@ -56,7 +56,6 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setD(m_rollerD);
 
       m_NoteProximitySensor = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR, this);
-      m_NoteProximitySensor.start();
     }
   }
 
@@ -142,5 +141,8 @@ public class Barrel extends SubsystemBase {
     m_barrelSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
 
     super.periodic();
+    if(m_NoteProximitySensor != null){
+      m_NoteProximitySensor.update();
+    }
   }
 }

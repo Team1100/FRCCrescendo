@@ -4,11 +4,15 @@
 
 package frc.robot.utils;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.Constants;
 import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TDString;
 
 /** Add your docs here. */
-public class NoteProximitySensor extends Thread {
+public class NoteProximitySensor {
     private enum State {
         c_State_No_Note,
         c_State_First_Leg,
@@ -27,81 +31,60 @@ public class NoteProximitySensor extends Thread {
         m_tdState = new TDString(subsystem, "Sensors", sensorName);
     }
 
-    public void run() {
-        try {
-            while(true) {
-                sleep(1);
-                update();
-            }
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Got unexpected exception in Note sensor thread. Exiting thread, sensor will no longer be updated");
-        } catch (InterruptedException ex) {
-            System.out.println("Note Sensor Thread was interrupted. Exiting thread, sensor will no longer be updated");
-        }
-    }
-
     public void update(){
         m_sensor.update();
         boolean val = m_sensor.get();
         State nextState = State.c_State_No_Note;
-        synchronized(this) {
-            switch (m_state) {
-                case c_State_No_Note:
-                    nextState = State.c_State_No_Note;
-                    if(val){
-                        nextState = State.c_State_First_Leg;
-                    }
-                    break;
 
-                case c_State_First_Leg:
+        switch (m_state) {
+            case c_State_No_Note:
+                nextState = State.c_State_No_Note;
+                if(val){
                     nextState = State.c_State_First_Leg;
-                    if(!val){
-                        nextState = State.c_State_Middle_Hole;
-                    }
-                    break;
+                }
+                break;
 
-                case c_State_Middle_Hole:
+            case c_State_First_Leg:
+                nextState = State.c_State_First_Leg;
+                if(!val){
                     nextState = State.c_State_Middle_Hole;
-                    if(val){
-                        nextState = State.c_State_Second_Leg;
-                    }
-                    break;
+                }
+                break;
 
-                case c_State_Second_Leg:
+            case c_State_Middle_Hole:
+                nextState = State.c_State_Middle_Hole;
+                if(val){
                     nextState = State.c_State_Second_Leg;
-                    if(!val){
-                        nextState = State.c_State_No_Note;
-                    }
-                    break;
+                }
+                break;
 
-                default:
-                    System.out.println("Note Proximity Sensor has invalid state");
+            case c_State_Second_Leg:
+                nextState = State.c_State_Second_Leg;
+                if(!val){
                     nextState = State.c_State_No_Note;
-                    break;
-            }
+                }
+                break;
 
-            m_state = nextState;
+            default:
+                System.out.println("Note Proximity Sensor has invalid state");
+                nextState = State.c_State_No_Note;
+                break;
         }
+
+        m_state = nextState;
         updateTD();
     }
 
     public boolean hasNote() {
-        return getSensorState() != State.c_State_No_Note;
+        return m_state != State.c_State_No_Note;
     }
 
-    public boolean noteIsCentered() { return getSensorState() == State.c_State_Middle_Hole; }
+    public boolean noteIsCentered() { return m_state == State.c_State_Middle_Hole; }
 
-    public void reset() { setSensorState(State.c_State_No_Note); }
-
-    private State getSensorState() {
-        synchronized(this){return m_state;}
-    }
-    private void setSensorState(State newState) {
-        synchronized(this){m_state = newState;}
-    } 
+    public void reset() { m_state = State.c_State_No_Note; }
 
     public void updateTD(){
-        switch (getSensorState()) {
+        switch (m_state) {
             case c_State_No_Note:
                 m_tdState.set("No Note Detected");
                 break;
