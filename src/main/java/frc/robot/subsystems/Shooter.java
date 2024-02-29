@@ -27,6 +27,8 @@ public class Shooter extends SubsystemBase {
   double   m_shootP = Constants.kShooterP;
   double   m_shootI = Constants.kShooterI;
   double   m_shootD = Constants.kShooterD;
+  private double m_lastLeftSpeed = 0;
+  private double m_lastRightSpeed = 0;
 
   TDNumber m_rightMeasuredSpeed;
   TDNumber m_leftMeasuredSpeed;
@@ -88,17 +90,17 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSpeeds(double LeftRPM, double RightRPM, boolean backwards) {
-    if (!backwards) {
-      m_leftSpeedSetpoint = LeftRPM;
-      m_rightSpeedSetpoint = RightRPM;
-      m_LeftSparkPIDController.setReference(LeftRPM, ControlType.kVelocity);
-      m_RightSparkPIDController.setReference(RightRPM, ControlType.kVelocity);
+    double leftSetPoint = backwards? -LeftRPM : LeftRPM;
+    double rightSetPoint = backwards? -RightRPM : RightRPM;
+
+    if (leftSetPoint != m_lastLeftSpeed)
+    {
+      m_lastLeftSpeed = leftSetPoint;
+      m_LeftSparkPIDController.setReference(leftSetPoint, ControlType.kVelocity);
     }
-    else {
-      m_leftSpeedSetpoint = -LeftRPM;
-      m_rightSpeedSetpoint = -RightRPM;
-      m_LeftSparkPIDController.setReference(-LeftRPM, ControlType.kVelocity);
-      m_RightSparkPIDController.setReference(-RightRPM, ControlType.kVelocity);
+    if (rightSetPoint != m_lastRightSpeed) {
+      m_lastRightSpeed = rightSetPoint;
+      m_RightSparkPIDController.setReference(rightSetPoint, ControlType.kVelocity);
     }
   }
 
@@ -106,6 +108,8 @@ public class Shooter extends SubsystemBase {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
       m_SLeftSparkMax.set(leftSpeed);
       m_SRightSparkMax.set(rightSpeed);
+      m_lastLeftSpeed = 0;
+      m_lastRightSpeed = 0;
     }
   }
 
@@ -113,14 +117,16 @@ public class Shooter extends SubsystemBase {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
       m_SLeftSparkMax.set(-speed);
       m_SRightSparkMax.set(-speed);
-    }
+      m_lastLeftSpeed = 0;
+      m_lastRightSpeed = 0;    }
   }
 
   public void spinStop() {
     if (m_SLeftSparkMax != null && m_SRightSparkMax != null) {
       m_SLeftSparkMax.set(0);
       m_SRightSparkMax.set(0);
-    }
+      m_lastLeftSpeed = 0;
+      m_lastRightSpeed = 0;    }
   }
 
   public boolean isAtSetSpeed() {

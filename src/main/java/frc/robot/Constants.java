@@ -49,6 +49,8 @@ public final class Constants {
     public static final double kAmpPivotD = 0;
 
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
+    public static final double kAPivotUpperLimitDegrees = 280;
+    public static final double kAPivotLowerLimitDegrees = 60;
     public static final double kAPivotToleranceDegrees = 2;
     public static final double kAPivotIntakePositionDegrees = 64;
     public static final double kAPivotUpPositionDegrees = 275;
@@ -71,6 +73,8 @@ public final class Constants {
     public static final double kBarrelPivotP = 0.06;
     public static final double kBarrelPivotI = 0.000001;
     public static final double kBarrelPivotD = 0;
+    public static final double kBarrelPivotLowerLimitDegrees = 60;
+    public static final double kBarrelPivotUpperLimitDegrees = 150;
 
     public static final double kBPEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
 

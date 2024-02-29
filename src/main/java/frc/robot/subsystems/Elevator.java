@@ -23,6 +23,7 @@ public class Elevator extends SubsystemBase {
   double   m_climbP = Constants.kElevatorPivotP;
   double   m_climbI = Constants.kElevatorPivotI;
   double   m_climbD = Constants.kElevatorPivotD;
+  private double   m_lastSpeed = 0;
 
   CANSparkMax m_LeftCanSparkMax;
   CANSparkMax m_RightCanSparkMax;
@@ -62,11 +63,10 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setSpeed(double RPM, boolean backwards) {
-    if (!backwards) {
-      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
-    }
-    else {
-      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    double setPoint = backwards? -RPM : RPM;
+    if (setPoint != m_lastSpeed) {
+      m_lastSpeed = setPoint;
+      m_SparkPIDController.setReference(setPoint, ControlType.kVelocity);
     }
   }
 

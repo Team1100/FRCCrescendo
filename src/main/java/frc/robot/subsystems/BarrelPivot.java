@@ -31,6 +31,7 @@ public class BarrelPivot extends SubsystemBase {
   double   m_angleP = Constants.kBarrelPivotP;
   double   m_angleI = Constants.kBarrelPivotI;
   double   m_angleD = Constants.kBarrelPivotD;
+  private double   m_lastAngle = 0;
   TDNumber m_encoderValueRotations;
   TDNumber m_encoderValueAngleDegrees;
   
@@ -102,8 +103,16 @@ public class BarrelPivot extends SubsystemBase {
   }
 
   public void setTargetAngle(double angle) {
-    m_targetAngle.set(angle % Constants.DEGREES_PER_REVOLUTION);
-    m_SparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
+    double setPoint = angle % Constants.DEGREES_PER_REVOLUTION;
+    setPoint  = MathUtil.clamp(setPoint,
+                               Constants.kBarrelPivotLowerLimitDegrees, 
+                               Constants.kBarrelPivotUpperLimitDegrees);
+    if (setPoint != m_lastAngle)
+    {
+      m_targetAngle.set(setPoint);
+      m_lastAngle = setPoint;
+      m_SparkPIDController.setReference(setPoint, ControlType.kPosition);
+    }
   }
 
   public void resetTargetAngle() {
