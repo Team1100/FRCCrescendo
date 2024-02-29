@@ -26,6 +26,7 @@ public class Intake extends SubsystemBase {
   double   m_intakeP = Constants.kIntakeP;
   double   m_intakeI = Constants.kIntakeI;
   double   m_intakeD = Constants.kIntakeD;
+  private double   m_lastSpeed = 0;
   
   CANSparkMax m_ILeftSparkMax;
   CANSparkMax m_IRightSparkMax;
@@ -73,11 +74,10 @@ public class Intake extends SubsystemBase {
   }
 
   public void setSpeeds(double RPM, boolean backwards) {
-    if (!backwards) {
-      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
-    }
-    else {
-      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    double setPoint = backwards? -RPM : RPM;
+    if (setPoint != m_lastSpeed) {
+      m_lastSpeed = setPoint;
+      m_SparkPIDController.setReference(setPoint, ControlType.kVelocity);
     }
   }
 

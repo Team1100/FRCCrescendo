@@ -27,12 +27,13 @@ public class Barrel extends SubsystemBase {
   double m_rollerD = Constants.kBarrelD;
 
   TDNumber m_barrelSpeedRPM;
+  private double m_lastSpeed = 0;
 
   CANSparkMax m_CanSparkMax;
   SparkPIDController m_SparkPIDController;
 
   NoteProximitySensor m_NoteProximitySensor;
-
+  
   /** Creates a new Barrel. */
   private Barrel() {
     super("Barrel");
@@ -67,11 +68,10 @@ public class Barrel extends SubsystemBase {
   }
 
   public void setSpeed(double RPM, boolean backwards) {
-    if (!backwards) {
-      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
-    }
-    else {
-      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    double setPoint = backwards? -RPM : RPM;
+    if (m_lastSpeed != setPoint) {
+      m_lastSpeed = setPoint;
+      m_SparkPIDController.setReference(setPoint, ControlType.kVelocity);
     }
   }
 
