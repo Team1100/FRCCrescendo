@@ -14,21 +14,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Lights.EnableLights;
-import frc.robot.commands.Lights.MakeRainbow;
-import frc.robot.commands.Lights.MoveLightsBlue;
 import frc.robot.commands.Sensors.ResetAllSensors;
-import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.subsystems.Drive;
 import frc.robot.utils.FieldUtils;
-import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
 import frc.robot.commands.MoveNoteToAmp;
 import frc.robot.commands.MoveNoteToBarrel;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
-import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
 import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.TurnToTarget;
 
@@ -79,16 +73,10 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
     // new JoystickButton(m_DriverXboxController, Button.kY.value).onTrue(new TurnToTarget(new Pose2d(0,0, new Rotation2d())));
 
-    // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).toggleOnTrue(new MakeRainbow());
-    // new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).toggleOnTrue(new DisableLights());
-    // new JoystickButton(m_DriverXboxController, Button.kX.value).toggleOnTrue(new BlinkLights());
-    // new JoystickButton(m_DriverXboxController, Button.kY.value).toggleOnTrue(new MoveLights());
-
     //Operator Mapping
     new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new MoveNoteToBarrel());
     new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteToAmp());
     new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ResetAllSensors());
-    // new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new SetZeroAsCurrentPosition());
   }
 
   /**
