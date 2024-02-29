@@ -21,6 +21,8 @@ import frc.robot.commands.AmpAddOn.ScoreAmp;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.BarrelPivot.AlignPivotToAmp;
+import frc.robot.commands.BarrelPivot.AlignWithSource;
 import frc.robot.commands.BarrelPivot.PivotDownwards;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
 import frc.robot.commands.BarrelPivot.PivotUpwards;
@@ -173,6 +175,8 @@ public class RobotContainer {
     new SpinBarrelBackward();
 
     // BarrelPivot commands
+    new AlignWithSource();
+    new AlignPivotToAmp();
     new SetZeroAsCurrentPosition();
     new ResetTargetAngle();
     new PivotRelativeAngleControl();
@@ -201,6 +205,7 @@ public class RobotContainer {
 
     // Sensor commands
     new ToggleSensorsOnOff();
+    new ResetAllSensors();
 
     // Shooter commands
     new IntakeFromShooter();
@@ -215,8 +220,6 @@ public class RobotContainer {
 
     new GroundIntake();
     new ShootSpeaker();
-
-    new ResetAllSensors();
 
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
     TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");
