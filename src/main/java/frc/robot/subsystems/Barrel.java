@@ -33,7 +33,7 @@ public class Barrel extends SubsystemBase {
   SparkPIDController m_SparkPIDController;
 
   NoteProximitySensor m_NoteProximitySensor;
-  
+
   /** Creates a new Barrel. */
   private Barrel() {
     super("Barrel");
