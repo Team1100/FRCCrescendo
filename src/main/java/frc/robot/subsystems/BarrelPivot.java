@@ -10,6 +10,9 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.math.MathUtil;
+
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -114,6 +117,14 @@ public class BarrelPivot extends SubsystemBase {
   public void setZeroAsCurrentPosition() {
     m_absoluteEncoder.setZeroOffset(getAngle());
     resetTargetAngle(); 
+  }
+
+  public boolean alignedToSource() {
+    return MathUtil.isNear(Constants.BP_SOURCE_ANGLE_DEGREES, m_barrelPivot.getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
+  }
+
+  public boolean alignedToAmp() {
+    return MathUtil.isNear(Constants.BP_AMP_SCORING_ANGLE_DEGREES, m_barrelPivot.getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
   }
 
   public void pivotUpwards() {
