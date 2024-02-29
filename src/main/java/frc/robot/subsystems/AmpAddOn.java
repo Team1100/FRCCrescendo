@@ -161,9 +161,9 @@ public class AmpAddOn extends SubsystemBase {
     return m_targetAngle.get();
   }
 
-  public void setZeroAsCurrentPosition() {
+  public void setZeroOffset(double angle) {
     if (m_absoluteEncoder != null) {
-      m_absoluteEncoder.setZeroOffset(getAngle());
+      m_absoluteEncoder.setZeroOffset(angle);
     }
     resetTargetAngle();
   }
