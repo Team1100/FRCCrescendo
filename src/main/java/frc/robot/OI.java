@@ -19,6 +19,7 @@ import frc.robot.subsystems.Drive;
 import frc.robot.utils.FieldUtils;
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
+import frc.robot.commands.MoveNoteForward;
 import frc.robot.commands.MoveNoteToAmp;
 import frc.robot.commands.MoveNoteToBarrel;
 import frc.robot.commands.Shoot;
@@ -63,19 +64,26 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new IngestNote());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new ExcreteNote());
     new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new ShooterIngestNote());
+    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new MoveNoteForward());
 
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
-    new JoystickButton(m_DriverXboxController, Button.kA.value).onTrue(new DriveToPose(()->{
-      Pose2d ampPose = FieldUtils.getInstance().getAmpPose().toPose2d();
-      return new Pose2d(ampPose.getX(), ampPose.getY(), new Rotation2d(Units.degreesToRadians(90)));
-    }));
+    // new JoystickButton(m_DriverXboxController, Button.kA.value).onTrue(new DriveToPose(()->{
+    //   Pose2d ampPose = FieldUtils.getInstance().getAmpPose().toPose2d();
+    //   return new Pose2d(ampPose.getX(), ampPose.getY(), new Rotation2d(Units.degreesToRadians(90)));
+    // }));
 
-    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
+    //Drive to locations on the field
+    // new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getAmpScorePose));
+    // new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource1Pose));
+    // new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource3Pose));
+    // new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSpeakerScorePose));
+
+    // new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new Shoot());
     // new JoystickButton(m_DriverXboxController, Button.kY.value).onTrue(new TurnToTarget(new Pose2d(0,0, new Rotation2d())));
 
     //Operator Mapping
-    new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new MoveNoteToBarrel());
-    new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteToAmp());
+    // new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new MoveNoteToBarrel());
+    // new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteToAmp());
     new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ResetAllSensors());
   }
 

@@ -13,6 +13,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,6 +23,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Unit;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -42,21 +44,21 @@ public final class Constants {
     public static final double kAmpP = 0;
     public static final double kAmpI = 0;
     public static final double kAmpD = 0;
-    public static final double kAmpPivotP = 0.001;
+    public static final double kAmpPivotP = 0.0045;
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     public static final double kAPivotToleranceDegrees = 2;
-    public static final double kAPivotIntakePositionDegrees = 53;
-    public static final double kAPivotUpPositionDegrees = 230;
-    public static final double kAPivotDeliverAmpPositionDegrees = 150;
+    public static final double kAPivotIntakePositionDegrees = 64;
+    public static final double kAPivotUpPositionDegrees = 275;
+    public static final double kAPivotDeliverAmpPositionDegrees = 160;
     
     public static final double A_ANGLE_INCREMENT_DEGREES = 0.5;
     public static final double kADeadband = 0.05;
 
     // Defines Barrel constants
-    public static final boolean kEnableBarrelPIDTuning = true;
+    public static final boolean kEnableBarrelPIDTuning = false;
     public static final double kBarrelP = 0;
     public static final double kBarrelI = 0;
     public static final double kBarrelD = 0;
@@ -66,13 +68,13 @@ public final class Constants {
 
     // Defines Barrel Pivot constants
     public static final boolean kEnableBarrelPivotPIDTuning = false;
-    public static final double kBarrelPivotP = 0.01;
-    public static final double kBarrelPivotI = 0;
+    public static final double kBarrelPivotP = 0.06;
+    public static final double kBarrelPivotI = 0.000001;
     public static final double kBarrelPivotD = 0;
 
     public static final double kBPEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
 
-    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.2;
+    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.5;
     public static final double kBPDeadband = 0.05;
 
     public static final double BP_SPEED = 0.1;
@@ -93,7 +95,7 @@ public final class Constants {
     public static final double ELEVATOR_SPEED = 0.2;
     public static final double ELEVATOR_SPEED_RPM = 0;
 
-    public static final boolean kEnableElevatorPivotPIDTuning = true;
+    public static final boolean kEnableElevatorPivotPIDTuning = false;
     public static final double kElevatorPivotP = 0;
     public static final double kElevatorPivotI = 0;
     public static final double kElevatorPivotD = 0;
@@ -184,7 +186,7 @@ public final class Constants {
     public static final double kDriveDeadband = 0.2;
 
     // Defines Intake constants
-    public static final boolean kEnableIntakePIDTuning = true;
+    public static final boolean kEnableIntakePIDTuning = false;
     public static final double kIntakeP = 0;
     public static final double kIntakeI = 0;
     public static final double kIntakeD = 0;
@@ -196,9 +198,9 @@ public final class Constants {
     public static final int LED_LENGTH = 42; // number of LEDs
 
     // Defines Shooter constants
-    public static final boolean kEnableShooterPIDTuning = true;
+    public static final boolean kEnableShooterPIDTuning = false;
     public static final double kShooterP = 0.000550;
-    public static final double kShooterI = 0.000001;
+    public static final double kShooterI = 0.000000001;
     public static final double kShooterD = 0.001000;
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
@@ -214,12 +216,23 @@ public final class Constants {
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(0.5, 0.0, 0.5), 
-                new Rotation3d(0, Units.degreesToRadians(30), 0));
+            new Transform3d(new Translation3d(Units.inchesToMeters(-3.5), Units.inchesToMeters(-14), Units.inchesToMeters(13.5)), 
+                new Rotation3d(0, Units.degreesToRadians(30), Units.degreesToRadians(180)));
 
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
             AprilTagFields.kDefaultField.loadAprilTagLayoutField();
+
+    //Determine these Poses on a real field
+    public static final Pose2d kSource1RedPose = new Pose2d();
+    public static final Pose2d kSource3RedPose = new Pose2d();
+    public static final Pose2d kAmpScoreRedPose = new Pose2d();
+    public static final Pose2d kSpeakerScoreRedPose = new Pose2d();
+
+    public static final Pose2d kSource1BluePose = new Pose2d();
+    public static final Pose2d kSource3BluePose = new Pose2d();
+    public static final Pose2d kAmpScoreBluePose = new Pose2d();
+    public static final Pose2d kSpeakerScoreBluePose = new Pose2d();
 
     // The standard deviations of our vision estimated poses, which affect correction rate
     // (Fake values. Experiment and determine estimation noise on an actual robot.)

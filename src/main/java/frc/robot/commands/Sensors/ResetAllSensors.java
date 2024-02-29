@@ -12,4 +12,8 @@ public class ResetAllSensors extends InstantCommand {
   public ResetAllSensors() {
     super(SensorMonitor.getInstance()::resetAllSensors, SensorMonitor.getInstance(), "", "Reset All Sensors");
   }
+
+  public boolean runsWhenDisabled() {
+    return true;
+  }
 }

@@ -160,13 +160,6 @@ public class Shooter extends SubsystemBase {
     if (Constants.kEnableShooterPIDTuning && 
         m_LeftSparkPIDController != null &&
         m_RightSparkPIDController != null) {
-      m_LeftSparkPIDController.setP(m_shootP);
-      m_LeftSparkPIDController.setI(m_shootI);
-      m_LeftSparkPIDController.setD(m_shootD);
-
-      m_RightSparkPIDController.setP(m_shootP);
-      m_RightSparkPIDController.setI(m_shootI);
-      m_RightSparkPIDController.setD(m_shootD);
 
       double tmp = m_TDshootP.get();
       if (tmp != m_shootP) {
@@ -174,7 +167,7 @@ public class Shooter extends SubsystemBase {
         m_RightSparkPIDController.setP(tmp);
         m_shootP = tmp;
       }
-      tmp = m_TDshootI.get();
+      tmp = m_TDshootI.get() / 1000;
       if (tmp != m_shootI) {
         m_LeftSparkPIDController.setI(tmp);
         m_RightSparkPIDController.setI(tmp);

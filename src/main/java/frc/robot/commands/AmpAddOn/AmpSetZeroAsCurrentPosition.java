@@ -5,14 +5,19 @@
 package frc.robot.commands.AmpAddOn;
 
 import frc.robot.testingdashboard.Command;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.subsystems.AmpAddOn;
 
 public class AmpSetZeroAsCurrentPosition extends Command {
   AmpAddOn m_ampAddOn;
+
+  TDNumber m_inputOffset;
   /** Creates a new AmpSetZeroAsCurrentPosition. */
   public AmpSetZeroAsCurrentPosition() {
     super(AmpAddOn.getInstance(), "Basic", "AmpSetZeroAsCurrentPosition");
     m_ampAddOn = AmpAddOn.getInstance();
+
+    m_inputOffset = new TDNumber(m_ampAddOn, "Basic", "ZeroOffset");
     
     addRequirements(m_ampAddOn);
   }
@@ -25,7 +30,7 @@ public class AmpSetZeroAsCurrentPosition extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ampAddOn.setZeroAsCurrentPosition();
+    m_ampAddOn.setZeroOffset(m_inputOffset.get());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
