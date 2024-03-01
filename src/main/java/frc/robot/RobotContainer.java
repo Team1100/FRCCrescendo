@@ -98,34 +98,21 @@ public class RobotContainer {
   private final AmpAddOn m_ampAddOn;
   private final SendableChooser<Command> m_autoChooser;
 
-  private SwerveDriveInputs m_driveInputs;
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // load configuration
     RobotMap.init();
-
-    //Set up drive translation and rotation inputs
-    XboxController driveController = OI.getInstance().getDriverXboxController();
-    Supplier<Double> xInput;
-    Supplier<Double> yInput;
-    if(RobotBase.isReal()){
-      xInput = ()->driveController.getLeftY();
-      yInput = ()->driveController.getLeftX();
-    } else {
-      xInput = ()->-driveController.getLeftX();
-      yInput = ()->driveController.getLeftY();
-    }
-    m_driveInputs = new SwerveDriveInputs(xInput, yInput, ()->driveController.getRightX());
 
     // Instantiate parameterized commands to register them with the testing dashboard.
     // The first instance of a Command registers itself. No need to store the resulting
     // objects.
     registerCommands();
 
+    m_oi = OI.getInstance();
+
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
-    m_robotDrive.setDefaultCommand(new SwerveDrive(m_driveInputs));
+    m_robotDrive.setDefaultCommand(new SwerveDrive(m_oi.getDriveInputs()));
 
     m_ampAddOn = AmpAddOn.getInstance();
     if (RobotMap.A_PIVOT_ENABLED) {
@@ -229,7 +216,7 @@ public class RobotContainer {
 
     new TargetDrive(()->{
       return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
-    }, m_driveInputs);
+    }, m_oi.getDriveInputs());
 
     new DriveToPose(()->{
       return FieldUtils.getInstance().getSpeakerPose().toPose2d();//return new Pose2d(testX.get(), testY.get(), new Rotation2d());//
