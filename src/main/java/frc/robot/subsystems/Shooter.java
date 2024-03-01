@@ -60,8 +60,8 @@ public class Shooter extends SubsystemBase {
       m_LeftSparkPIDController = m_SLeftSparkMax.getPIDController();
       m_RightSparkPIDController = m_SRightSparkMax.getPIDController();
 
-      m_leftSpeedSetpoint = 0;
-      m_rightSpeedSetpoint = 0;
+      m_leftSpeedSetpoint = Constants.LEFT_SHOOTER_SPEED_RPM;
+      m_rightSpeedSetpoint = Constants.RIGHT_SHOOTER_SPEED;
 
       m_TDshootP = new TDNumber(this, "ShooterPID", "P", Constants.kShooterP);
       m_TDshootI = new TDNumber(this, "ShooterPID", "I", Constants.kShooterI);

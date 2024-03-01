@@ -7,9 +7,12 @@
 
 package frc.robot;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -17,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.subsystems.Drive;
 import frc.robot.utils.FieldUtils;
+import frc.robot.utils.SwerveDriveInputs;
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.IngestNote;
 import frc.robot.commands.MoveNoteForward;
@@ -37,6 +41,8 @@ public class OI {
   private static XboxController m_DriverXboxController;
   private static XboxController m_OperatorXboxController;
 
+  private SwerveDriveInputs m_driveInputs;
+
   /**
    * Used outside of the OI class to return an instance of the class.
    * @return Returns instance of OI class formed from constructor.
@@ -53,6 +59,19 @@ public class OI {
     // TODO: Tune deadband
     m_DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER);
     m_OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER);
+
+    // Set up drive translation and rotation inputs
+    XboxController driveController = m_DriverXboxController;
+    Supplier<Double> xInput;
+    Supplier<Double> yInput;
+    if(RobotBase.isReal()){
+      xInput = ()->driveController.getLeftY();
+      yInput = ()->driveController.getLeftX();
+    } else {
+      xInput = ()->-driveController.getLeftX();
+      yInput = ()->driveController.getLeftY();
+    }
+    m_driveInputs = new SwerveDriveInputs(xInput, yInput, ()->driveController.getRightX());
   }
 
   public void bindControls() {
@@ -97,5 +116,9 @@ public class OI {
 
   public XboxController getOperatorXboxController() {
     return m_OperatorXboxController;
-  }  
+  }
+
+  public SwerveDriveInputs getDriveInputs() {
+    return m_driveInputs;
+  }
 }

@@ -209,9 +209,9 @@ public final class Constants {
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
-    public static final double LEFT_SHOOTER_SPEED_RPM = 0;
-    public static final double RIGHT_SHOOTER_SPEED_RPM = 0;
-    public static final double SHOOTER_SPEED_TOLERANCE = 30;//RPM Diff
+    public static final double LEFT_SHOOTER_SPEED_RPM = 2500;
+    public static final double RIGHT_SHOOTER_SPEED_RPM = 3500;
+    public static final double SHOOTER_SPEED_TOLERANCE = 100; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 0;
@@ -227,7 +227,7 @@ public final class Constants {
     public static final AprilTagFieldLayout kTagLayout =
             AprilTagFields.kDefaultField.loadAprilTagLayoutField();
 
-    //Determine these Poses on a real field
+    // Determine these Poses on a real field
     public static final Pose2d kSource1RedPose = new Pose2d();
     public static final Pose2d kSource3RedPose = new Pose2d();
     public static final Pose2d kAmpScoreRedPose = new Pose2d();
