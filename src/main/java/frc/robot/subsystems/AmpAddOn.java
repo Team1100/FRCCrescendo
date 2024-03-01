@@ -51,6 +51,9 @@ public class AmpAddOn extends SubsystemBase {
   AbsoluteEncoder m_absoluteEncoder;
 
   NoteProximitySensor m_NoteProximitySensor;
+  // initially set motor to "Don't move"
+  private double m_lastAngle = 0;
+  private double m_lastSpeed = 0;
   
   /** Creates a new AmpAddOn. */
   private AmpAddOn() {
@@ -113,11 +116,10 @@ public class AmpAddOn extends SubsystemBase {
 
     if (m_SparkPIDController == null) return;
 
-    if (!backwards) {
-      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
-    }
-    else {
-      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
+    double setPoint = backwards? -RPM : RPM;
+    if (m_lastSpeed != setPoint) {
+      m_lastSpeed = setPoint;
+      m_SparkPIDController.setReference(setPoint, ControlType.kVelocity);
     }
   }
 
@@ -147,9 +149,16 @@ public class AmpAddOn extends SubsystemBase {
   }
 
   public void setTargetAngle(double angle) {
-    m_targetAngle.set(angle % Constants.DEGREES_PER_REVOLUTION);
+    double setPoint = angle % Constants.DEGREES_PER_REVOLUTION;
+    setPoint  = MathUtil.clamp(setPoint,
+                               Constants.kAPivotLowerLimitDegrees, 
+                               Constants.kAPivotUpperLimitDegrees);
+    m_targetAngle.set(setPoint);
     if (m_PivotSparkPIDController != null) {
-      m_PivotSparkPIDController.setReference(m_targetAngle.get(), ControlType.kPosition);
+      if (m_lastAngle != setPoint) {
+        m_lastAngle = setPoint;
+        m_PivotSparkPIDController.setReference(setPoint, ControlType.kPosition);
+      }
     }
   }
 

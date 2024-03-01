@@ -29,6 +29,8 @@ public class MAXSwerveModule {
 
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+  private double m_lastAngle = 0;
+  private double m_lastSpeed = 0;
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
@@ -151,8 +153,14 @@ public class MAXSwerveModule {
         new Rotation2d(m_turningEncoder.getPosition()));
 
     // Command driving and turning SPARKS MAX towards their respective setpoints.
-    m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
-    m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
+    if (optimizedDesiredState.speedMetersPerSecond != m_lastSpeed) {
+      m_lastSpeed = optimizedDesiredState.speedMetersPerSecond;
+      m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
+    }
+    if (optimizedDesiredState.angle.getRadians() != m_lastAngle) {
+      m_lastAngle = optimizedDesiredState.angle.getRadians();
+      m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
+    }
 
     m_desiredState = desiredState;
   }
