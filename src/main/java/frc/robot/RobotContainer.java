@@ -7,9 +7,12 @@ package frc.robot;
 import frc.robot.commands.ExcreteNote;
 import frc.robot.commands.GroundIntake;
 import frc.robot.commands.IngestNote;
+import frc.robot.commands.PrepareToAmp;
+import frc.robot.commands.PrepareToShoot;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootSpeaker;
 import frc.robot.commands.ShooterIngestNote;
+import frc.robot.commands.SourceIntake;
 import frc.robot.commands.Shooter.ShooterSlowOut;
 import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
 import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
@@ -206,7 +209,12 @@ public class RobotContainer {
     new ExcreteNote();
 
     new GroundIntake();
+    new SourceIntake();
+    new PrepareToShoot();
     new ShootSpeaker();
+    new PrepareToAmp();
+    new ScoreAmp();
+
 
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
     TDNumber testY = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseY");

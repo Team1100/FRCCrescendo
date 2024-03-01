@@ -5,23 +5,24 @@
 package frc.robot.commands;
 
 import frc.robot.commands.Barrel.SpinBarrelForward;
-import frc.robot.subsystems.Barrel;
+import frc.robot.commands.Lights.MoveLightsPurple;
+import frc.robot.subsystems.SensorMonitor;
+import frc.robot.subsystems.SensorMonitor.NoteLocation;
 import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 
 public class ShootSpeaker extends Command {
   enum State {
     INIT,
-    SCHEDULE_SPIN_BARREL_FORWARD,
-    WAIT_FOR_SHOOTER_NOTE_DETECTION,
-    SPIN_BARREL_FORWARD_UNTIL_RELEASE,
+    WAIT_FOR_RELEASE,
     DONE
   }
 
+  MoveLightsPurple m_MoveLightsPurple;
   SpinBarrelForward m_spinBarrelForward;
   
   Shooter m_shooter;
-  Barrel m_barrel;
+  SensorMonitor m_sensorMonitor;
 
   private boolean m_isFinished;
   private State m_state;
@@ -33,8 +34,11 @@ public class ShootSpeaker extends Command {
     m_state = State.INIT;
     m_isFinished = false;
 
+    m_MoveLightsPurple = new MoveLightsPurple();
+    m_spinBarrelForward = new SpinBarrelForward();
+
     m_shooter = Shooter.getInstance();
-    m_barrel = Barrel.getInstance();
+    m_sensorMonitor = SensorMonitor.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -50,26 +54,14 @@ public class ShootSpeaker extends Command {
     switch (m_state) {
       case INIT:
         if (m_shooter.isAtSetSpeed()) {
-          m_state = State.SCHEDULE_SPIN_BARREL_FORWARD;
-        }
-        else if (!m_barrel.hasNote()) {
-          m_state = State.DONE;
-        }
-        break;
-
-      case SCHEDULE_SPIN_BARREL_FORWARD:
-        m_spinBarrelForward.schedule();
-        m_state = State.WAIT_FOR_SHOOTER_NOTE_DETECTION;
-        break;
-
-      case WAIT_FOR_SHOOTER_NOTE_DETECTION:
-        if (m_shooter.hasNote()) {
-          m_state = State.SPIN_BARREL_FORWARD_UNTIL_RELEASE;
+          m_MoveLightsPurple.schedule();
+          m_spinBarrelForward.schedule();
+          m_state = State.WAIT_FOR_RELEASE;
         }
         break;
-
-      case SPIN_BARREL_FORWARD_UNTIL_RELEASE:
-        if (!m_shooter.hasNote()) {
+        
+      case WAIT_FOR_RELEASE:
+        if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote) {
           m_state = State.DONE;
         }
         break;
@@ -88,6 +80,9 @@ public class ShootSpeaker extends Command {
   public void end(boolean interrupted) {
     if (m_spinBarrelForward.isScheduled()) {
       m_spinBarrelForward.cancel();
+    }
+    if (m_MoveLightsPurple.isScheduled()) {
+      m_MoveLightsPurple.cancel();
     }
   }
 

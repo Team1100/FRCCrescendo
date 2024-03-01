@@ -6,28 +6,24 @@ package frc.robot.commands;
 
 import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.Intake.Consume;
-import frc.robot.subsystems.AmpAddOn;
-import frc.robot.subsystems.Barrel;
+import frc.robot.commands.Lights.MoveLightsYellow;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SensorMonitor;
+import frc.robot.subsystems.SensorMonitor.NoteLocation;
 import frc.robot.testingdashboard.Command;
 
 public class GroundIntake extends Command {
   enum State {
     INIT,
-    CHECK_NOTE_LOCATION,
-    SPIN_SUBSYSTEMS_IN,
     WAIT_FOR_BARREL_NOTE_DETECTION,
     DONE
   }
 
+  MoveLightsYellow m_moveLightsYellow;
   Consume m_consume;
   SpinBarrelForward m_spinBarrelForward;
 
-  Intake m_intake;
-  Barrel m_barrel;
-  Shooter m_shooter;
-  AmpAddOn m_ampAddOn;
+  SensorMonitor m_sensorMonitor;
 
   private boolean m_isFinished;
   private State m_state;
@@ -39,13 +35,11 @@ public class GroundIntake extends Command {
     m_state = State.INIT;
     m_isFinished = false;
     
+    m_moveLightsYellow = new MoveLightsYellow();
     m_consume = new Consume();
     m_spinBarrelForward = new SpinBarrelForward();
 
-    m_intake = Intake.getInstance();
-    m_barrel = Barrel.getInstance();
-    m_shooter = Shooter.getInstance();
-    m_ampAddOn = AmpAddOn.getInstance();
+    m_sensorMonitor = SensorMonitor.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -53,6 +47,8 @@ public class GroundIntake extends Command {
   public void initialize() {
     m_state = State.INIT;
     m_isFinished = false;
+
+    m_moveLightsYellow.schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -60,29 +56,23 @@ public class GroundIntake extends Command {
   public void execute() {
     switch (m_state) {
       case INIT:
-        m_state = State.CHECK_NOTE_LOCATION;
-        break;
-
-      case CHECK_NOTE_LOCATION:
-        if (!m_intake.hasNote() && !m_barrel.hasNote() && !m_shooter.hasNote() && !m_ampAddOn.hasNote()) {
-          m_state = State.SPIN_SUBSYSTEMS_IN;
+        switch (m_sensorMonitor.determineLocation()) {
+          case c_NoNote:
+          case c_SensorsDisabled:
+          case c_Intake:
+          case c_IntakeAndBarrel:
+            m_consume.schedule();
+            m_spinBarrelForward.schedule();
+            m_state = State.WAIT_FOR_BARREL_NOTE_DETECTION;
+            break;
+          default:
+            m_state = State.DONE;
+            break;
         }
-        else if (m_intake.hasNote()) {
-          m_state = State.SPIN_SUBSYSTEMS_IN;
-        }
-        else {
-          m_state = State.DONE;
-        }
-        break;
-
-      case SPIN_SUBSYSTEMS_IN:
-        m_consume.schedule();
-        m_spinBarrelForward.schedule();
-        m_state = State.WAIT_FOR_BARREL_NOTE_DETECTION;
         break;
       
       case WAIT_FOR_BARREL_NOTE_DETECTION:
-        if (m_barrel.hasNote() && !m_intake.hasNote()) {
+        if (m_sensorMonitor.determineLocation() == NoteLocation.c_Barrel) {
           m_state = State.DONE;
         }
         break;
@@ -105,8 +95,9 @@ public class GroundIntake extends Command {
     if (m_spinBarrelForward.isScheduled()) {
       m_spinBarrelForward.cancel();
     }
-
-    m_isFinished = true;
+    if (m_moveLightsYellow.isScheduled()) {
+      m_moveLightsYellow.cancel();
+    }
   }
 
   // Returns true when the command should end.
