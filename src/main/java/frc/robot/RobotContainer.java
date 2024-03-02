@@ -106,12 +106,13 @@ public class RobotContainer {
     // load configuration
     RobotMap.init();
 
+    m_oi = OI.getInstance();
+
     // Instantiate parameterized commands to register them with the testing dashboard.
     // The first instance of a Command registers itself. No need to store the resulting
     // objects.
     registerCommands();
 
-    m_oi = OI.getInstance();
 
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
