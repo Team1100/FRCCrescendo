@@ -49,7 +49,7 @@ public class SensorMonitor extends SubsystemBase {
     m_amp = AmpAddOn.getInstance();
 
     m_noteLocation = new TDString(this, "", "Note Location", "No Note In Robot");
-    m_sensorsEnabled = new TDBoolean(this, "Toggle Sensors", "Sensors Enabled", true);
+    m_sensorsEnabled = new TDBoolean(this, "Toggle Sensors", "Sensors Enabled", false);
   }
 
   /** Flips the value of sensorsEnabled boolean */
@@ -100,14 +100,14 @@ public class SensorMonitor extends SubsystemBase {
   }
 
   public boolean isValidState() {
-    if(m_intake.hasNote()){
+    if(!m_sensorsEnabled.get()) {
+      return false;
+    }else if(m_intake.hasNote()){
       return !(m_shooter.hasNote() || m_amp.hasNote());
     } else if(m_barrel.hasNote()){
       return (!m_amp.hasNote() && !(m_shooter.hasNote() && m_intake.hasNote()));
     } else if(m_shooter.hasNote()){
       return (!m_intake.hasNote() && !(m_barrel.hasNote() && m_amp.hasNote()));
-    } else if(!m_sensorsEnabled.get()) {
-      return false;
     }
     return true;
   }
@@ -156,6 +156,9 @@ public class SensorMonitor extends SubsystemBase {
   }
 
   public NoteLocation determineLocation() {
+    if (!m_sensorsEnabled.get()) {
+        return NoteLocation.c_SensorsDisabled;
+      }
     if(!isValidState()){
       if (!m_sensorsEnabled.get()) {
         return NoteLocation.c_SensorsDisabled;
