@@ -9,7 +9,7 @@ import frc.robot.subsystems.AmpAddOn;
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;
 
-public class ScoreAmp extends Command {
+public class SpinUpAmpRollers extends Command {
   AmpAddOn m_AmpAddOn;
 
   TDNumber m_RPM;
@@ -17,8 +17,8 @@ public class ScoreAmp extends Command {
   TDNumber m_ampSpeed;
 
   /** Creates a new ScoreAmp. */
-  public ScoreAmp() {
-    super(AmpAddOn.getInstance(), "", "ScoreAmp");
+  public SpinUpAmpRollers() {
+    super(AmpAddOn.getInstance(), "Basic", "SpinUpAmpRollers");
     m_AmpAddOn = AmpAddOn.getInstance();
 
     m_RPM = new TDNumber(m_AmpAddOn, "Amp Speed (RPM)", "RPM", Constants.AMP_SPEED_RPM);

@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.commands.AmpAddOn.SpinUpAmpRollers;
 import frc.robot.commands.Lights.MoveLightsPurple;
 import frc.robot.subsystems.AmpAddOn;
 import frc.robot.subsystems.SensorMonitor;
@@ -12,7 +13,7 @@ import frc.robot.testingdashboard.Command;
 
 public class ScoreAmp extends Command {
   MoveLightsPurple m_MoveLightsPurple;
-  ScoreAmp m_scoreAmp;
+  SpinUpAmpRollers m_SpinUpAmpRollers;
   
   SensorMonitor m_sensorMonitor;
   
@@ -21,14 +22,14 @@ public class ScoreAmp extends Command {
     super (AmpAddOn.getInstance(), "", "ScoreAmp");
 
     m_MoveLightsPurple = new MoveLightsPurple();
-    m_scoreAmp = new ScoreAmp();
+    m_SpinUpAmpRollers = new SpinUpAmpRollers();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_MoveLightsPurple.schedule();
-    m_scoreAmp.schedule();
+    m_SpinUpAmpRollers.schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,8 +42,8 @@ public class ScoreAmp extends Command {
     if (m_MoveLightsPurple.isScheduled()) {
       m_MoveLightsPurple.cancel();
     }
-    if (m_scoreAmp.isScheduled()) {
-      m_scoreAmp.cancel();
+    if (m_SpinUpAmpRollers.isScheduled()) {
+      m_SpinUpAmpRollers.cancel();
     }
   }
 
