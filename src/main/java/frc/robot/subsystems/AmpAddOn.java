@@ -95,6 +95,7 @@ public class AmpAddOn extends SubsystemBase {
 
       m_absoluteEncoder.setInverted(false);
       m_absoluteEncoder.setPositionConversionFactor(Constants.kAEncoderPositionFactorDegrees);
+      m_absoluteEncoder.setZeroOffset(Constants.kAEncoderZeroOffset);
       m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
     }
 

@@ -48,6 +48,7 @@ public final class Constants {
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
+    public static final double kAEncoderZeroOffset = 136;
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     public static final double kAPivotUpperLimitDegrees = 280;
     public static final double kAPivotLowerLimitDegrees = 60;
