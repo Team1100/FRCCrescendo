@@ -4,19 +4,14 @@
 
 package frc.robot.commands.BarrelPivot;
 
-import java.lang.reflect.Field;
-
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.Command;
-import frc.robot.testingdashboard.TDNumber;
 import frc.robot.utils.FieldUtils;
 
 public class PivotToSpeaker extends Command {
