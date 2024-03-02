@@ -112,14 +112,14 @@ public class PrepareToShoot extends Command {
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:
-        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed()) { // && tracking speaker && BP aligned
+        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal()) { // && tracking speaker && BP aligned
           m_moveLightsGreen.schedule();
           m_state = State.READY_TO_SHOOT;
         }
         break;
 
       case READY_TO_SHOOT:
-        if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote && m_barrelPivot.atGoal()) {
+        if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote) {
           m_state = State.DONE;
         }
         // TODO: 
