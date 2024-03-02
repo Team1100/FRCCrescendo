@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.OI;
 import frc.robot.commands.AmpAddOn.AmpPivotUp;
+import frc.robot.commands.BarrelPivot.PivotToSpeaker;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
@@ -33,7 +34,7 @@ public class PrepareToShoot extends Command {
   MoveNoteToBarrel m_moveNoteToBarrel;
   AmpPivotUp m_ampPivotUp;
   SpinUpShooter m_spinUpShooter;
-  // Command to align the BarrelPivot with the speaker
+  PivotToSpeaker m_pivotToSpeaker;
   TargetDrive m_trackSpeaker;
   MoveLightsGreen m_moveLightsGreen;
 
@@ -56,6 +57,7 @@ public class PrepareToShoot extends Command {
     m_moveNoteToBarrel = new MoveNoteToBarrel();
     m_ampPivotUp = new AmpPivotUp();
     m_spinUpShooter = new SpinUpShooter();
+    m_pivotToSpeaker = new PivotToSpeaker();
     m_trackSpeaker = new TargetDrive(()->{
         return FieldUtils.getInstance().getSpeakerPose().toPose2d();
       }, m_oi.getDriveInputs());
@@ -102,7 +104,7 @@ public class PrepareToShoot extends Command {
       case PREPARING_TO_SHOOT:
         m_ampPivotUp.schedule();
         m_spinUpShooter.schedule();
-        // Schedule command to align the BarrelPivot with the speaker
+        m_pivotToSpeaker.schedule();
         m_trackSpeaker.schedule();
         break;
 
@@ -149,7 +151,9 @@ public class PrepareToShoot extends Command {
       m_ampPivotUp.cancel();
     }
     // Cancel all scheduled commands
-    // Command to align the BarrelPivot with the speaker
+    if (m_pivotToSpeaker.isScheduled()) {
+      m_pivotToSpeaker.cancel();
+    }
     if (m_trackSpeaker.isScheduled()) {
       m_trackSpeaker.cancel();
     }

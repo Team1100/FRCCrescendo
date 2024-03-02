@@ -17,12 +17,12 @@ import frc.robot.utils.FieldUtils;
 public class PivotToSpeaker extends Command {
   protected BarrelPivot m_barrelPivot;
 
-  public PivotToSpeaker(Rotation2d target) {
-    this(target, "Auto Commands", "PivotToSpeaker");
+  public PivotToSpeaker() {
+    this("Auto Commands", "PivotToSpeaker");
   }
 
   //Used for subclasses so they can set they're own testing dashboard name
-  protected PivotToSpeaker(Rotation2d target, String groupName, String name){
+  protected PivotToSpeaker(String groupName, String name){
     super(BarrelPivot.getInstance(), "Auto Pivot", "PivotToSpeaker");
     m_barrelPivot = BarrelPivot.getInstance();
     addRequirements(m_barrelPivot);
@@ -68,6 +68,6 @@ public class PivotToSpeaker extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_barrelPivot.atGoal();
+    return false;
   }
 }
