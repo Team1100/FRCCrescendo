@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.OI;
 import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.BarrelPivot.PivotToSpeaker;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
@@ -40,6 +41,7 @@ public class PrepareToShoot extends Command {
 
   Shooter m_shooter;
   SensorMonitor m_sensorMonitor;
+  BarrelPivot m_barrelPivot;
 
   private boolean m_isFinished;
   private State m_state;
@@ -65,6 +67,7 @@ public class PrepareToShoot extends Command {
 
     m_shooter = Shooter.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
+    m_barrelPivot = BarrelPivot.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -116,7 +119,7 @@ public class PrepareToShoot extends Command {
         break;
 
       case READY_TO_SHOOT:
-        if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote) {
+        if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote && m_barrelPivot.atGoal()) {
           m_state = State.DONE;
         }
         // TODO: 
