@@ -66,7 +66,7 @@ public final class Constants {
     public static final double kBarrelD = 0;
 
     public static final Transform3d kRobotToBarrel =
-            new Transform3d(new Translation3d(0.0, 0.0, -0.5), 
+            new Transform3d(new Translation3d(0.0, -0.5, -0.15), 
                 new Rotation3d(0, 0, 0));
 
     public static final double BARREL_SPEED = 0.3;
