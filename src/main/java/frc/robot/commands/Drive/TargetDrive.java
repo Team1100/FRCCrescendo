@@ -69,7 +69,7 @@ public class TargetDrive extends Command {
     Pose2d currentPose = m_drive.getPose();
     ChassisSpeeds fieldRelativeSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(m_drive.getMeasuredSpeeds(), currentPose.getRotation());
 
-    Rotation2d targetRot = FieldUtils.getInstance().getAngleToPose(currentPose, targetPose);
+    Rotation2d targetRot = FieldUtils.getInstance().getAngleToPose(currentPose, targetPose).plus(new Rotation2d(Math.PI));
 
     TDTargetAngle.set(targetRot.getDegrees());
 

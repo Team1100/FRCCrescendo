@@ -4,27 +4,35 @@
 
 package frc.robot.commands;
 
-import frc.robot.testingdashboard.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.BarrelPivot.AlignPivotToSpeaker;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Shoot extends ParallelCommandGroup {
+public class Shoot extends frc.robot.testingdashboard.SequentialCommandGroup {
   /** Creates a new Shoot. */
   public Shoot() {
-    super(Shooter.getInstance(), "ParallelCommands", "Shoot");
+    super(Shooter.getInstance(), "", "Shoot Command Group");
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SpinUpShooter(),
-      new SequentialCommandGroup(
-        new WaitCommand(2), 
-        new SpinBarrelForward()
+      new ParallelCommandGroup(
+        new AmpPivotUp(),
+        new AlignPivotToSpeaker()
+      ),
+      new ParallelCommandGroup(
+        new SpinUpShooter(),
+        new SequentialCommandGroup(
+          new WaitCommand(1), 
+          new SpinBarrelForward()
+        )
       )
     );
   }
