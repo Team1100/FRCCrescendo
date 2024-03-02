@@ -136,6 +136,10 @@ public class BarrelPivot extends SubsystemBase {
     return MathUtil.isNear(Constants.BP_AMP_SCORING_ANGLE_DEGREES, m_barrelPivot.getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
   }
 
+  public boolean atGoal() {
+    return MathUtil.isNear(getTargetAngle(), getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
+  }
+
   public void pivotUpwards() {
     if (m_BPLeftSparkMax != null) {
       m_BPLeftSparkMax.set(Constants.BP_SPEED);
