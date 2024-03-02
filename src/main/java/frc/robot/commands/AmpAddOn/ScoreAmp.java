@@ -18,7 +18,7 @@ public class ScoreAmp extends Command {
 
   /** Creates a new ScoreAmp. */
   public ScoreAmp() {
-    super(AmpAddOn.getInstance(), "Basic", "ScoreAmp");
+    super(AmpAddOn.getInstance(), "", "ScoreAmp");
     m_AmpAddOn = AmpAddOn.getInstance();
 
     m_RPM = new TDNumber(m_AmpAddOn, "Amp Speed (RPM)", "RPM", Constants.AMP_SPEED_RPM);
