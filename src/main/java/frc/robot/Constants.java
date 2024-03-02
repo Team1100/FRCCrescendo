@@ -52,7 +52,7 @@ public final class Constants {
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     public static final double kAPivotUpperLimitDegrees = 280;
     public static final double kAPivotLowerLimitDegrees = 60;
-    public static final double kAPivotToleranceDegrees = 2;
+    public static final double kAPivotToleranceDegrees = 5;
     public static final double kAPivotIntakePositionDegrees = 64;
     public static final double kAPivotUpPositionDegrees = 275;
     public static final double kAPivotDeliverAmpPositionDegrees = 160;
@@ -86,7 +86,8 @@ public final class Constants {
 
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 1;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
-    public static final double BP_AMP_SCORING_ANGLE_DEGREES = 111;
+    public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
+     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
 
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
@@ -215,7 +216,7 @@ public final class Constants {
     public static final double SHOOTER_SPEED_TOLERANCE = 100; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
-    public static final double SHOOTER_INTAKING_SPEED_RPM = 0;
+    public static final double SHOOTER_INTAKING_SPEED_RPM = 500;
 
     // Vision Constants
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
