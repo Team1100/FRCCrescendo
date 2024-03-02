@@ -18,16 +18,23 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Sensors.ResetAllSensors;
+import frc.robot.commands.Sensors.ToggleSensorsOnOff;
 import frc.robot.subsystems.Drive;
 import frc.robot.utils.FieldUtils;
 import frc.robot.utils.SwerveDriveInputs;
 import frc.robot.commands.ExcreteNote;
+import frc.robot.commands.GroundIntake;
 import frc.robot.commands.IngestNote;
 import frc.robot.commands.MoveNoteForward;
 import frc.robot.commands.MoveNoteToAmp;
 import frc.robot.commands.MoveNoteToBarrel;
+import frc.robot.commands.PrepareToAmp;
+import frc.robot.commands.PrepareToShoot;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShooterIngestNote;
+import frc.robot.commands.SourceIntake;
+import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
+import frc.robot.commands.AmpAddOn.SpinUpAmpRollers;
 import frc.robot.commands.Drive.DriveToPose;
 import frc.robot.commands.Drive.TurnToTarget;
 
@@ -79,11 +86,15 @@ public class OI {
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
 
-    //Driver Mapping
-    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new IngestNote());
-    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new ExcreteNote());
+    // Driver Mapping
+    // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
+
+    /*
+    new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new IngestNote());
+    new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new ExcreteNote());
     new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new ShooterIngestNote());
     new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new MoveNoteForward());
+    */
 
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
     // new JoystickButton(m_DriverXboxController, Button.kA.value).onTrue(new DriveToPose(()->{
@@ -103,7 +114,24 @@ public class OI {
     //Operator Mapping
     // new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new MoveNoteToBarrel());
     // new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteToAmp());
-    new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ResetAllSensors());
+    /*
+    new JoystickButton(m_OperatorXboxController, Button.kY.value).whileTrue(new AmpPivotToIntake());
+    new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new PrepareToAmp());
+    new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new SourceIntake());
+    new JoystickButton(m_OperatorXboxController, Button.kX.value).whileTrue(new GroundIntake());
+    new JoystickButton(m_OperatorXboxController, Button.kLeftBumper.value).whileTrue(new ScoreAmp());
+    new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new Shoot());
+    new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ToggleSensorsOnOff());
+    new JoystickButton(m_OperatorXboxController, Button.kStart.value).onTrue(new ResetAllSensors());
+    */
+
+    new JoystickButton(m_OperatorXboxController, Button.kY.value).whileTrue(new ExcreteNote());
+    new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new AmpPivotToIntake());
+    new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new PrepareToAmp());
+    new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new SourceIntake());
+    new JoystickButton(m_OperatorXboxController, Button.kX.value).whileTrue(new MoveNoteForward());
+    new JoystickButton(m_OperatorXboxController, Button.kLeftBumper.value).whileTrue(new SpinUpAmpRollers());
+    new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new Shoot());
   }
 
   /**
