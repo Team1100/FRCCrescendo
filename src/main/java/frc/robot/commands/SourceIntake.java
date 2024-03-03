@@ -138,6 +138,9 @@ public class SourceIntake extends Command {
     if (m_moveLightsGreen.isScheduled()) {
       m_moveLightsGreen.cancel();
     }
+    if (m_unScoreAmp.isScheduled()) {
+      m_unScoreAmp.cancel();
+    }
   }
 
   // Returns true when the command should end.
