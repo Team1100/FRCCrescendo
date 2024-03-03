@@ -36,7 +36,7 @@ public final class Constants {
     public static final double DEGREES_PER_REVOLUTION = 360;
 
     // Defines AmpAddOn constants
-    public static final double AMP_SPEED = 0.2;
+    public static final double AMP_SPEED = 0.5;
     public static final double AMP_SPEED_RPM = 0;
 
     public static final boolean kEnableAmpAddOnPIDTuning = false;
@@ -69,7 +69,7 @@ public final class Constants {
             new Transform3d(new Translation3d(0.0, -0.5, -0.15), 
                 new Rotation3d(0, 0, 0));
 
-    public static final double BARREL_SPEED = 0.3;
+    public static final double BARREL_SPEED = 0.7;
     public static final double BARREL_SPEED_RPM = 0;
 
     // Defines Barrel Pivot constants
