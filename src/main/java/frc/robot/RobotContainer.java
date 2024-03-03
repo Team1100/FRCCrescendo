@@ -4,15 +4,16 @@
 
 package frc.robot;
 
-import frc.robot.commands.ExcreteNote;
+import frc.robot.commands.MoveNoteBackward;
+import frc.robot.commands.MoveNoteForward;
+import frc.robot.commands.MoveNoteToAmp;
+import frc.robot.commands.MoveNoteToBarrel;
 import frc.robot.commands.GroundIntake;
-import frc.robot.commands.IngestNote;
 import frc.robot.commands.PrepareToAmp;
 import frc.robot.commands.PrepareToShoot;
 import frc.robot.commands.ScoreAmp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootSpeaker;
-import frc.robot.commands.ShooterIngestNote;
 import frc.robot.commands.SourceIntake;
 import frc.robot.commands.Shooter.ShooterSlowOut;
 import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
@@ -26,6 +27,7 @@ import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.BarrelPivot.AlignPivotToAmp;
+import frc.robot.commands.BarrelPivot.AlignPivotToSpeakerClose;
 import frc.robot.commands.BarrelPivot.AlignWithSource;
 import frc.robot.commands.BarrelPivot.PivotDownwards;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
@@ -66,16 +68,11 @@ import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TDSendable;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.utils.FieldUtils;
-import frc.robot.utils.SwerveDriveInputs;
-
-import java.util.function.Supplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -113,7 +110,6 @@ public class RobotContainer {
     // The first instance of a Command registers itself. No need to store the resulting
     // objects.
     registerCommands();
-
 
     // Robot subsystems initialized and configured here
     m_robotDrive = Drive.getInstance();
@@ -169,6 +165,7 @@ public class RobotContainer {
     // BarrelPivot commands
     new AlignWithSource();
     new AlignPivotToAmp();
+    new AlignPivotToSpeakerClose();
     new SetZeroAsCurrentPosition();
     new ResetTargetAngle();
     new PivotRelativeAngleControl();
@@ -205,10 +202,10 @@ public class RobotContainer {
     new ShooterSlowOut();
 
     new Shoot();
-    new ShooterIngestNote();
-
-    new IngestNote();
-    new ExcreteNote();
+    new MoveNoteForward();
+    new MoveNoteBackward();
+    new MoveNoteToAmp();
+    new MoveNoteToBarrel();
 
     new GroundIntake();
     new SourceIntake();

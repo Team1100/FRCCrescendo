@@ -7,7 +7,6 @@ package frc.robot.commands.AmpAddOn;
 import frc.robot.Constants;
 import frc.robot.subsystems.AmpAddOn;
 import frc.robot.testingdashboard.Command;
-import frc.robot.testingdashboard.TDBoolean;
 import frc.robot.testingdashboard.TDNumber;
 
 public class AmpPivotUp extends Command {

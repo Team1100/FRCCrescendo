@@ -16,7 +16,7 @@ public class BlinkLights extends Command {
     super(Lights.getInstance(), "Basic", "BlinkLights");
     m_lights = Lights.getInstance();
 
-    int hue = 10; // Orange
+    hue = 0; // Red
 
     addRequirements(m_lights);
   }
