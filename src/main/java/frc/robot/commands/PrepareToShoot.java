@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import frc.robot.OI;
 import frc.robot.commands.AmpAddOn.AmpPivotUp;
+import frc.robot.commands.BarrelPivot.PivotToSpeaker;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
@@ -33,12 +35,13 @@ public class PrepareToShoot extends Command {
   MoveNoteToBarrel m_moveNoteToBarrel;
   AmpPivotUp m_ampPivotUp;
   SpinUpShooter m_spinUpShooter;
-  // Command to align the BarrelPivot with the speaker
+  PivotToSpeaker m_pivotToSpeaker;
   TargetDrive m_trackSpeaker;
   MoveLightsGreen m_moveLightsGreen;
 
   Shooter m_shooter;
   SensorMonitor m_sensorMonitor;
+  BarrelPivot m_barrelPivot;
 
   private boolean m_isFinished;
   private State m_state;
@@ -56,6 +59,7 @@ public class PrepareToShoot extends Command {
     m_moveNoteToBarrel = new MoveNoteToBarrel();
     m_ampPivotUp = new AmpPivotUp();
     m_spinUpShooter = new SpinUpShooter();
+    m_pivotToSpeaker = new PivotToSpeaker();
     m_trackSpeaker = new TargetDrive(()->{
         return FieldUtils.getInstance().getSpeakerPose().toPose2d();
       }, m_oi.getDriveInputs());
@@ -63,6 +67,7 @@ public class PrepareToShoot extends Command {
 
     m_shooter = Shooter.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
+    m_barrelPivot = BarrelPivot.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -102,12 +107,12 @@ public class PrepareToShoot extends Command {
       case PREPARING_TO_SHOOT:
         m_ampPivotUp.schedule();
         m_spinUpShooter.schedule();
-        // Schedule command to align the BarrelPivot with the speaker
+        m_pivotToSpeaker.schedule();
         m_trackSpeaker.schedule();
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:
-        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed()) { // && tracking speaker && BP aligned
+        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal()) { // && tracking speaker && BP aligned
           m_moveLightsGreen.schedule();
           m_state = State.READY_TO_SHOOT;
         }
@@ -149,7 +154,9 @@ public class PrepareToShoot extends Command {
       m_ampPivotUp.cancel();
     }
     // Cancel all scheduled commands
-    // Command to align the BarrelPivot with the speaker
+    if (m_pivotToSpeaker.isScheduled()) {
+      m_pivotToSpeaker.cancel();
+    }
     if (m_trackSpeaker.isScheduled()) {
       m_trackSpeaker.cancel();
     }
