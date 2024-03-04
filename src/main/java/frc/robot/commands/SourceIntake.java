@@ -11,6 +11,7 @@ import frc.robot.commands.BarrelPivot.AlignWithSource;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
 import frc.robot.commands.Shooter.IntakeFromShooter;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.SensorMonitor;
 import frc.robot.subsystems.SensorMonitor.NoteLocation;
 import frc.robot.subsystems.Shooter;
@@ -33,6 +34,7 @@ public class SourceIntake extends Command {
   IntakeFromShooter m_intakeFromShooter;
   SpinBarrelBackward m_spinBarrelBackward;
 
+  BarrelPivot m_barrelPivot;
   SensorMonitor m_sensorMonitor;
 
   private boolean m_isFinished;
@@ -89,7 +91,7 @@ public class SourceIntake extends Command {
         break;
 
       case ALIGN_PIVOTS:
-        if (m_ampPivotToIntake.isFinished() && m_alignWithSource.isFinished()) {
+        if (m_ampPivotToIntake.isFinished() && m_barrelPivot.alignedToSource()) {
           m_state = State.SPIN_SUBSYSTEMS_IN;
         }
         break;

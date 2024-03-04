@@ -10,6 +10,7 @@ import frc.robot.commands.BarrelPivot.AlignPivotToAmp;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
 import frc.robot.subsystems.AmpAddOn;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.SensorMonitor;
 import frc.robot.subsystems.SensorMonitor.NoteLocation;
 
@@ -29,6 +30,7 @@ public class PrepareToAmp extends Command {
   AlignPivotToAmp m_alignPivotToAmp;
   MoveLightsGreen m_MoveLightsGreen;
 
+  BarrelPivot m_barrelPivot;
   SensorMonitor m_sensorMonitor;
 
   private boolean m_isFinished;
@@ -47,6 +49,7 @@ public class PrepareToAmp extends Command {
     m_alignPivotToAmp = new AlignPivotToAmp();
     m_MoveLightsGreen = new MoveLightsGreen();
 
+    m_barrelPivot = BarrelPivot.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
   }
 
@@ -91,7 +94,7 @@ public class PrepareToAmp extends Command {
         break;
 
       case WAIT_FOR_ALIGN_PIVOTS:
-        if (m_ampPivotToScoringPosition.isFinished() && m_alignPivotToAmp.isFinished()) {
+        if (m_ampPivotToScoringPosition.isFinished() && m_barrelPivot.alignedToAmp()) {
           m_blinkLights.cancel();
           m_MoveLightsGreen.schedule();
           m_state = State.READY_TO_AMP_SCORE;

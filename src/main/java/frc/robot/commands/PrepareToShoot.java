@@ -123,6 +123,14 @@ public class PrepareToShoot extends Command {
         if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote) {
           m_state = State.DONE;
         }
+        if (!m_barrelPivot.atGoal() && m_moveLightsGreen.isScheduled()) {
+          m_moveLightsGreen.cancel();
+          m_blinkLights.schedule();
+        }
+        else if (m_barrelPivot.atGoal() && m_blinkLights.isScheduled()) {
+          m_blinkLights.cancel();
+          m_moveLightsGreen.schedule();
+        }
         // TODO: 
         // if ((speaker not tracked || BP not aligned) && red not scheduled)
         //   schedule red lights
