@@ -88,6 +88,7 @@ public final class Constants {
     public static final double BP_SPEED = 0.1;
 
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 1;
+    public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
      public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
