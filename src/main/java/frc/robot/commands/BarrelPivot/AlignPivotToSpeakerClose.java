@@ -6,7 +6,6 @@ package frc.robot.commands.BarrelPivot;
 
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;
-import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.subsystems.BarrelPivot;
 
@@ -39,6 +38,6 @@ public class AlignPivotToSpeakerClose extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return MathUtil.isNear(Constants.BP_SHOOTER_SCORING_ANGLE_DEGREES, m_barrelPivot.getAngle(), 3);
+    return false;
   }
 }

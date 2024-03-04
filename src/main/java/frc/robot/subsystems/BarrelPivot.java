@@ -136,6 +136,10 @@ public class BarrelPivot extends SubsystemBase {
     return MathUtil.isNear(Constants.BP_AMP_SCORING_ANGLE_DEGREES, m_barrelPivot.getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
   }
 
+  public boolean alignedToShootClose() {
+    return MathUtil.isNear(Constants.BP_SHOOTER_SCORING_ANGLE_DEGREES, m_barrelPivot.getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
+  }
+
   public boolean atGoal() {
     return MathUtil.isNear(getTargetAngle(), getAngle(), Constants.BP_SPEAKER_TOLERANCE_DEGREES);
   }
