@@ -90,7 +90,8 @@ public final class Constants {
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 1;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
-     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
+    public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
+    public static final double BP_DOWN_ANGLE_DEGREES = 65;
 
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
