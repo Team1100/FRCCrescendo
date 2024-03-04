@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.Barrel.SpinBarrelForward;
-import frc.robot.commands.BarrelPivot.AlignPivotToSpeaker;
+import frc.robot.commands.BarrelPivot.AlignPivotToSpeakerClose;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.Shooter;
 
@@ -25,7 +25,7 @@ public class Shoot extends frc.robot.testingdashboard.SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new AmpPivotUp(),
-        new AlignPivotToSpeaker()
+        new AlignPivotToSpeakerClose()
       ),
       new ParallelCommandGroup(
         new SpinUpShooter(),

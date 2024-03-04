@@ -112,7 +112,8 @@ public class PrepareToShoot extends Command {
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:
-        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal()) { // && tracking speaker && BP aligned
+        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal()) { // && tracking speaker
+          m_blinkLights.cancel();
           m_moveLightsGreen.schedule();
           m_state = State.READY_TO_SHOOT;
         }
@@ -153,7 +154,6 @@ public class PrepareToShoot extends Command {
     if (m_ampPivotUp.isScheduled()) {
       m_ampPivotUp.cancel();
     }
-    // Cancel all scheduled commands
     if (m_pivotToSpeaker.isScheduled()) {
       m_pivotToSpeaker.cancel();
     }

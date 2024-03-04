@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.Intake.Consume;
+import frc.robot.commands.Lights.MoveLightsYellow;
 import frc.robot.commands.Shooter.ShooterSlowOut;
 import frc.robot.subsystems.Barrel;
 import frc.robot.testingdashboard.ParallelCommandGroup;
@@ -14,6 +15,6 @@ import frc.robot.testingdashboard.ParallelCommandGroup;
 public class MoveNoteForward extends ParallelCommandGroup {
   /** Creates a new MoveNoteForward. */
   public MoveNoteForward() {
-    super(Barrel.getInstance(), "ParallelCommands", "MoveNoteForward", new Consume(), new SpinBarrelForward(), new ShooterSlowOut(), new UNScoreAmp());
+    super(Barrel.getInstance(), "ParallelCommands", "MoveNoteForward", new Consume(), new SpinBarrelForward(), new ShooterSlowOut(), new UNScoreAmp(), new MoveLightsYellow());
   }
 }

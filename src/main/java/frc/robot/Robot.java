@@ -7,13 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.AmpAddOn.AmpPivotRelativeAngleControl;
 import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
 import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
-import frc.robot.subsystems.Barrel;
-import frc.robot.subsystems.BarrelPivot;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

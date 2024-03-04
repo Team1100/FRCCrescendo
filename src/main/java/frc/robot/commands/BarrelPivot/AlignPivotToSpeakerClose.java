@@ -10,13 +10,13 @@ import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.subsystems.BarrelPivot;
 
-public class AlignPivotToSpeaker extends Command {
+public class AlignPivotToSpeakerClose extends Command {
   BarrelPivot m_barrelPivot;
   TDNumber m_SpeakerPosition;
 
-  /** Creates a new AlignPivotToSpeaker. */
-  public AlignPivotToSpeaker() {
-    super(BarrelPivot.getInstance(), "Setpoints", "AlignPivotToSpeaker");
+  /** Creates a new AlignPivotToSpeakerClose. */
+  public AlignPivotToSpeakerClose() {
+    super(BarrelPivot.getInstance(), "Setpoints", "AlignPivotToSpeakerClose");
     m_barrelPivot = BarrelPivot.getInstance();
     m_SpeakerPosition = new TDNumber(m_barrelPivot, "Setpoints", "SpeakerPosition (degrees)", Constants.BP_SHOOTER_SCORING_ANGLE_DEGREES);
     addRequirements(m_barrelPivot);
