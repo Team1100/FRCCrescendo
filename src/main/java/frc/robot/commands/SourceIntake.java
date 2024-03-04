@@ -95,6 +95,7 @@ public class SourceIntake extends Command {
         break;
 
       case SPIN_SUBSYSTEMS_IN:
+        m_blinkLights.cancel();
         m_moveLightsGreen.schedule();
         m_unScoreAmp.schedule();
         m_intakeFromShooter.schedule();

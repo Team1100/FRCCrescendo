@@ -92,6 +92,7 @@ public class PrepareToAmp extends Command {
 
       case WAIT_FOR_ALIGN_PIVOTS:
         if (m_ampPivotToScoringPosition.isFinished() && m_alignPivotToAmp.isFinished()) {
+          m_blinkLights.cancel();
           m_MoveLightsGreen.schedule();
           m_state = State.READY_TO_AMP_SCORE;
         }
