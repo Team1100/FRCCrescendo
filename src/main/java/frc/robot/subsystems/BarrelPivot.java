@@ -137,7 +137,7 @@ public class BarrelPivot extends SubsystemBase {
   }
 
   public boolean atGoal() {
-    return MathUtil.isNear(getTargetAngle(), getAngle(), Constants.BP_ANGLE_TOLERANCE_DEGREES);
+    return MathUtil.isNear(getTargetAngle(), getAngle(), Constants.BP_SPEAKER_TOLERANCE_DEGREES);
   }
 
   public void pivotUpwards() {

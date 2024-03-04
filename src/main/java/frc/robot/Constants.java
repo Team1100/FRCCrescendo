@@ -66,7 +66,7 @@ public final class Constants {
     public static final double kBarrelD = 0;
 
     public static final Transform3d kRobotToBarrel =
-            new Transform3d(new Translation3d(0.0, -0.5, -0.15), 
+            new Transform3d(new Translation3d(0.0, 0.33, 0.2),
                 new Rotation3d(0, 0, 0));
 
     public static final double BARREL_SPEED = 0.7;
@@ -88,6 +88,7 @@ public final class Constants {
     public static final double BP_SPEED = 0.1;
 
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 1;
+    public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
@@ -234,7 +235,7 @@ public final class Constants {
             AprilTagFields.kDefaultField.loadAprilTagLayoutField();
 
     // Height of Speaker mouth above tag pose
-    public static final double SPEAKER_HEIGHT_OFFSET = 0.75;
+    public static final double SPEAKER_HEIGHT_OFFSET = 0.6;
 
     // Determine these Poses on a real field
     public static final Pose2d kSource1RedPose = new Pose2d();
