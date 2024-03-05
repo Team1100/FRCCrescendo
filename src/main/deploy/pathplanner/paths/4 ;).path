@@ -1,0 +1,215 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.5236213857798736,
+        "y": 6.699391201986509
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.1730042061228954,
+        "y": 6.607233453496904
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.829934900610542,
+        "y": 6.486139921353917
+      },
+      "prevControl": {
+        "x": 2.2618598960798417,
+        "y": 6.408668662887571
+      },
+      "nextControl": {
+        "x": 3.4041781482413827,
+        "y": 6.564452374295787
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.277501434632498,
+        "y": 7.4734778301394
+      },
+      "prevControl": {
+        "x": 7.403719696328282,
+        "y": 7.624597832528999
+      },
+      "nextControl": {
+        "x": 9.009110659266046,
+        "y": 7.346946474620979
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3150627073203554,
+        "y": 5.544363070207622
+      },
+      "prevControl": {
+        "x": 1.720595925089219,
+        "y": 5.814653969105865
+      },
+      "nextControl": {
+        "x": 0.6136781096875528,
+        "y": 5.0768850312677785
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.829934900610542,
+        "y": 5.544363070207622
+      },
+      "prevControl": {
+        "x": 2.5853177100577964,
+        "y": 5.762534372203446
+      },
+      "nextControl": {
+        "x": 3.0745520911632873,
+        "y": 5.326191768211797
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.9742324716130917,
+        "y": 4.759479745811344
+      },
+      "prevControl": {
+        "x": 1.4039588881908722,
+        "y": 5.055559403102174
+      },
+      "nextControl": {
+        "x": 0.5445060550353074,
+        "y": 4.463400088520514
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.137387745567954,
+        "y": 4.759479745811344
+      },
+      "prevControl": {
+        "x": 3.882345987308817,
+        "y": 4.862294178771797
+      },
+      "nextControl": {
+        "x": 4.392429503827092,
+        "y": 4.656665312850891
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.277501434632498,
+        "y": 4.134221629554371
+      },
+      "prevControl": {
+        "x": 7.2294643033366235,
+        "y": 4.27696022681297
+      },
+      "nextControl": {
+        "x": 9.325538565928374,
+        "y": 3.991483032295771
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.962368531218544,
+        "y": 3.348625692621756
+      },
+      "prevControl": {
+        "x": 5.791446426651439,
+        "y": 3.511835508185452
+      },
+      "nextControl": {
+        "x": 4.13329063578565,
+        "y": 3.185415877058061
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.9742324716130917,
+        "y": 3.9846323813018
+      },
+      "prevControl": {
+        "x": 1.3995431630159358,
+        "y": 3.9594652299039583
+      },
+      "nextControl": {
+        "x": 0.5489217802102482,
+        "y": 4.009799532699642
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.829934900610542,
+        "y": 4.134221629554371
+      },
+      "prevControl": {
+        "x": 2.3843888283714127,
+        "y": 4.326923952502021
+      },
+      "nextControl": {
+        "x": 3.275480972849672,
+        "y": 3.941519306606721
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7194734898729058,
+        "y": 4.45590680533213
+      },
+      "prevControl": {
+        "x": 0.1844585796273115,
+        "y": 4.866217907762369
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 39.54123739152176,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Caitlin's CATastrophies",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
