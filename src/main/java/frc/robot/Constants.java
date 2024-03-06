@@ -77,8 +77,8 @@ public final class Constants {
     public static final double kBarrelPivotP = 0.06;
     public static final double kBarrelPivotI = 0.000001;
     public static final double kBarrelPivotD = 0;
-    public static final double kBarrelPivotLowerLimitDegrees = 60;
-    public static final double kBarrelPivotUpperLimitDegrees = 150;
+    public static final double kBarrelPivotLowerLimitDegrees = 80;
+    public static final double kBarrelPivotUpperLimitDegrees = 140;
 
     public static final double kBPEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
 
@@ -92,7 +92,7 @@ public final class Constants {
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
-    public static final double BP_DOWN_ANGLE_DEGREES = 65;
+    public static final double BP_DOWN_ANGLE_DEGREES = 95;
 
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
