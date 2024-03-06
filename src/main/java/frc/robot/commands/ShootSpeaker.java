@@ -53,11 +53,11 @@ public class ShootSpeaker extends Command {
   public void execute() {
     switch (m_state) {
       case INIT:
-        if (m_shooter.isAtSetSpeed()) {
+        // if (m_shooter.isAtSetSpeed()) {
           m_MoveLightsPurple.schedule();
           m_spinBarrelForward.schedule();
           m_state = State.WAIT_FOR_RELEASE;
-        }
+        // }
         break;
         
       case WAIT_FOR_RELEASE:

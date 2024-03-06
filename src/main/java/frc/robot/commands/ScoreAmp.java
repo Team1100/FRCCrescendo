@@ -50,6 +50,7 @@ public class ScoreAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote;
+    // return m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote;
+    return false;
   }
 }
