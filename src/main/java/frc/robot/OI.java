@@ -27,10 +27,13 @@ import frc.robot.commands.GroundIntake;
 import frc.robot.commands.MoveNoteForward;
 import frc.robot.commands.PrepareToAmp;
 import frc.robot.commands.PrepareToShoot;
+import frc.robot.commands.PrepareToShootClose;
 import frc.robot.commands.ScoreAmp;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.ShootSpeaker;
 import frc.robot.commands.SourceIntake;
 import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
+import frc.robot.commands.BarrelPivot.PivotDOWNDOWNDOWN;
 import frc.robot.commands.Drive.DriveToPose;
 
 /**
@@ -82,7 +85,7 @@ public class OI {
     ////////////////////////////////////////////////////
 
     // Driver Mapping
-    // new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
+    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShootClose());
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
     
     // Drive to locations on the field
@@ -102,8 +105,9 @@ public class OI {
     // new JoystickButton(m_OperatorXboxController, Button.kX.value).whileTrue(new GroundIntake());
     new JoystickButton(m_OperatorXboxController, Button.kY.value).whileTrue(new MoveNoteBackward());
     new JoystickButton(m_OperatorXboxController, Button.kLeftBumper.value).whileTrue(new ScoreAmp());
-    new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new Shoot());
+    new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new ShootSpeaker());
     new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new AmpPivotToIntake());
+    new JoystickButton(m_OperatorXboxController, Button.kStart.value).whileTrue(new PivotDOWNDOWNDOWN());
     // new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ToggleSensorsOnOff());
     // new JoystickButton(m_OperatorXboxController, Button.kStart.value).onTrue(new ResetAllSensors());
   }
