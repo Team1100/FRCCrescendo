@@ -8,14 +8,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.Command;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.utils.FieldUtils;
 
 public class PivotToSpeaker extends Command {
   protected BarrelPivot m_barrelPivot;
+  TDNumber ANGLE_OFFSET;
+  TDNumber SPEAKER_HEIGHT_OFFSET;
 
   public PivotToSpeaker() {
     this("Auto Commands", "PivotToSpeaker");
@@ -25,6 +29,8 @@ public class PivotToSpeaker extends Command {
   protected PivotToSpeaker(String groupName, String name){
     super(BarrelPivot.getInstance(), "Auto Pivot", "PivotToSpeaker");
     m_barrelPivot = BarrelPivot.getInstance();
+    ANGLE_OFFSET = new TDNumber(m_barrelPivot, "Auto Pivot", "Angle Offset (degrees)", Constants.BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES);
+    SPEAKER_HEIGHT_OFFSET = new TDNumber(m_barrelPivot, "Auto Pivot", "Speaker Height Offset (meters)", Constants.SPEAKER_HEIGHT_OFFSET);
     addRequirements(m_barrelPivot);
   }
 
@@ -40,7 +46,7 @@ public class PivotToSpeaker extends Command {
     // get speaker pose as topdown vector2 (x, y, z) > (x,y), get height as tag pose Z + constant offset - barrel pivot vertical offset
     Pose3d speakerPose = FieldUtils.getInstance().getSpeakerPose();
     Translation2d speakerTrans = new Translation2d(speakerPose.getX(), speakerPose.getY());
-    double speakerHeight = speakerPose.getZ() + Constants.SPEAKER_HEIGHT_OFFSET - Constants.kRobotToBarrel.getZ();
+    double speakerHeight = speakerPose.getZ() + SPEAKER_HEIGHT_OFFSET.get() - Constants.kRobotToBarrel.getZ();
 
     // get shooter pivot point as topdown vector2 (x, y) via offsetting drive pose by constant barrel pivot offset, rotated by drive rotation
     Pose2d botPose = Drive.getInstance().getPose();
@@ -56,7 +62,7 @@ public class PivotToSpeaker extends Command {
     // equivalent to arctan( speakerHeight / distToTag )
     Rotation2d rotation = new Rotation2d(distToTag, speakerHeight);
     
-    m_barrelPivot.setTargetAngle(rotation.getDegrees());
+    m_barrelPivot.setTargetAngle(rotation.getDegrees() + ANGLE_OFFSET.get());
   }
 
   // Called once the command ends or is interrupted.

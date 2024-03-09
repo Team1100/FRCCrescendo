@@ -66,7 +66,7 @@ public final class Constants {
     public static final double kBarrelD = 0;
 
     public static final Transform3d kRobotToBarrel =
-            new Transform3d(new Translation3d(0.0, 0.33, 0.2),
+            new Transform3d(new Translation3d(-0.33, 0.0, 0.2),
                 new Rotation3d(0, 0, 0));
 
     public static final double BARREL_SPEED = 0.7;
@@ -86,7 +86,8 @@ public final class Constants {
     public static final double kBPDeadband = 0.05;
 
     public static final double BP_SPEED = 0.1;
-
+    
+    public static final double BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES = 75;
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 3;
     public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
@@ -211,7 +212,7 @@ public final class Constants {
     // Defines Shooter constants
     public static final boolean kEnableShooterPIDTuning = false;
     public static final double kShooterP = 0.000550;
-    public static final double kShooterI = 0.000000001;
+     public static final double kShooterI = 0.000000001;
     public static final double kShooterD = 0.001000;
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
@@ -227,7 +228,7 @@ public final class Constants {
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(Units.inchesToMeters(-3.5), Units.inchesToMeters(-14), Units.inchesToMeters(13.5)), 
+            new Transform3d(new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(28)), 
                 new Rotation3d(0, Units.degreesToRadians(30), Units.degreesToRadians(180)));
 
     // The layout of the AprilTags on the field
