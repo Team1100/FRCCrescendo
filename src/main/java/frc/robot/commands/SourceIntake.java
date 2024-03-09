@@ -55,6 +55,7 @@ public class SourceIntake extends Command {
     m_intakeFromShooter = new IntakeFromShooter();
     m_spinBarrelBackward = new SpinBarrelBackward();
 
+    m_barrelPivot = BarrelPivot.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
   }
 

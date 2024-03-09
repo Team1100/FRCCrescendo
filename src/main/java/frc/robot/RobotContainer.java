@@ -11,6 +11,7 @@ import frc.robot.commands.MoveNoteToBarrel;
 import frc.robot.commands.GroundIntake;
 import frc.robot.commands.PrepareToAmp;
 import frc.robot.commands.PrepareToShoot;
+import frc.robot.commands.PrepareToShootClose;
 import frc.robot.commands.ScoreAmp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootSpeaker;
@@ -217,6 +218,8 @@ public class RobotContainer {
     new ShootSpeaker();
     new PrepareToAmp();
     new ScoreAmp();
+
+    new PrepareToShootClose();
 
 
     TDNumber testX = new TDNumber(Drive.getInstance(), "Test Inputs", "TargetPoseX");
