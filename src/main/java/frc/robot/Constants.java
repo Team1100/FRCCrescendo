@@ -210,9 +210,9 @@ public final class Constants {
     public static final int LED_LENGTH = 42; // number of LEDs
 
     // Defines Shooter constants
-    public static final boolean kEnableShooterPIDTuning = false;
+    public static final boolean kEnableShooterPIDTuning = true;
     public static final double kShooterP = 0.000550;
-     public static final double kShooterI = 0.000000001;
+     public static final double kShooterI = 0.000000250;
     public static final double kShooterD = 0.001000;
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
@@ -228,8 +228,8 @@ public final class Constants {
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(28)), 
-                new Rotation3d(0, Units.degreesToRadians(30), Units.degreesToRadians(180)));
+            new Transform3d(new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(25.5)), 
+                new Rotation3d(0, Units.degreesToRadians(150), Units.degreesToRadians(180)));
 
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
