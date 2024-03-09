@@ -49,6 +49,7 @@ import frc.robot.commands.Lights.DisableLights;
 import frc.robot.commands.Lights.EnableLights;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.commands.Lights.MakeWarm;
 import frc.robot.commands.Lights.MoveLightsBlue;
 import frc.robot.commands.Lights.MoveLightsColor;
 import frc.robot.commands.Lights.MoveLightsGreen;
@@ -194,6 +195,7 @@ public class RobotContainer {
     new MoveLightsYellow();
     new MoveLightsPurple();
     new MoveLightsColor();
+    new MakeWarm();
 
     // Sensor commands
     new ToggleSensorsOnOff();
