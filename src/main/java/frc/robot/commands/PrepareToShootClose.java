@@ -101,6 +101,7 @@ public class PrepareToShootClose extends Command {
         m_ampPivotUp.schedule();
         m_spinUpShooter.schedule();
         m_alignPivotToSpeakerClose.schedule();
+        m_state = State.WAIT_FOR_PREPARING_TO_SHOOT;
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:

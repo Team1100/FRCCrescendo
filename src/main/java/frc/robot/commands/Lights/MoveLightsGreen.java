@@ -15,7 +15,7 @@ public class MoveLightsGreen extends Command {
     super(Lights.getInstance(), "Basic", "MoveLightsGreen");
     m_lights = Lights.getInstance();
 
-    hue = 70; //Green
+    hue = 60; //Green
 
     addRequirements(m_lights);
     // Use addRequirements() here to declare subsystem dependencies.
