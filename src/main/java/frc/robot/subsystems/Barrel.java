@@ -93,6 +93,14 @@ public class Barrel extends SubsystemBase {
     }
   }
 
+  public void setCoastMode() {
+    m_CanSparkMax.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void setBreakMode() {
+    m_CanSparkMax.setIdleMode(IdleMode.kBrake);
+  }
+
   public boolean hasNote() {
     if(m_NoteProximitySensor != null) {
       return m_NoteProximitySensor.hasNote();
