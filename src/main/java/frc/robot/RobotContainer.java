@@ -27,6 +27,7 @@ import frc.robot.commands.AmpAddOn.SpinUpAmpRollers;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.BarrelPivot.AlignPivotForMiddleAuto;
 import frc.robot.commands.BarrelPivot.AlignPivotToAmp;
 import frc.robot.commands.BarrelPivot.AlignPivotToSpeakerClose;
 import frc.robot.commands.BarrelPivot.AlignWithSource;
@@ -165,6 +166,7 @@ public class RobotContainer {
     new SpinBarrelBackward();
 
     // BarrelPivot commands
+    new AlignPivotForMiddleAuto();
     new AlignWithSource();
     new AlignPivotToAmp();
     new AlignPivotToSpeakerClose();

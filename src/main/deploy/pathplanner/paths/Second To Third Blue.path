@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9217304635379833,
-        "y": 4.59872915087565
+        "x": 1.9827292580793818,
+        "y": 5.201309944604622
       },
       "isLocked": false,
       "linkedName": "Middle Note"
     },
     {
       "anchor": {
-        "x": 2.5347945418113063,
-        "y": 4.283692109050885
+        "x": 2.3796163622861606,
+        "y": 4.156870196692047
       },
       "prevControl": {
-        "x": 1.1252469449383347,
-        "y": 4.557751013650176
+        "x": 1.3769542042900886,
+        "y": 4.532868505940574
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 160.0,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,
