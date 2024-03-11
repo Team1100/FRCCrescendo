@@ -14,6 +14,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -47,14 +48,16 @@ public final class Constants {
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
+    // TODO: Refind amp setpoints (encoder was moved)
+    // These were loosely done without Glass
     public static final double kAEncoderZeroOffset = 136;
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     public static final double kAPivotUpperLimitDegrees = 280;
-    public static final double kAPivotLowerLimitDegrees = 60;
+    public static final double kAPivotLowerLimitDegrees = 45;
     public static final double kAPivotToleranceDegrees = 5;
-    public static final double kAPivotIntakePositionDegrees = 64;
-    public static final double kAPivotUpPositionDegrees = 275;
-    public static final double kAPivotDeliverAmpPositionDegrees = 160;
+    public static final double kAPivotIntakePositionDegrees = 45;
+    public static final double kAPivotUpPositionDegrees = 255;
+    public static final double kAPivotDeliverAmpPositionDegrees = 140;
     
     public static final double A_ANGLE_INCREMENT_DEGREES = 0.5;
     public static final double kADeadband = 0.05;
@@ -210,15 +213,15 @@ public final class Constants {
     public static final int LED_LENGTH = 42; // number of LEDs
 
     // Defines Shooter constants
-    public static final boolean kEnableShooterPIDTuning = true;
+    public static final boolean kEnableShooterPIDTuning = false;
     public static final double kShooterP = 0.000550;
-     public static final double kShooterI = 0.000000250;
+    public static final double kShooterI = 0.000000350;
     public static final double kShooterD = 0.001000;
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
-    public static final double LEFT_SHOOTER_SPEED_RPM = 2500;
-    public static final double RIGHT_SHOOTER_SPEED_RPM = 3500;
+    public static final double LEFT_SHOOTER_SPEED_RPM = 3500;
+    public static final double RIGHT_SHOOTER_SPEED_RPM = 4500;
     public static final double SHOOTER_SPEED_TOLERANCE = 100; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
@@ -228,8 +231,8 @@ public final class Constants {
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(25.5)), 
-                new Rotation3d(0, Units.degreesToRadians(150), Units.degreesToRadians(180)));
+            new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(25)), 
+                new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180)));
 
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
@@ -238,19 +241,20 @@ public final class Constants {
     // Height of Speaker mouth above tag pose
     public static final double SPEAKER_HEIGHT_OFFSET = 0.6;
 
-    // Determine these Poses on a real field
-    public static final Pose2d kSource1RedPose = new Pose2d();
-    public static final Pose2d kSource3RedPose = new Pose2d();
-    public static final Pose2d kAmpScoreRedPose = new Pose2d();
+    // TODO: Determine & test these Poses on a real field
+    // Most of these are simulation guesses, aside from kAmpScoreBluePose
+    public static final Pose2d kSource1RedPose = new Pose2d(0.71, 1.45, new Rotation2d(Units.degreesToRadians(-120)));
+    public static final Pose2d kSource3RedPose = new Pose2d(1.78, 0.87, new Rotation2d(Units.degreesToRadians(-120)));
+    public static final Pose2d kAmpScoreRedPose = new Pose2d(14.75, 7.6, new Rotation2d(Math.PI / 2));
     public static final Pose2d kSpeakerScoreRedPose = new Pose2d();
 
-    public static final Pose2d kSource1BluePose = new Pose2d();
-    public static final Pose2d kSource3BluePose = new Pose2d();
-    public static final Pose2d kAmpScoreBluePose = new Pose2d();
+    public static final Pose2d kSource1BluePose = new Pose2d(16, 1.47, new Rotation2d(Units.degreesToRadians(-60)));
+    public static final Pose2d kSource3BluePose = new Pose2d(14.87, 0.89, new Rotation2d(Units.degreesToRadians(-60)));
+    public static final Pose2d kAmpScoreBluePose = new Pose2d(1.82, 7.56, new Rotation2d(-Math.PI / 2));
     public static final Pose2d kSpeakerScoreBluePose = new Pose2d();
 
     // The standard deviations of our vision estimated poses, which affect correction rate
-    // (Fake values. Experiment and determine estimation noise on an actual robot.)
+    // TODO: (Fake values. Experiment and determine estimation noise on an actual robot.)
     public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
     public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
 
@@ -260,8 +264,8 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = 4*Math.PI;
 
     //Autonomous control rate limits(Driver control limits are applied after so should be <=)
-    public static final double kAutoMaxAccelerationMpSS = 2;
-    public static final double kAutoMaxSpeedMpS = 2;
+    public static final double kAutoMaxAccelerationMpSS = 2.5;
+    public static final double kAutoMaxSpeedMpS = 3.5;
     public static final double kAutoMaxAngularAccelRpSS = 2 * Math.PI;
     public static final double kAutoMaxAngularSpeedRpS = Math.PI;
 
