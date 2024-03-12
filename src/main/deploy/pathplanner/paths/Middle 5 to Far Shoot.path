@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.33,
-        "y": 5.56
+        "x": 7.9,
+        "y": 0.77
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7529525135386155,
-        "y": 5.984639755539054
+        "x": 6.035155479980171,
+        "y": 1.2742164924533423
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5636756374343124,
-        "y": 6.81
+        "x": 2.6407262992643044,
+        "y": 3.1333192437377244
       },
       "prevControl": {
-        "x": 2.573754524473254,
-        "y": 6.813820567295474
+        "x": 3.956720381634148,
+        "y": 2.1306570857416522
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,18 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 2.5,
-    "maxAngularVelocity": 360.0,
-    "maxAngularAcceleration": 180.0
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 30.0,
+    "rotation": -49.5,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
-  "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
-  },
-  "useDefaultConstraints": true
+  "folder": "Caitlin's CATastrophies",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
 }

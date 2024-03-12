@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
-import frc.robot.commands.AmpAddOn.UNScoreAmp;
+import frc.robot.commands.AmpAddOn.SpinUpAmpRollers;
 import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.BarrelPivot.AlignWithSource;
 import frc.robot.commands.Lights.BlinkLights;
@@ -30,7 +30,7 @@ public class SourceIntake extends Command {
   AmpPivotToIntake m_ampPivotToIntake;
   AlignWithSource m_alignWithSource;
   MoveLightsGreen m_moveLightsGreen;
-  UNScoreAmp m_unScoreAmp;
+  SpinUpAmpRollers m_spinUpAmpRollers;
   IntakeFromShooter m_intakeFromShooter;
   SpinBarrelBackward m_spinBarrelBackward;
 
@@ -51,7 +51,7 @@ public class SourceIntake extends Command {
     m_ampPivotToIntake = new AmpPivotToIntake();
     m_alignWithSource = new AlignWithSource();
     m_moveLightsGreen = new MoveLightsGreen();
-    m_unScoreAmp = new UNScoreAmp();
+    m_spinUpAmpRollers = new SpinUpAmpRollers();
     m_intakeFromShooter = new IntakeFromShooter();
     m_spinBarrelBackward = new SpinBarrelBackward();
 
@@ -100,7 +100,7 @@ public class SourceIntake extends Command {
       case SPIN_SUBSYSTEMS_IN:
         m_blinkLights.cancel();
         m_moveLightsGreen.schedule();
-        m_unScoreAmp.schedule();
+        m_spinUpAmpRollers.schedule();
         m_intakeFromShooter.schedule();
         m_spinBarrelBackward.schedule();
         m_state = State.WAIT_FOR_BARREL_NOTE_DETECTION;
@@ -142,8 +142,8 @@ public class SourceIntake extends Command {
     if (m_moveLightsGreen.isScheduled()) {
       m_moveLightsGreen.cancel();
     }
-    if (m_unScoreAmp.isScheduled()) {
-      m_unScoreAmp.cancel();
+    if (m_spinUpAmpRollers.isScheduled()) {
+      m_spinUpAmpRollers.cancel();
     }
   }
 

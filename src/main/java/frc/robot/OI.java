@@ -108,6 +108,7 @@ public class OI {
     new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new ShootSpeaker());
     new JoystickButton(m_OperatorXboxController, Button.kBack.value).whileTrue(new AmpPivotToIntake());
     new JoystickButton(m_OperatorXboxController, Button.kStart.value).whileTrue(new PivotDOWNDOWNDOWN());
+    new JoystickButton(m_OperatorXboxController, Button.kStart.value).whileTrue(new AmpPivotToIntake());
     // new JoystickButton(m_OperatorXboxController, Button.kBack.value).onTrue(new ToggleSensorsOnOff());
     // new JoystickButton(m_OperatorXboxController, Button.kStart.value).onTrue(new ResetAllSensors());
   }
