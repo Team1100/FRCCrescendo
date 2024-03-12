@@ -48,8 +48,7 @@ public final class Constants {
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
-    // TODO: Refind amp setpoints (encoder was moved)
-    // These were loosely done without Glass
+    // TODO: Refind amp setpoints (encoder was moved AGAIN)
     public static final double kAEncoderZeroOffset = 136;
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     public static final double kAPivotUpperLimitDegrees = 280;
@@ -95,8 +94,8 @@ public final class Constants {
     public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
-    public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 121;
-    public static final double BP_DOWN_ANGLE_DEGREES = 95;
+    public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 120.7;
+    public static final double BP_DOWN_ANGLE_DEGREES = 81;
 
     // Defines Drive constants
     public static final double kMaxSpeedMetersPerSecond = 4.8;
@@ -222,7 +221,7 @@ public final class Constants {
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
     public static final double LEFT_SHOOTER_SPEED_RPM = 3500;
     public static final double RIGHT_SHOOTER_SPEED_RPM = 4500;
-    public static final double SHOOTER_SPEED_TOLERANCE = 100; // RPM Diff
+    public static final double SHOOTER_SPEED_TOLERANCE = 300; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 500;
