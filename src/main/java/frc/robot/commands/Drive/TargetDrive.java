@@ -96,11 +96,11 @@ public class TargetDrive extends Command {
   }
 
   private double calculateRotationFF(ChassisSpeeds currentSpeeds, Pose2d currentPose, Pose2d targetPose, Rotation2d targetAngle) {
-    int inverter = currentPose.getX() > targetPose.getX()? -1 : 1;
+    int inverter = currentPose.getX() > targetPose.getX()? 1 : -1;
     Translation2d velocityTrans = new Translation2d(currentSpeeds.vxMetersPerSecond, currentSpeeds.vyMetersPerSecond);
     Translation2d nextTrans = velocityTrans.times(periodTime);
     Pose2d nextPose = currentPose.plus(new Transform2d(nextTrans, new Rotation2d()));
-    Rotation2d nextAngle = FieldUtils.getInstance().getAngleToPose(nextPose, targetPose);
+    Rotation2d nextAngle = FieldUtils.getInstance().getAngleToPose(nextPose, targetPose).plus(new Rotation2d(Math.PI));
     Rotation2d dif = nextAngle.minus(targetAngle);
     
     return inverter * MathUtil.angleModulus(dif.getRadians())/periodTime;
