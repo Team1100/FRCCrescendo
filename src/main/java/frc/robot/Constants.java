@@ -129,8 +129,8 @@ public final class Constants {
 
     public static final HolonomicPathFollowerConfig kPathFollowerConfig =
        new HolonomicPathFollowerConfig(
-         new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-         new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+         new PIDConstants(1.0, 0.0, 0.0), // Translation PID constants
+         new PIDConstants(1.0, 0.0, 0.0), // Rotation PID constants
          Constants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
          Constants.kBaseRadius, // Drive base radius in meters
          new ReplanningConfig()); // Default path replanning config. See the API for the options here
@@ -230,7 +230,7 @@ public final class Constants {
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(25)), 
+            new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(24)), 
                 new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180)));
 
     // The layout of the AprilTags on the field
