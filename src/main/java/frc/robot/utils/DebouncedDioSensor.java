@@ -27,6 +27,7 @@ public class DebouncedDioSensor {
     }
 
     public void update() {
+        synchronized(this) {
         boolean val = !m_sensorDio.get();
         if(RobotBase.isSimulation()){
             val = m_testingVal.get() != 0;
@@ -43,10 +44,13 @@ public class DebouncedDioSensor {
             m_output = val;
             resetDebounce();
         }
+        }
     }
 
     public boolean get() {
-        return m_output;
+        synchronized(this){
+            return m_output;
+        }
     }
 
     private void resetDebounce() {

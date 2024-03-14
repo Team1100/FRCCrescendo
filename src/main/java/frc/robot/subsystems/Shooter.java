@@ -38,7 +38,6 @@ public class Shooter extends SubsystemBase {
   SparkPIDController m_LeftSparkPIDController;
   SparkPIDController m_RightSparkPIDController;
 
-  NoteProximitySensor m_NoteProximitySensor;
 
   private double m_leftSpeedSetpoint;
   private double m_rightSpeedSetpoint;
@@ -78,7 +77,6 @@ public class Shooter extends SubsystemBase {
       m_RightSparkPIDController.setI(m_shootI);
       m_RightSparkPIDController.setD(m_shootD);
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR, this);
     }
   }
 
@@ -139,27 +137,6 @@ public class Shooter extends SubsystemBase {
     }
   }
 
-  public boolean hasNote() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.hasNote();
-    } else {
-      return false;
-    }
-  }
-
-  public boolean noteCenteredOnSensor() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.noteIsCentered();
-    } else {
-      return false;
-    }
-  }
-
-  public void resetSensor() {
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.reset();
-    }
-  }
 
   @Override
   public void periodic() {
@@ -191,8 +168,5 @@ public class Shooter extends SubsystemBase {
     m_rightMeasuredSpeed.set(m_SRightSparkMax.getEncoder().getVelocity());
 
     super.periodic();
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.update();
-    }
   }
 }

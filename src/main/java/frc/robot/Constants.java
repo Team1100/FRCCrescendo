@@ -145,7 +145,7 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
 
     //Sensor Constants
-    public static final int kSensorDebounceCycles = 3;
+    public static final int kSensorDebounceCycles = 10;
     public static final double kConfusedSensorTimeoutSeconds = 1.5;
 
     // Defines Swerve Module constants

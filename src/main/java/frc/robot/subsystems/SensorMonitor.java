@@ -5,17 +5,22 @@
 package frc.robot.subsystems;
 
 
+import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDBoolean;
 import frc.robot.testingdashboard.TDString;
+import frc.robot.utils.NoteProximitySensor;
+import frc.robot.utils.SensorThread;
 
 public class SensorMonitor extends SubsystemBase {
   private static SensorMonitor m_instance;
 
-  private Intake m_intake;
-  private Barrel m_barrel;
-  private Shooter m_shooter;
-  private AmpAddOn m_amp;
+  private NoteProximitySensor m_intake;
+  private NoteProximitySensor m_barrel;
+  private NoteProximitySensor m_shooter;
+  private NoteProximitySensor m_amp;
+
+  private SensorThread m_sensorUpdater;
 
   public enum NoteLocation {
     c_Intake,
@@ -43,18 +48,40 @@ public class SensorMonitor extends SubsystemBase {
   private SensorMonitor() {
     super("SensorMonitor");
 
-    m_intake = Intake.getInstance();
-    m_barrel = Barrel.getInstance();
-    m_shooter = Shooter.getInstance();
-    m_amp = AmpAddOn.getInstance();
+    m_intake = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR, Intake.getInstance());
+    m_barrel = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR, Barrel.getInstance());
+    m_shooter = new NoteProximitySensor(RobotMap.S_NOTE_SENSOR, Shooter.getInstance());
+    m_amp = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, AmpAddOn.getInstance());
 
     m_noteLocation = new TDString(this, "", "Note Location", "No Note In Robot");
     m_sensorsEnabled = new TDBoolean(this, "Toggle Sensors", "Sensors Enabled", false);
+    if(m_sensorsEnabled.get()){
+      startSensorThread();
+    }
+  }
+
+  private void startSensorThread() {
+    if(m_sensorUpdater == null || !m_sensorUpdater.isAlive()) {
+      m_sensorUpdater = new SensorThread(m_intake, m_barrel, m_shooter, m_amp);
+      m_sensorUpdater.start();
+    } else {
+      System.out.println("Sensor Update Thread is already running");
+    }
   }
 
   /** Flips the value of sensorsEnabled boolean */
   public void toggleSensorsOnOff() {
     m_sensorsEnabled.set(!m_sensorsEnabled.get());
+
+    if(m_sensorsEnabled.get()){
+      startSensorThread();
+    } else {
+      if(m_sensorUpdater != null 
+          && m_sensorUpdater.isAlive()){
+        m_sensorUpdater.interrupt();
+        m_sensorUpdater = null;
+      }
+    }
   }
 
   public boolean intakeHasNote() {
@@ -65,6 +92,14 @@ public class SensorMonitor extends SubsystemBase {
     else {
       return false;
     }
+  }
+
+  public boolean intakeNoteCentered() {
+    return m_intake.noteIsCentered();
+  }
+
+  public void intakeResetSensor() {
+    m_intake.reset();
   }
 
   public boolean shooterHasNote() {
@@ -78,6 +113,14 @@ public class SensorMonitor extends SubsystemBase {
     }
   }
 
+  public boolean shooterNoteCentered() {
+    return m_shooter.noteIsCentered();
+  }
+
+  public void shooterResetSensor() {
+    m_shooter.reset();
+  }
+
   public boolean ampHasNote() {
     if (determineLocation() == NoteLocation.c_Amp ||
           determineLocation() == NoteLocation.c_ShooterAndAmp) {
@@ -86,6 +129,14 @@ public class SensorMonitor extends SubsystemBase {
     else {
       return false;
     }
+  }
+
+  public boolean ampNoteCentered() {
+    return m_amp.noteIsCentered();
+  }
+
+  public void ampResetSensor() {
+    m_amp.reset();
   }
 
   public boolean barrelHasNote() {
@@ -97,6 +148,14 @@ public class SensorMonitor extends SubsystemBase {
     else {
       return false;
     }
+  }
+
+  public boolean barrelNoteCentered() {
+    return m_barrel.noteIsCentered();
+  }
+
+  public void barrelResetSensor() {
+    m_barrel.reset();
   }
 
   public boolean isValidState() {
@@ -113,10 +172,10 @@ public class SensorMonitor extends SubsystemBase {
   }
 
   public void resetAllSensors() {
-    m_intake.resetSensor();
-    m_barrel.resetSensor();
-    m_shooter.resetSensor();
-    m_amp.resetSensor();
+    m_intake.reset();
+    m_barrel.reset();
+    m_shooter.reset();
+    m_amp.reset();
   }
 
   @Override
@@ -164,7 +223,9 @@ public class SensorMonitor extends SubsystemBase {
         return NoteLocation.c_SensorsDisabled;
       }
       else {
-        return NoteLocation.c_Invalid;
+        if(!attemptToCorrectInvalid()) { //If we can't correct the invalid state, return invalid
+          return NoteLocation.c_Invalid;
+        }
       }
     }
 
@@ -197,5 +258,45 @@ public class SensorMonitor extends SubsystemBase {
     }
 
     return NoteLocation.c_NoNote;
+  }
+
+  /*
+   * Tries to reset sensors based on the actual sensor inputs rather than stored state
+   * 
+   * @returns true if it succeeded at correcting the invalid state
+   */
+  boolean attemptToCorrectInvalid() {
+    if(m_intake.seesNote()) {
+        if(m_amp.hasNote() && !m_amp.seesNote()){
+          m_amp.reset();
+        }
+        if(m_shooter.hasNote() && !m_shooter.seesNote()) {
+          m_shooter.reset();
+        }
+    }
+
+    if(m_barrel.seesNote()) {
+      if(m_amp.hasNote() && !m_amp.seesNote()) {
+        m_amp.reset();
+      }
+    }
+
+    if(m_shooter.seesNote()) {
+      if(m_intake.hasNote() && !m_intake.seesNote()) {
+        m_intake.reset();
+      }
+    }
+
+    if(m_amp.seesNote()) {
+      if(m_intake.hasNote() && !m_intake.seesNote()){
+        m_intake.reset();
+      }
+
+      if(m_barrel.hasNote() && !m_barrel.seesNote()){
+        m_barrel.reset();
+      }
+    }
+
+    return isValidState();
   }
 }

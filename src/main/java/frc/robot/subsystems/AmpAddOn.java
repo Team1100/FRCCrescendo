@@ -50,7 +50,6 @@ public class AmpAddOn extends SubsystemBase {
   SparkPIDController m_PivotSparkPIDController;
   AbsoluteEncoder m_absoluteEncoder;
 
-  NoteProximitySensor m_NoteProximitySensor;
   // initially set motor to "Don't move"
   private double m_lastAngle = 0;
   private double m_lastSpeed = 0;
@@ -103,7 +102,6 @@ public class AmpAddOn extends SubsystemBase {
     m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
     m_rollerSpeedRPM = new TDNumber(this, "Encoder Values", "Measured Roller Speed RPM");
 
-    m_NoteProximitySensor = new NoteProximitySensor(RobotMap.A_NOTE_SENSOR, this);
   }
 
   public static AmpAddOn getInstance() {
@@ -200,27 +198,6 @@ public class AmpAddOn extends SubsystemBase {
     return MathUtil.isNear(Constants.kAPivotDeliverAmpPositionDegrees, getAngle(), Constants.kAPivotToleranceDegrees);
   }
 
-  public boolean hasNote() {
-    if(m_NoteProximitySensor != null){
-      return m_NoteProximitySensor.hasNote();
-    } else {
-      return false;
-    }
-  }
-
-  public boolean noteCenteredOnSensor() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.noteIsCentered();
-    } else {
-      return false;
-    }
-  }
-
-  public void resetSensor() {
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.reset();
-    }
-  }
 
   @Override
   public void periodic() {
@@ -264,8 +241,5 @@ public class AmpAddOn extends SubsystemBase {
       m_rollerSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
     }
     super.periodic();
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.update();
-    }
   }
 }

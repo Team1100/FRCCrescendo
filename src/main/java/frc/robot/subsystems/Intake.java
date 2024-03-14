@@ -32,7 +32,6 @@ public class Intake extends SubsystemBase {
   CANSparkMax m_IRightSparkMax;
   SparkPIDController m_SparkPIDController;
 
-  NoteProximitySensor m_NoteProximitySensor;
 
   /** Creates a new Intake. */
   private Intake() {
@@ -62,7 +61,6 @@ public class Intake extends SubsystemBase {
       m_SparkPIDController.setI(m_intakeI);
       m_SparkPIDController.setD(m_intakeD);
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.I_NOTE_SENSOR, this);
     }
   }
 
@@ -96,28 +94,6 @@ public class Intake extends SubsystemBase {
       m_ILeftSparkMax.set(0);
   }
 
-  public boolean hasNote() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.hasNote();
-    } else {
-      return false;
-    }
-  }
-
-  public boolean noteCenteredOnSensor() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.noteIsCentered();
-    } else {
-      return false;
-    }
-  }
-
-  public void resetSensor() {
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.reset();
-    }
-  }
-
   @Override
   public void periodic() {
     if (Constants.kEnableIntakePIDTuning && 
@@ -143,8 +119,5 @@ public class Intake extends SubsystemBase {
     }
       
     super.periodic();
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.update();
-    }
   }
 }
