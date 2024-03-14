@@ -147,6 +147,12 @@
                                               "data": {
                                                 "name": "SpinBarrelForward"
                                               }
+                                            },
+                                            {
+                                              "type": "named",
+                                              "data": {
+                                                "name": "Consume"
+                                              }
                                             }
                                           ]
                                         }
@@ -235,6 +241,12 @@
                                               "type": "named",
                                               "data": {
                                                 "name": "SpinBarrelForward"
+                                              }
+                                            },
+                                            {
+                                              "type": "named",
+                                              "data": {
+                                                "name": "Consume"
                                               }
                                             }
                                           ]
