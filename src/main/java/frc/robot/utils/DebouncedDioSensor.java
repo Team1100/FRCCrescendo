@@ -62,7 +62,7 @@ public class DebouncedDioSensor {
     }
 
     private boolean debounceComplete() {
-        return m_debounceIncrementer.get() >= Constants.kSensorDebounceCycles;
+        return m_debounceIncrementer.get() >= (Constants.kSensorThreadingEnabled?Constants.kThreadedSensorDebounceCycles:Constants.kSensorDebounceCycles);
     }
 
 }

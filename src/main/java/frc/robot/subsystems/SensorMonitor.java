@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDBoolean;
@@ -55,7 +56,7 @@ public class SensorMonitor extends SubsystemBase {
 
     m_noteLocation = new TDString(this, "", "Note Location", "No Note In Robot");
     m_sensorsEnabled = new TDBoolean(this, "Toggle Sensors", "Sensors Enabled", false);
-    if(m_sensorsEnabled.get()){
+    if(Constants.kSensorThreadingEnabled && m_sensorsEnabled.get()){
       startSensorThread();
     }
   }
@@ -73,13 +74,15 @@ public class SensorMonitor extends SubsystemBase {
   public void toggleSensorsOnOff() {
     m_sensorsEnabled.set(!m_sensorsEnabled.get());
 
-    if(m_sensorsEnabled.get()){
-      startSensorThread();
-    } else {
-      if(m_sensorUpdater != null 
-          && m_sensorUpdater.isAlive()){
-        m_sensorUpdater.interrupt();
-        m_sensorUpdater = null;
+    if(Constants.kSensorThreadingEnabled){
+      if(m_sensorsEnabled.get()){
+        startSensorThread();
+      } else {
+        if(m_sensorUpdater != null 
+            && m_sensorUpdater.isAlive()){
+          m_sensorUpdater.interrupt();
+          m_sensorUpdater = null;
+        }
       }
     }
   }
@@ -180,6 +183,13 @@ public class SensorMonitor extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(!Constants.kSensorThreadingEnabled){
+      m_intake.update();
+      m_barrel.update();
+      m_shooter.update();
+      m_amp.update();
+    }
+
     NoteLocation currentLocation = determineLocation();
     m_noteLocation.set(locationToString(currentLocation));
 
