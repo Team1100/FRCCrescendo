@@ -3,8 +3,7 @@
   "robotLength": 0.66,
   "holonomicMode": true,
   "pathFolders": [
-    "Caitlin's CATastrophies",
-    "autoCommand"
+    "Caitlin's CATastrophies"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.5,

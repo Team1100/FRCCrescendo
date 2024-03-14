@@ -17,24 +17,18 @@
     {
       "anchor": {
         "x": 2.45,
-        "y": 4.12
+        "y": 4.1
       },
       "prevControl": {
         "x": 1.6248925991490661,
-        "y": 4.569109091602407
+        "y": 4.549109091602406
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": -10.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {

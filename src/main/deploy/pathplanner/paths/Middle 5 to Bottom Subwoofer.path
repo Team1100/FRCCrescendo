@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5,
-        "y": 5.54
+        "x": 7.9,
+        "y": 0.77
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.27,
-        "y": 5.54
+        "x": 6.19602150236329,
+        "y": 1.1977976980865002
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 4.1
+        "x": 0.7328954159687686,
+        "y": 4.499045012324901
       },
       "prevControl": {
-        "x": 1.652313730309214,
-        "y": 4.226547453030498
+        "x": 1.5606417926952114,
+        "y": 1.9671149188087227
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "preNote3"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -38,15 +38,12 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 1.5,
-    "rotation": 0,
+    "velocity": 0,
+    "rotation": -60.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "autoCommand",
-  "previewStartingState": {
-    "rotation": 0,
-    "velocity": 1.0
-  },
+  "folder": "Caitlin's CATastrophies",
+  "previewStartingState": null,
   "useDefaultConstraints": false
 }
