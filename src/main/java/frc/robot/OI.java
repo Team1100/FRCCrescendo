@@ -86,7 +86,7 @@ public class OI {
 
     // Driver Mapping
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
-    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShootClose());
+    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToShootClose());
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
     
     // Drive to locations on the field
