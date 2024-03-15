@@ -46,7 +46,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.8
+                        "waitTime": 1.0
                       }
                     },
                     {
@@ -71,7 +71,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Subwoofer to First"
+                        "pathName": "Subwoofer to Third"
                       }
                     },
                     {
@@ -81,7 +81,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "First to Subwoofer"
+                              "pathName": "Third to Subwoofer"
                             }
                           },
                           {
@@ -185,7 +185,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Subwoofer to Third"
+                        "pathName": "Subwoofer to First"
                       }
                     },
                     {
@@ -195,7 +195,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Third to Subwoofer"
+                              "pathName": "First to Subwoofer"
                             }
                           },
                           {

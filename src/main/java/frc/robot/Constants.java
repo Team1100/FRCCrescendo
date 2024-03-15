@@ -89,7 +89,7 @@ public final class Constants {
 
     public static final double BP_SPEED = 0.1;
     
-    public static final double BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES = 75;
+    public static final double BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES = 70;
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 3;
     public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
@@ -221,7 +221,7 @@ public final class Constants {
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
     public static final double LEFT_SHOOTER_SPEED_RPM = 3500;
     public static final double RIGHT_SHOOTER_SPEED_RPM = 4500;
-    public static final double SHOOTER_SPEED_TOLERANCE = 300; // RPM Diff
+    public static final double SHOOTER_SPEED_TOLERANCE = 400; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 500;
