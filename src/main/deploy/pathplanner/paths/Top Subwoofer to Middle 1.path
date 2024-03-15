@@ -1,0 +1,74 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7523718013035084,
+        "y": 6.56
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.4729980586840135,
+        "y": 7.173506138044305
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.90451238078739,
+        "y": 7.683434014554862
+      },
+      "prevControl": {
+        "x": 2.0266522725992178,
+        "y": 7.641344831285566
+      },
+      "nextControl": {
+        "x": 4.326288510223398,
+        "y": 7.751601363226452
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.45,
+        "y": 7.436411005137533
+      },
+      "prevControl": {
+        "x": 7.675418143592211,
+        "y": 7.436411005137533
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": 0.0,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 180.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Caitlin's CATastrophies",
+  "previewStartingState": {
+    "rotation": 60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
