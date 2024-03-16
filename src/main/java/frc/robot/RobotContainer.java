@@ -142,7 +142,7 @@ public class RobotContainer {
     m_SensorMonitor = SensorMonitor.getInstance();
 
     // Build the auto commands and add them to the chooser
-    m_autoChooser = AutoBuilder.buildAutoChooser("3NotePaths");
+    m_autoChooser = AutoBuilder.buildAutoChooser("closeAutoBot_startMid");
     new TDSendable(Drive.getInstance(), "Auto Commands", "Chooser", m_autoChooser);
     
     // Configure the trigger/button bindings
