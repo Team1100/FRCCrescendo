@@ -48,13 +48,12 @@ public final class Constants {
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
-    // TODO: Refind amp setpoints (encoder was moved AGAIN)
     public static final double kAEncoderZeroOffset = 136;
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
     public static final double kAPivotUpperLimitDegrees = 280;
-    public static final double kAPivotLowerLimitDegrees = 45;
+    public static final double kAPivotLowerLimitDegrees = 15;
     public static final double kAPivotToleranceDegrees = 5;
-    public static final double kAPivotIntakePositionDegrees = 45;
+    public static final double kAPivotIntakePositionDegrees = 25;
     public static final double kAPivotUpPositionDegrees = 255;
     public static final double kAPivotDeliverAmpPositionDegrees = 140;
     
