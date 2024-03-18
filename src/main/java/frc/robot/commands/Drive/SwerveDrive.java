@@ -41,7 +41,7 @@ public class SwerveDrive extends Command {
   @Override
   public void initialize() {
     m_operatorRotating = false;
-    m_TDheading.set(m_drive.getHeading());
+    m_TDheading.set(m_drive.getGyroAngle());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -52,10 +52,10 @@ public class SwerveDrive extends Command {
       if (m_operatorRotating &&
           MathUtil.isNear(0, m_drive.getMeasuredSpeeds().omegaRadiansPerSecond, kHeadingTolerance)) {
         m_operatorRotating = false;
-        m_TDheading.set(m_drive.getHeading());
+        m_TDheading.set(m_drive.getGyroAngle());
       }
       if (!m_operatorRotating) {
-        rotationPower = m_headingController.calculate(m_drive.getHeading(), m_TDheading.get());
+        rotationPower = m_headingController.calculate(m_drive.getGyroAngle(), m_TDheading.get());
       }
     }
     else {

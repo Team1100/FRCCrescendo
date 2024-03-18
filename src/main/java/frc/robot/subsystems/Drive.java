@@ -367,6 +367,10 @@ public class Drive extends SubsystemBase {
     return getPose().getRotation().getDegrees();
   }
 
+  public double getGyroAngle() {
+    return m_gyro.getAngle(IMUAxis.kZ);
+  }
+
   /**
    * Returns the turn rate of the robot.
    *
