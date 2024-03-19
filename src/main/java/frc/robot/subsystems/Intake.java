@@ -138,8 +138,10 @@ public class Intake extends SubsystemBase {
             m_intakeD = tmp;
           }
     }
-    m_measuredSpeed.set(m_ILeftSparkMax.getEncoder().getVelocity());
-    
+    if (m_ILeftSparkMax != null) {
+      m_measuredSpeed.set(m_ILeftSparkMax.getEncoder().getVelocity());
+    }
+      
     super.periodic();
     if(m_NoteProximitySensor != null) {
       m_NoteProximitySensor.update();
