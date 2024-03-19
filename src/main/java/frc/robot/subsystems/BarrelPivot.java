@@ -88,6 +88,9 @@ public class BarrelPivot extends SubsystemBase {
       // for SPARK w/absolute encoder
       m_motorTemperature = new TDNumber(this, "Safety", "Motor Temperature (fahrenheit)", getMotorTemperature());
       m_currentOutput = new TDNumber(this, "Safety", "Current Output", getCurrentOutput());
+
+      m_BPLeftSparkMax.burnFlash();
+      m_BPRightSparkMax.burnFlash();
     }
   }
 
