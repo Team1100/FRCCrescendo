@@ -67,8 +67,8 @@ public class AmpAddOn extends SubsystemBase {
 
       m_PivotCanSparkMax.setIdleMode(IdleMode.kBrake);
 
-      m_CanSparkMax.setInverted(true);
-      m_PivotCanSparkMax.setInverted(true);
+      m_CanSparkMax.setInverted(false);
+      m_PivotCanSparkMax.setInverted(false);
       
       m_SparkPIDController = m_CanSparkMax.getPIDController();
 
@@ -139,6 +139,12 @@ public class AmpAddOn extends SubsystemBase {
   public void spinStop() {
     if (m_CanSparkMax != null) {
       m_CanSparkMax.set(0);
+    }
+  }
+
+  public void setPivotMotorPower(double speed) {
+    if (m_PivotCanSparkMax != null) {
+      m_PivotCanSparkMax.set(speed);
     }
   }
 
