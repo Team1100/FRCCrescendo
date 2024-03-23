@@ -4,8 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Barrel.SpinBarrelForward;
 import frc.robot.commands.Intake.Consume;
+import frc.robot.commands.Lights.MoveLightsGreen;
 import frc.robot.commands.Lights.MoveLightsYellow;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SensorMonitor;
@@ -16,12 +18,15 @@ public class GroundIntake extends Command {
   enum State {
     INIT,
     WAIT_FOR_BARREL_NOTE_DETECTION,
+    NOTE_DETECTED,
     DONE
   }
 
   MoveLightsYellow m_moveLightsYellow;
   Consume m_consume;
   SpinBarrelForward m_spinBarrelForward;
+  MoveLightsGreen m_moveLightsGreen;
+  WaitCommand m_wait;
 
   SensorMonitor m_sensorMonitor;
 
@@ -38,6 +43,9 @@ public class GroundIntake extends Command {
     m_moveLightsYellow = new MoveLightsYellow();
     m_consume = new Consume();
     m_spinBarrelForward = new SpinBarrelForward();
+
+    m_moveLightsGreen = new MoveLightsGreen();
+    m_wait = new WaitCommand(1.5);
 
     m_sensorMonitor = SensorMonitor.getInstance();
   }
@@ -56,29 +64,28 @@ public class GroundIntake extends Command {
   public void execute() {
     switch (m_state) {
       case INIT:
-        switch (m_sensorMonitor.determineLocation()) {
-          case c_NoNote:
-          case c_SensorsDisabled:
-          case c_Intake:
-          case c_IntakeAndBarrel:
-            m_consume.schedule();
-            m_spinBarrelForward.schedule();
-            m_state = State.WAIT_FOR_BARREL_NOTE_DETECTION;
-            break;
-          default:
-            m_state = State.DONE;
-            break;
-        }
+        m_consume.schedule();
+        m_spinBarrelForward.schedule();
+        m_state = State.WAIT_FOR_BARREL_NOTE_DETECTION;
         break;
       
       case WAIT_FOR_BARREL_NOTE_DETECTION:
-        if (m_sensorMonitor.determineLocation() == NoteLocation.c_Barrel) {
-          m_state = State.DONE;
+        if (m_sensorMonitor.barrelSeesNote()) {
+          m_state = State.NOTE_DETECTED;
         }
         break;
 
+      case NOTE_DETECTED:
+        m_spinBarrelForward.cancel();
+        m_consume.cancel();
+        m_moveLightsGreen.schedule();
+        m_wait.schedule();
+        m_state = State.DONE;
+
       case DONE:
-        m_isFinished = true;
+        if(m_wait.isFinished()) {
+          m_isFinished = true;
+        }
         break;
 
       default:
@@ -97,6 +104,12 @@ public class GroundIntake extends Command {
     }
     if (m_moveLightsYellow.isScheduled()) {
       m_moveLightsYellow.cancel();
+    }
+    if(m_moveLightsGreen.isScheduled()) {
+      m_moveLightsGreen.cancel();
+    }
+    if(m_wait.isScheduled()) {
+      m_wait.cancel();
     }
   }
 

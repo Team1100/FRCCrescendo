@@ -56,7 +56,7 @@ public class SensorMonitor extends SubsystemBase {
 
     m_noteLocation = new TDString(this, "", "Note Location", "No Note In Robot");
     m_sensorsEnabled = new TDBoolean(this, "Toggle Sensors", "Sensors Enabled", false);
-    if(Constants.kSensorThreadingEnabled && m_sensorsEnabled.get()){
+    if(Constants.kSensorThreadingEnabled){
       startSensorThread();
     }
   }
@@ -73,18 +73,6 @@ public class SensorMonitor extends SubsystemBase {
   /** Flips the value of sensorsEnabled boolean */
   public void toggleSensorsOnOff() {
     m_sensorsEnabled.set(!m_sensorsEnabled.get());
-
-    if(Constants.kSensorThreadingEnabled){
-      if(m_sensorsEnabled.get()){
-        startSensorThread();
-      } else {
-        if(m_sensorUpdater != null 
-            && m_sensorUpdater.isAlive()){
-          m_sensorUpdater.interrupt();
-          m_sensorUpdater = null;
-        }
-      }
-    }
   }
 
   public boolean intakeHasNote() {
@@ -155,6 +143,10 @@ public class SensorMonitor extends SubsystemBase {
 
   public boolean barrelNoteCentered() {
     return m_barrel.noteIsCentered();
+  }
+
+  public boolean barrelSeesNote() {
+    return m_barrel.seesNote();
   }
 
   public void barrelResetSensor() {
