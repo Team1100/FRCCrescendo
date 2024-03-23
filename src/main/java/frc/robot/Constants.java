@@ -48,14 +48,14 @@ public final class Constants {
     public static final double kAmpPivotI = 0;
     public static final double kAmpPivotD = 0;
 
-    public static final double kAEncoderZeroOffset = 136;
+    public static final double kAEncoderZeroOffset = 240;
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
-    public static final double kAPivotUpperLimitDegrees = 280;
-    public static final double kAPivotLowerLimitDegrees = 15;
+    public static final double kAPivotUpperLimitDegrees = 330;
+    public static final double kAPivotLowerLimitDegrees = 70;
     public static final double kAPivotToleranceDegrees = 5;
-    public static final double kAPivotIntakePositionDegrees = 25;
-    public static final double kAPivotUpPositionDegrees = 255;
-    public static final double kAPivotDeliverAmpPositionDegrees = 140;
+    public static final double kAPivotIntakePositionDegrees = 80;
+    public static final double kAPivotUpPositionDegrees = 290;
+    public static final double kAPivotDeliverAmpPositionDegrees = 195.1;
     
     public static final double A_ANGLE_INCREMENT_DEGREES = 0.5;
     public static final double kADeadband = 0.05;
@@ -92,7 +92,7 @@ public final class Constants {
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 3;
     public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
     public static final double BP_SOURCE_ANGLE_DEGREES = 111;
-    public static final double BP_AMP_SCORING_ANGLE_DEGREES = 114;
+    public static final double BP_AMP_SCORING_ANGLE_DEGREES = 100;
     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 120.7;
     public static final double BP_DOWN_ANGLE_DEGREES = 81;
 
@@ -128,8 +128,8 @@ public final class Constants {
 
     public static final HolonomicPathFollowerConfig kPathFollowerConfig =
        new HolonomicPathFollowerConfig(
-         new PIDConstants(1.0, 0.0, 0.0), // Translation PID constants
-         new PIDConstants(1.0, 0.0, 0.0), // Rotation PID constants
+         new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+         new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
          Constants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
          Constants.kBaseRadius, // Drive base radius in meters
          new ReplanningConfig()); // Default path replanning config. See the API for the options here
