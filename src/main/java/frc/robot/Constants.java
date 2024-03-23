@@ -91,7 +91,7 @@ public final class Constants {
     public static final double BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES = 70;
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 3;
     public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
-    public static final double BP_SOURCE_ANGLE_DEGREES = 111;
+    public static final double BP_SOURCE_ANGLE_DEGREES = 108;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 100;
     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 120.7;
     public static final double BP_DOWN_ANGLE_DEGREES = 81;
