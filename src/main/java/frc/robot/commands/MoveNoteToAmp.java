@@ -20,6 +20,8 @@ public class MoveNoteToAmp extends Command {
   private Barrel m_barrel;
   private Intake m_intake;
 
+  private SensorMonitor m_sensorMonitor;
+
   private ParallelRaceGroup m_BlinkLights;
 
   private boolean m_finished;
@@ -47,6 +49,8 @@ public class MoveNoteToAmp extends Command {
     m_barrel = Barrel.getInstance();
     m_intake = Intake.getInstance();
 
+    m_sensorMonitor = SensorMonitor.getInstance();
+
     m_BlinkLights = new BlinkLights().withTimeout(1.5);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -57,9 +61,9 @@ public class MoveNoteToAmp extends Command {
   @Override
   public void initialize() {
     m_finished = false;
-    if(m_amp.noteCenteredOnSensor()){
+    if(m_sensorMonitor.ampNoteCentered()){
       m_state = State.c_state_Done;
-    } else if(m_shooter.hasNote() && !m_amp.pivotAtIntake() ){
+    } else if(m_sensorMonitor.shooterHasNote() && !m_amp.pivotAtIntake() ){
       m_state = State.c_state_startsInShooter;
     } else if (!m_amp.pivotAtIntake()) {
       m_state = State.c_state_moveAmpToIntake;
@@ -79,7 +83,7 @@ public class MoveNoteToAmp extends Command {
         m_barrel.setSpeed(Constants.BARREL_SPEED_RPM, true);
         m_shooter.setSpeeds(Constants.SHOOTER_INTAKING_SPEED_RPM, Constants.SHOOTER_INTAKING_SPEED_RPM, true);
 
-        if(!m_shooter.hasNote() && m_barrel.noteCenteredOnSensor()) {
+        if(!m_sensorMonitor.shooterHasNote() && m_sensorMonitor.barrelNoteCentered()) {
           m_barrel.spinStop();
           m_shooter.spinStop();
           nextState = State.c_state_moveAmpToIntake;
@@ -102,7 +106,7 @@ public class MoveNoteToAmp extends Command {
         m_intake.setSpeeds(Constants.INTAKE_SPEED_RPM, false);
         m_barrel.setSpeed(Constants.BARREL_SPEED_RPM, false);
 
-        if(m_barrel.noteCenteredOnSensor() && !m_intake.hasNote()){
+        if(m_sensorMonitor.barrelNoteCentered() && !m_sensorMonitor.intakeHasNote()){
           m_intake.spinStop();
           nextState = State.c_state_inBarrel;
         } else {
@@ -115,7 +119,7 @@ public class MoveNoteToAmp extends Command {
         m_shooter.setSpeeds(Constants.SHOOTER_INTAKING_SPEED_RPM, Constants.SHOOTER_INTAKING_SPEED_RPM, false);
         m_amp.setSpeed(Constants.AMP_SPEED_RPM, false);
 
-        if(!m_barrel.hasNote()){
+        if(!m_sensorMonitor.barrelHasNote()){
           m_intake.spinStop();
           nextState = State.c_state_inShooter;
         } else {
@@ -128,7 +132,7 @@ public class MoveNoteToAmp extends Command {
         m_shooter.setSpeeds(Constants.SHOOTER_INTAKING_SPEED_RPM, Constants.SHOOTER_INTAKING_SPEED_RPM, false);
         m_barrel.setSpeed(Constants.BARREL_SPEED_RPM, false);
 
-        if(!m_shooter.hasNote() && m_amp.hasNote()){
+        if(!m_sensorMonitor.shooterHasNote() && m_sensorMonitor.ampHasNote()){
           m_barrel.spinStop();
           nextState = State.c_state_inAmp;
         } else {
@@ -140,7 +144,7 @@ public class MoveNoteToAmp extends Command {
         m_amp.setSpeed(Constants.AMP_SPEED_RPM, false);
         m_shooter.setSpeeds(Constants.SHOOTER_INTAKING_SPEED_RPM, Constants.SHOOTER_INTAKING_SPEED_RPM, false);
 
-        if(m_amp.noteCenteredOnSensor()) {
+        if(m_sensorMonitor.ampNoteCentered()) {
           m_amp.spinStop();
           m_shooter.spinStop();
           nextState = State.c_state_Done;
@@ -208,7 +212,7 @@ public class MoveNoteToAmp extends Command {
         return State.c_state_inShooter;
 
       case c_Amp:
-        if(m_amp.noteCenteredOnSensor()) {
+        if(m_sensorMonitor.ampNoteCentered()) {
           return State.c_state_Done;
         } else {
           return State.c_state_inAmp;

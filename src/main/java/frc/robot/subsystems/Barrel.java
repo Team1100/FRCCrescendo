@@ -32,8 +32,6 @@ public class Barrel extends SubsystemBase {
   CANSparkMax m_CanSparkMax;
   SparkPIDController m_SparkPIDController;
 
-  NoteProximitySensor m_NoteProximitySensor;
-
   /** Creates a new Barrel. */
   private Barrel() {
     super("Barrel");
@@ -56,7 +54,6 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setI(m_rollerI);
       m_SparkPIDController.setD(m_rollerD);
 
-      m_NoteProximitySensor = new NoteProximitySensor(RobotMap.B_NOTE_SENSOR, this);
     }
   }
 
@@ -101,27 +98,6 @@ public class Barrel extends SubsystemBase {
     m_CanSparkMax.setIdleMode(IdleMode.kBrake);
   }
 
-  public boolean hasNote() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.hasNote();
-    } else {
-      return false;
-    }
-  }
-
-  public boolean noteCenteredOnSensor() {
-    if(m_NoteProximitySensor != null) {
-      return m_NoteProximitySensor.noteIsCentered();  
-    } else {
-      return false;
-    }
-  }
-
-  public void resetSensor() {
-    if(m_NoteProximitySensor != null) {
-      m_NoteProximitySensor.reset();
-    }
-  }
 
   @Override
   public void periodic() {
@@ -149,8 +125,5 @@ public class Barrel extends SubsystemBase {
     m_barrelSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
 
     super.periodic();
-    if(m_NoteProximitySensor != null){
-      m_NoteProximitySensor.update();
-    }
   }
 }

@@ -20,6 +20,8 @@ public class MoveNoteToBarrel extends Command {
   private Barrel m_barrel;
   private Intake m_intake;
 
+  private SensorMonitor m_sensorMonitor;
+
   private ParallelRaceGroup m_BlinkLights;
 
   private State m_state;
@@ -31,6 +33,8 @@ public class MoveNoteToBarrel extends Command {
     m_shooter = Shooter.getInstance();
     m_barrel = Barrel.getInstance();
     m_intake = Intake.getInstance();
+
+    m_sensorMonitor = SensorMonitor.getInstance();
 
     m_BlinkLights = new BlinkLights().withTimeout(Constants.kConfusedSensorTimeoutSeconds);
 
@@ -61,7 +65,7 @@ public class MoveNoteToBarrel extends Command {
     switch (m_state) {
       case c_state_prepAmp:
         //Ensure note is out of the way, pivot amp down to intake
-        if(!m_amp.noteCenteredOnSensor()){
+        if(!m_sensorMonitor.ampNoteCentered()){
           m_amp.setSpeed(Constants.AMP_SPEED_RPM, false);
         } else {
           m_amp.spinStop();
@@ -80,7 +84,7 @@ public class MoveNoteToBarrel extends Command {
         m_amp.setSpeed(Constants.AMP_SPEED_RPM, true);
         m_shooter.setSpeeds(Constants.SHOOTER_INTAKING_SPEED_RPM, Constants.SHOOTER_INTAKING_SPEED_RPM, true);
         
-        if(m_shooter.hasNote()){
+        if(m_sensorMonitor.shooterHasNote()){
           nextState = State.c_state_inShooter;
         } else {
           nextState = State.c_state_inAmp;
@@ -91,7 +95,7 @@ public class MoveNoteToBarrel extends Command {
         m_shooter.setSpeeds(Constants.SHOOTER_INTAKING_SPEED_RPM, Constants.SHOOTER_INTAKING_SPEED_RPM, true);
         m_barrel.setSpeed(Constants.BARREL_SPEED_RPM, true);
         m_amp.setSpeed(Constants.AMP_SPEED_RPM, true);
-        if(m_barrel.noteCenteredOnSensor() && !m_shooter.hasNote()) {
+        if(m_sensorMonitor.barrelNoteCentered() && !m_sensorMonitor.shooterHasNote()) {
           nextState = State.c_state_Done;
         } else {
           nextState = State.c_state_inShooter;
@@ -101,7 +105,7 @@ public class MoveNoteToBarrel extends Command {
       case c_state_inIntake:
         m_intake.setSpeeds(Constants.INTAKE_SPEED_RPM, false);
         m_barrel.setSpeed(Constants.BARREL_SPEED_RPM, false);
-        if(m_barrel.noteCenteredOnSensor() && !m_intake.hasNote()){
+        if(m_sensorMonitor.barrelNoteCentered() && !m_sensorMonitor.intakeHasNote()){
           nextState = State.c_state_Done;
         } else {
           nextState = State.c_state_inIntake;

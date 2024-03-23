@@ -32,52 +32,60 @@ public class NoteProximitySensor {
         boolean val = m_sensor.get();
         State nextState = State.c_State_No_Note;
 
-        switch (m_state) {
-            case c_State_No_Note:
-                nextState = State.c_State_No_Note;
-                if(val){
-                    nextState = State.c_State_First_Leg;
-                }
-                break;
-
-            case c_State_First_Leg:
-                nextState = State.c_State_First_Leg;
-                if(!val){
-                    nextState = State.c_State_Middle_Hole;
-                }
-                break;
-
-            case c_State_Middle_Hole:
-                nextState = State.c_State_Middle_Hole;
-                if(val){
-                    nextState = State.c_State_Second_Leg;
-                }
-                break;
-
-            case c_State_Second_Leg:
-                nextState = State.c_State_Second_Leg;
-                if(!val){
+        synchronized(this) {
+            switch (m_state) {
+                case c_State_No_Note:
                     nextState = State.c_State_No_Note;
-                }
-                break;
+                    if(val){
+                        nextState = State.c_State_First_Leg;
+                    }
+                    break;
 
-            default:
-                System.out.println("Note Proximity Sensor has invalid state");
-                nextState = State.c_State_No_Note;
-                break;
+                case c_State_First_Leg:
+                    nextState = State.c_State_First_Leg;
+                    if(!val){
+                        nextState = State.c_State_Middle_Hole;
+                    }
+                    break;
+
+                case c_State_Middle_Hole:
+                    nextState = State.c_State_Middle_Hole;
+                    if(val){
+                        nextState = State.c_State_Second_Leg;
+                    }
+                    break;
+
+                case c_State_Second_Leg:
+                    nextState = State.c_State_Second_Leg;
+                    if(!val){
+                        nextState = State.c_State_No_Note;
+                    }
+                    break;
+
+                default:
+                    System.out.println("Note Proximity Sensor has invalid state");
+                    nextState = State.c_State_No_Note;
+                    break;
+            }
+
+            m_state = nextState;
         }
-
-        m_state = nextState;
         updateTD();
     }
 
     public boolean hasNote() {
-        return m_state != State.c_State_No_Note;
+        synchronized(this){
+            return m_state != State.c_State_No_Note;
+        }
     }
 
-    public boolean noteIsCentered() { return m_state == State.c_State_Middle_Hole; }
+    public boolean seesNote() {
+        return m_sensor.get();
+    }
 
-    public void reset() { m_state = State.c_State_No_Note; }
+    public boolean noteIsCentered() { synchronized(this){return m_state == State.c_State_Middle_Hole;} }
+
+    public void reset() { synchronized(this){ m_state = State.c_State_No_Note;} }
 
     public void updateTD(){
         switch (m_state) {
