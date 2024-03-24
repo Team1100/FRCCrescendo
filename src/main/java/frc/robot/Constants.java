@@ -202,12 +202,12 @@ public final class Constants {
 
     // Defines Intake constants
     public static final boolean kEnableIntakePIDTuning = false;
-    public static final double kIntakeP = 0;
-    public static final double kIntakeI = 0;
-    public static final double kIntakeD = 0;
+    public static final double kIntakeP = 0.000200;
+    public static final double kIntakeI = 0.000001;
+    public static final double kIntakeD = 0.003600;
 
     public static final double kIntakeSpeed = 0.6;
-    public static final double INTAKE_SPEED_RPM = 0;
+    public static final double INTAKE_SPEED_RPM = 3000;
 
     // Defines Lights constants
     public static final int LED_LENGTH = 42; // number of LEDs

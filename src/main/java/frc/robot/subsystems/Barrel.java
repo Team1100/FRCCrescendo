@@ -53,7 +53,6 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setP(m_rollerP);
       m_SparkPIDController.setI(m_rollerI);
       m_SparkPIDController.setD(m_rollerD);
-
     }
   }
 

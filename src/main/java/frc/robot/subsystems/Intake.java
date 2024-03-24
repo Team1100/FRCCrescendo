@@ -72,10 +72,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void setSpeeds(double RPM, boolean backwards) {
-    double setPoint = backwards? -RPM : RPM;
-    if (setPoint != m_lastSpeed) {
-      m_lastSpeed = setPoint;
-      m_SparkPIDController.setReference(setPoint, ControlType.kVelocity);
+    if (!backwards) {
+      m_SparkPIDController.setReference(RPM, ControlType.kVelocity);
+    }
+    else {
+      m_SparkPIDController.setReference(-RPM, ControlType.kVelocity);
     }
   }
 

@@ -101,22 +101,9 @@
                                         }
                                       },
                                       {
-                                        "type": "sequential",
+                                        "type": "named",
                                         "data": {
-                                          "commands": [
-                                            {
-                                              "type": "wait",
-                                              "data": {
-                                                "waitTime": 2.5
-                                              }
-                                            },
-                                            {
-                                              "type": "named",
-                                              "data": {
-                                                "name": "Consume"
-                                              }
-                                            }
-                                          ]
+                                          "name": "Consume"
                                         }
                                       }
                                     ]
@@ -196,22 +183,9 @@
                                         }
                                       },
                                       {
-                                        "type": "sequential",
+                                        "type": "named",
                                         "data": {
-                                          "commands": [
-                                            {
-                                              "type": "wait",
-                                              "data": {
-                                                "waitTime": 1.75
-                                              }
-                                            },
-                                            {
-                                              "type": "named",
-                                              "data": {
-                                                "name": "Consume"
-                                              }
-                                            }
-                                          ]
+                                          "name": "Consume"
                                         }
                                       }
                                     ]

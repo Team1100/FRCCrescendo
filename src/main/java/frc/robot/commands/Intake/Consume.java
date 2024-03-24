@@ -48,12 +48,7 @@ public class Consume extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (m_enablePID.get() == 1) {
-      m_intake.setSpeeds(0, false);
-    }
-    else {
-      m_intake.spinStop();
-    }
+    m_intake.spinStop();
   }
 
   // Returns true when the command should end.
