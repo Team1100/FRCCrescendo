@@ -17,7 +17,7 @@ public class AlignPivotToAmp extends Command {
   public AlignPivotToAmp() {
     super(BarrelPivot.getInstance(), "Setpoints", "AlignPivotToAmp");
     m_barrelPivot = BarrelPivot.getInstance();
-    m_ampPosition = new TDNumber(m_barrelPivot, "Setpoints", "AmpPosition (degrees)", Constants.BP_SOURCE_ANGLE_DEGREES);
+    m_ampPosition = new TDNumber(m_barrelPivot, "Setpoints", "AmpPosition (degrees)", Constants.BP_AMP_SCORING_ANGLE_DEGREES);
     addRequirements(m_barrelPivot);
   }
 
