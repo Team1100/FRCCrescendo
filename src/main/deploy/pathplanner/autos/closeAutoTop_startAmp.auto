@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.73,
-      "y": 4.5
+      "x": 0.75,
+      "y": 6.56
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -30,12 +30,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AlignPivotToSpeakerClose"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "Consume"
                 }
               },
@@ -44,9 +38,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
+                      "type": "deadline",
                       "data": {
-                        "waitTime": 1.0
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.0
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignPivotToSpeakerClose"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -69,9 +76,174 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "Bot Subwoofer to Third"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Top Subwoofer to First"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignPivotToDOWN"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "First to Subwoofer"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignPivotToSpeakerClose"
+                            }
+                          },
+                          {
+                            "type": "deadline",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.33
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "SpinBarrelForward"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.75
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SpinBarrelForward"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Subwoofer to Second"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignPivotToDOWN"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Second to Subwoofer"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignPivotToSpeakerClose"
+                            }
+                          },
+                          {
+                            "type": "deadline",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.33
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "SpinBarrelForward"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.75
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SpinBarrelForward"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Subwoofer to Third"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AlignPivotToDOWN"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -91,7 +263,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.25
+                                    "waitTime": 0.33
                                   }
                                 },
                                 {
@@ -101,120 +273,12 @@
                                   }
                                 }
                               ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.75
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "SpinBarrelForward"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Subwoofer to Second"
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Second to Subwoofer"
-                            }
-                          },
-                          {
-                            "type": "deadline",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.25
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "SpinBarrelForward"
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.75
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "SpinBarrelForward"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Subwoofer to First"
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "First to Subwoofer"
-                            }
-                          },
-                          {
-                            "type": "deadline",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.25
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "SpinBarrelForward"
-                                  }
-                                }
-                              ]
+                              "name": "AlignPivotToSpeakerClose"
                             }
                           }
                         ]

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 6.56
+      "x": 0.73,
+      "y": 4.5
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -71,7 +71,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Top Subwoofer to First"
+                        "pathName": "Bot Subwoofer to Third"
                       }
                     },
                     {
@@ -81,7 +81,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "First to Subwoofer"
+                              "pathName": "Third to Subwoofer"
                             }
                           },
                           {
@@ -91,7 +91,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.25
+                                    "waitTime": 0.33
                                   }
                                 },
                                 {
@@ -148,7 +148,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.25
+                                    "waitTime": 0.33
                                   }
                                 },
                                 {
@@ -185,7 +185,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Subwoofer to Third"
+                        "pathName": "Subwoofer to First"
                       }
                     },
                     {
@@ -195,7 +195,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Third to Subwoofer"
+                              "pathName": "First to Subwoofer"
                             }
                           },
                           {
@@ -205,7 +205,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 0.25
+                                    "waitTime": 0.33
                                   }
                                 },
                                 {

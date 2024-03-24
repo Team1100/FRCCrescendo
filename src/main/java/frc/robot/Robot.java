@@ -26,7 +26,6 @@ public class Robot extends TimedRobot {
   private ResetTargetAngle m_resetTargetAngle;
   private AmpResetTargetAngle m_ampResetTargetAngle;
 
-  private Barrel m_barrel;
   private RobotContainer m_robotContainer;
 
   /**
@@ -38,7 +37,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_barrel = Barrel.getInstance();
 
     m_makeRainbow = new MakeRainbow();
     m_makeCool = new MakeCool();
@@ -90,7 +88,6 @@ public class Robot extends TimedRobot {
     }
     
     m_makeCool.schedule();
-    m_barrel.setCoastMode();
   }
 
   /** This function is called periodically during autonomous. */
@@ -121,8 +118,6 @@ public class Robot extends TimedRobot {
     if (RobotMap.A_PIVOT_ENABLED) {
       m_ampResetTargetAngle.schedule();
     }
-
-    m_barrel.setBreakMode();
   }
 
   /** This function is called periodically during operator control. */
