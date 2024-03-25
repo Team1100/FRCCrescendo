@@ -50,7 +50,7 @@ public final class Constants {
 
     public static final double kAEncoderZeroOffset = 240;
     public static final double kAEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
-    public static final double kAPivotUpperLimitDegrees = 330;
+    public static final double kAPivotUpperLimitDegrees = 300;
     public static final double kAPivotLowerLimitDegrees = 70;
     public static final double kAPivotToleranceDegrees = 5;
     public static final double kAPivotIntakePositionDegrees = 80;
@@ -231,7 +231,7 @@ public final class Constants {
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(24)), 
+            new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
                 new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180)));
 
     // The layout of the AprilTags on the field
