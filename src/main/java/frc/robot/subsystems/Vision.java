@@ -20,6 +20,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import frc.robot.testingdashboard.SubsystemBase;
+import frc.robot.testingdashboard.TDBoolean;
 import frc.robot.testingdashboard.TDNumber;
 
 public class Vision extends SubsystemBase {
@@ -31,6 +32,7 @@ public class Vision extends SubsystemBase {
   private TDNumber m_estX;
   private TDNumber m_estY;
   private TDNumber m_estRot;
+  private TDBoolean m_poseUpdatesEnabled;
 
   /** Creates a new Vision. */
   private Vision() {
@@ -49,6 +51,8 @@ public class Vision extends SubsystemBase {
       m_estX = new TDNumber(this, "Est Pose", "Est X");
       m_estY = new TDNumber(this, "Est Pose", "Est Y");
       m_estRot = new TDNumber(this, "Est Pose", "Est Rot");
+
+      m_poseUpdatesEnabled = new TDBoolean(this, "", "Pose Updates Enabled");
     }
   }
 
@@ -59,9 +63,21 @@ public class Vision extends SubsystemBase {
     return m_vision;
   }
 
+  public void enablePoseUpdates() {
+    m_poseUpdatesEnabled.set(true);
+  }
+
+  public void disablePoseUpdates() {
+    m_poseUpdatesEnabled.set(false);
+  }
+
+  public boolean getPoseUpdatesEnabled() {
+    return m_poseUpdatesEnabled.get();
+  }
+
   @Override
   public void periodic() {
-    if(m_photonEstimator != null){
+    if(m_photonEstimator != null && getPoseUpdatesEnabled()){
       Drive robotDrive = Drive.getInstance();
 
       var newest = getEstimatedGlobalPose();

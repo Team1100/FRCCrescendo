@@ -60,6 +60,8 @@ import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Sensors.ToggleSensorsOnOff;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
+import frc.robot.commands.Vision.DisablePoseUpdates;
+import frc.robot.commands.Vision.EnablePoseUpdates;
 import frc.robot.subsystems.AmpAddOn;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
@@ -142,7 +144,7 @@ public class RobotContainer {
     m_SensorMonitor = SensorMonitor.getInstance();
 
     // Build the auto commands and add them to the chooser
-    m_autoChooser = AutoBuilder.buildAutoChooser("closeAutoBot_startMid");
+    m_autoChooser = AutoBuilder.buildAutoChooser("closeAutoTop_startMid");
     new TDSendable(Drive.getInstance(), "Auto Commands", "Chooser", m_autoChooser);
     
     // Configure the trigger/button bindings
@@ -209,6 +211,10 @@ public class RobotContainer {
     new IntakeFromShooter();
     new SpinUpShooter();
     new ShooterSlowOut();
+
+    // Vision
+    new EnablePoseUpdates();
+    new DisablePoseUpdates();
 
     new Shoot();
     new MoveNoteForward();
