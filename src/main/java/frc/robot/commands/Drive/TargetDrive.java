@@ -28,7 +28,10 @@ public class TargetDrive extends Command {
     private ProfiledPIDController m_thetaController;
 
     private final double periodTime = 0.002;
+    
+    private boolean atGoal = false;
 
+    TDNumber TDCurrentAngle;
     TDNumber TDTargetAngle;
     TDNumber TDRotationFeedForward;
     TDSendable m_thetaControllerSendable;
@@ -48,11 +51,16 @@ public class TargetDrive extends Command {
 
     m_thetaControllerSendable = new TDSendable(m_drive, "", "TargetDriveThetaController", m_thetaController);
 
-    TDTargetAngle = new TDNumber(m_drive, "Test Outputs", "OutputAngle");
+    TDCurrentAngle = new TDNumber(m_drive, "Test Outputs", "Current Angle");
+    TDTargetAngle = new TDNumber(m_drive, "Test Outputs", "Target Angle");
     TDRotationFeedForward = new TDNumber(m_drive, "Test Outputs", "Rot FF");
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
+  }
+
+  public boolean atGoal() {
+    return atGoal;
   }
 
   // Called when the command is initially scheduled.
@@ -68,6 +76,7 @@ public class TargetDrive extends Command {
 
     Rotation2d targetRot = FieldUtils.getInstance().getAngleToPose(currentPose, targetPose).plus(new Rotation2d(Math.PI));
 
+    TDCurrentAngle.set(currentPose.getRotation().getDegrees());
     TDTargetAngle.set(targetRot.getDegrees());
 
     double rotation = m_thetaController.calculate(
@@ -83,6 +92,8 @@ public class TargetDrive extends Command {
 
     ChassisSpeeds outputSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotation, fieldRotationOffset);
     m_drive.drive(outputSpeeds);
+
+    atGoal = MathUtil.isNear(currentPose.getRotation().getDegrees(), targetPose.getRotation().getDegrees(), Constants.D_ANGLE_TOLERANCE_DEGREES);
   }
 
   // Called once the command ends or is interrupted.

@@ -113,7 +113,7 @@ public class PrepareToShoot extends Command {
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:
-        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal()) { // && tracking speaker
+        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal() && m_trackSpeaker.atGoal()) {
           m_blinkLights.cancel();
           m_moveLightsGreen.schedule();
           m_state = State.READY_TO_SHOOT;
@@ -124,11 +124,11 @@ public class PrepareToShoot extends Command {
         if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote) {
           m_state = State.DONE;
         }
-        if (!m_barrelPivot.atGoal() && m_moveLightsGreen.isScheduled()) { // && not targeting speaker
+        if ((!m_barrelPivot.atGoal() || !m_trackSpeaker.atGoal()) && m_moveLightsGreen.isScheduled()) {
           m_moveLightsGreen.cancel();
           m_blinkLights.schedule();
         }
-        else if (m_barrelPivot.atGoal() && m_blinkLights.isScheduled()) { // && targeting speaker
+        else if (m_barrelPivot.atGoal() && m_trackSpeaker.atGoal() && m_blinkLights.isScheduled()) {
           m_blinkLights.cancel();
           m_moveLightsGreen.schedule();
         }

@@ -275,6 +275,12 @@
                     }
                   ]
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "EnablePoseUpdates"
+                }
               }
             ]
           }
