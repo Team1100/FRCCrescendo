@@ -90,13 +90,15 @@ public final class Constants {
     
     public static final double BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES = 70;
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 3;
-    public static final double BP_SPEAKER_TOLERANCE_DEGREES = 0.5;
+    public static final double BP_SPEAKER_TOLERANCE_DEGREES = 1;
     public static final double BP_SOURCE_ANGLE_DEGREES = 105;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 100;
     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 120.7;
     public static final double BP_DOWN_ANGLE_DEGREES = 81;
 
     // Defines Drive constants
+    public static final double D_ANGLE_TOLERANCE_DEGREES = 2.5;
+
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
@@ -147,7 +149,7 @@ public final class Constants {
     //Sensor Constants
     public static final boolean kSensorThreadingEnabled = true;
     public static final int kSensorDebounceCycles = 3;
-    public static final int kThreadedSensorDebounceCycles = 10;
+    public static final int kThreadedSensorDebounceCycles = 7;
     public static final double kConfusedSensorTimeoutSeconds = 1.5;
 
     // Defines Swerve Module constants
@@ -164,7 +166,7 @@ public final class Constants {
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
-        / kDrivingMotorReduction;
+        / kDrivingMotorReduction; // meters per second
 
     public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
         / kDrivingMotorReduction; // meters
@@ -220,9 +222,9 @@ public final class Constants {
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
-    public static final double LEFT_SHOOTER_SPEED_RPM = 3500;
-    public static final double RIGHT_SHOOTER_SPEED_RPM = 4500;
-    public static final double SHOOTER_SPEED_TOLERANCE = 400; // RPM Diff
+    public static final double LEFT_SHOOTER_SPEED_RPM = 4000;
+    public static final double RIGHT_SHOOTER_SPEED_RPM = 5000;
+    public static final double SHOOTER_SPEED_TOLERANCE = 500; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 500;
