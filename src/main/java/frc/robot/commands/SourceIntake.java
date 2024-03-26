@@ -10,10 +10,10 @@ import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.BarrelPivot.AlignWithSource;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
+import frc.robot.commands.Lights.MoveLightsMagenta;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.SensorMonitor;
-import frc.robot.subsystems.SensorMonitor.NoteLocation;
 import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.Command;
 
@@ -29,6 +29,7 @@ public class SourceIntake extends Command {
   BlinkLights m_blinkLights;
   AmpPivotToIntake m_ampPivotToIntake;
   AlignWithSource m_alignWithSource;
+  MoveLightsMagenta m_moveLightsMagenta;
   MoveLightsGreen m_moveLightsGreen;
   SpinUpAmpRollers m_spinUpAmpRollers;
   IntakeFromShooter m_intakeFromShooter;
@@ -50,6 +51,7 @@ public class SourceIntake extends Command {
     m_blinkLights = new BlinkLights();
     m_ampPivotToIntake = new AmpPivotToIntake();
     m_alignWithSource = new AlignWithSource();
+    m_moveLightsMagenta = new MoveLightsMagenta();
     m_moveLightsGreen = new MoveLightsGreen();
     m_spinUpAmpRollers = new SpinUpAmpRollers();
     m_intakeFromShooter = new IntakeFromShooter();
@@ -99,7 +101,7 @@ public class SourceIntake extends Command {
 
       case SPIN_SUBSYSTEMS_IN:
         m_blinkLights.cancel();
-        m_moveLightsGreen.schedule();
+        m_moveLightsMagenta.schedule();
         m_spinUpAmpRollers.schedule();
         m_intakeFromShooter.schedule();
         m_spinBarrelBackward.schedule();
@@ -107,8 +109,8 @@ public class SourceIntake extends Command {
         break;
 
       case WAIT_FOR_BARREL_NOTE_DETECTION:
-        if (m_sensorMonitor.determineLocation() == NoteLocation.c_Barrel) {
-          m_state = State.DONE;
+        if (m_sensorMonitor.barrelSeesNote()) {
+          m_moveLightsGreen.schedule();
         }
         break;
 
@@ -138,6 +140,9 @@ public class SourceIntake extends Command {
     }
     if (m_spinBarrelBackward.isScheduled()) {
       m_spinBarrelBackward.cancel();
+    }
+    if (m_moveLightsMagenta.isScheduled()) {
+      m_moveLightsMagenta.cancel();
     }
     if (m_moveLightsGreen.isScheduled()) {
       m_moveLightsGreen.cancel();

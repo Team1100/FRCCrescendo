@@ -27,6 +27,7 @@ import frc.robot.commands.AmpAddOn.SpinUpAmpRollers;
 import frc.robot.commands.AmpAddOn.UNScoreAmp;
 import frc.robot.commands.Barrel.SpinBarrelBackward;
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.Barrel.SpinBarrelForwardAutoSensorStop;
 import frc.robot.commands.BarrelPivot.AlignPivotForMiddleAuto;
 import frc.robot.commands.BarrelPivot.AlignPivotToAmp;
 import frc.robot.commands.BarrelPivot.AlignPivotToSpeakerClose;
@@ -54,6 +55,7 @@ import frc.robot.commands.Lights.MakeWarm;
 import frc.robot.commands.Lights.MoveLightsBlue;
 import frc.robot.commands.Lights.MoveLightsColor;
 import frc.robot.commands.Lights.MoveLightsGreen;
+import frc.robot.commands.Lights.MoveLightsMagenta;
 import frc.robot.commands.Lights.MoveLightsPurple;
 import frc.robot.commands.Lights.MoveLightsYellow;
 import frc.robot.commands.Sensors.ResetAllSensors;
@@ -169,6 +171,7 @@ public class RobotContainer {
     // Barrel commands
     new SpinBarrelForward();
     new SpinBarrelBackward();
+    new SpinBarrelForwardAutoSensorStop();
 
     // BarrelPivot commands
     new AlignPivotForMiddleAuto();
@@ -198,6 +201,7 @@ public class RobotContainer {
     new MoveLightsBlue();
     new MakeCool();
     new MoveLightsGreen();
+    new MoveLightsMagenta();
     new MoveLightsYellow();
     new MoveLightsPurple();
     new MoveLightsColor();
