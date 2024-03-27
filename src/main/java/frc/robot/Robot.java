@@ -90,6 +90,7 @@ public class Robot extends TimedRobot {
     }
     
     m_makeCool.schedule();
+    m_vision.enablePoseUpdates();
   }
 
   /** This function is called periodically during autonomous. */
