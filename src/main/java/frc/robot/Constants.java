@@ -57,7 +57,7 @@ public final class Constants {
     public static final double kAPivotUpPositionDegrees = 290;
     public static final double kAPivotDeliverAmpPositionDegrees = 195.1;
     
-    public static final double A_ANGLE_INCREMENT_DEGREES = 0.5;
+    public static final double A_ANGLE_INCREMENT_DEGREES = 1.5;
     public static final double kADeadband = 0.05;
 
     // Defines Barrel constants
@@ -222,8 +222,8 @@ public final class Constants {
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
-    public static final double LEFT_SHOOTER_SPEED_RPM = 4000;
-    public static final double RIGHT_SHOOTER_SPEED_RPM = 5000;
+    public static final double LEFT_SHOOTER_SPEED_RPM = 3500;
+    public static final double RIGHT_SHOOTER_SPEED_RPM = 4700;
     public static final double SHOOTER_SPEED_TOLERANCE = 500; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
