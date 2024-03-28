@@ -21,13 +21,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Sensors.ToggleSensorsOnOff;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.utils.FieldUtils;
 import frc.robot.utils.SwerveDriveInputs;
 import frc.robot.commands.MoveNoteBackward;
 import frc.robot.commands.GroundIntake;
 import frc.robot.commands.MoveNoteForward;
 import frc.robot.commands.PrepareToAmp;
+import frc.robot.commands.PrepareToFerry;
 import frc.robot.commands.PrepareToShoot;
 import frc.robot.commands.PrepareToShootClose;
 import frc.robot.commands.ScoreAmp;
@@ -88,6 +91,7 @@ public class OI {
 
     // Driver Mapping
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
+    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToFerry());
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
     
     // Drive to locations on the field
@@ -111,6 +115,16 @@ public class OI {
 
     new JoystickButton(m_OperatorXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToAmp());
     new Trigger(()->{return (m_OperatorXboxController.getLeftTriggerAxis() > 0.5);}).whileTrue(new ScoreAmp());
+
+    new Trigger(m_OperatorXboxController.povDown(CommandScheduler.getInstance().getDefaultButtonLoop())).onTrue(new InstantCommand(()->{
+      TDNumber speakerHeightOffset = new TDNumber(BarrelPivot.getInstance(), "Auto Pivot", "Speaker Height Offset (meters)");
+      speakerHeightOffset.set(speakerHeightOffset.get() + Constants.SPEAKER_ADJUSTMENT_INCREMENT_M);
+    }));
+
+    new Trigger(m_OperatorXboxController.povUp(CommandScheduler.getInstance().getDefaultButtonLoop())).onTrue(new InstantCommand(()->{
+      TDNumber speakerHeightOffset = new TDNumber(BarrelPivot.getInstance(), "Auto Pivot", "Speaker Height Offset (meters)");
+      speakerHeightOffset.set(speakerHeightOffset.get() - Constants.SPEAKER_ADJUSTMENT_INCREMENT_M);
+    }));
   }
 
   /**
