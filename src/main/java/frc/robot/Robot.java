@@ -5,13 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AmpAddOn.AmpResetTargetAngle;
 import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
+import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Vision;
+import frc.robot.testingdashboard.TDNumber;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,6 +31,10 @@ public class Robot extends TimedRobot {
 
   private Vision m_vision;
   private RobotContainer m_robotContainer;
+
+  private boolean m_endProcessingDone = false;
+  private double m_teleopStartTime;
+  private double m_elapsedTeleopTime;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -125,11 +132,19 @@ public class Robot extends TimedRobot {
     if (RobotMap.V_ENABLED) {
       m_vision.enablePoseUpdates();
     }
+
+    m_teleopStartTime = Timer.getFPGATimestamp();
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    m_elapsedTeleopTime = Timer.getFPGATimestamp() - m_teleopStartTime;
+    if(!m_endProcessingDone &&
+       m_elapsedTeleopTime > Constants.END_MATCH_TIME_S) {
+        doEndMatchProcessing();
+    }
+  }
 
   @Override
   public void testInit() {
@@ -148,4 +163,17 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  private void doEndMatchProcessing() {
+    printSpeakerHeightOffset();
+
+    m_endProcessingDone = true;
+  }
+
+  private void printSpeakerHeightOffset(){
+      TDNumber speakerHeightOffset = new TDNumber(BarrelPivot.getInstance(), "Auto Pivot", "Speaker Height Offset (meters)");
+      if(speakerHeightOffset.get() != Constants.SPEAKER_HEIGHT_OFFSET) {
+        System.out.println("Adjusted Speaker Height Offset = " + speakerHeightOffset.get());
+      }
+  }
 }
