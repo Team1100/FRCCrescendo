@@ -34,6 +34,8 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final double END_MATCH_TIME_S = 134.9;
+
     public static final double DEGREES_PER_REVOLUTION = 360;
 
     // Defines AmpAddOn constants
@@ -242,6 +244,7 @@ public final class Constants {
 
     // Height of Speaker mouth above tag pose
     public static final double SPEAKER_HEIGHT_OFFSET = 0.6;
+    public static final double SPEAKER_ADJUSTMENT_INCREMENT_M = 0.05;
 
     // TODO: Determine & test these Poses on a real field
     // Most of these are simulation guesses, aside from kAmpScoreBluePose
