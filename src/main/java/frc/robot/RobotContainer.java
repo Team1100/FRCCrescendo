@@ -62,6 +62,7 @@ import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Sensors.ToggleSensorsOnOff;
 import frc.robot.commands.Shooter.IntakeFromShooter;
 import frc.robot.commands.Shooter.SpinUpShooter;
+import frc.robot.commands.Shooter.SpinUpShooterNoStop;
 import frc.robot.commands.Vision.DisablePoseUpdates;
 import frc.robot.commands.Vision.EnablePoseUpdates;
 import frc.robot.subsystems.AmpAddOn;
@@ -215,6 +216,7 @@ public class RobotContainer {
     new IntakeFromShooter();
     new SpinUpShooter();
     new ShooterSlowOut();
+    new SpinUpShooterNoStop();
 
     // Vision
     new EnablePoseUpdates();
