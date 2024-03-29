@@ -245,6 +245,9 @@ public final class Constants {
             new Transform3d(new Translation3d(Units.inchesToMeters(0), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
                 new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)));
 
+    //Maximum ambiguity accepted as a valid result from the vision systems
+    public static final double kMaxValidAmbiguity = 1.0;
+
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
             AprilTagFields.kDefaultField.loadAprilTagLayoutField();
