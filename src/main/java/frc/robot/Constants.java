@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -24,6 +28,8 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+
+import frc.robot.utils.vision.VisionConfig;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -236,6 +242,7 @@ public final class Constants {
 
     // Vision Constants
     public static final String kCameraName = "Arducam_OV9281_USB_Camera";
+    public static final String kForwardCameraName = "Forward_Facing_Arducam_OV9281";
     // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     public static final Transform3d kRobotToCam =
             new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
@@ -244,6 +251,19 @@ public final class Constants {
     // determine x and z transformatons
             new Transform3d(new Translation3d(Units.inchesToMeters(0), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
                 new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)));
+
+    public static final VisionConfig[] kVisionSystems = {
+        new VisionConfig("Arducam_OV9281_USB_Camera",
+                         new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(24)), 
+                                new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180))),
+                         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                         PoseStrategy.LOWEST_AMBIGUITY),
+        new VisionConfig("Forward_Facing_Arducam_OV9281",
+                         new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(24)), 
+                                new Rotation3d(0, Units.degreesToRadians(20), Units.degreesToRadians(0))), //Approximation, find the actual value
+                         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, 
+                         PoseStrategy.LOWEST_AMBIGUITY)
+    };
 
     //Maximum ambiguity accepted as a valid result from the vision systems
     public static final double kMaxValidAmbiguity = 1.0;

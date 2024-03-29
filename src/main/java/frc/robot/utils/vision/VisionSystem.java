@@ -64,7 +64,8 @@ public class VisionSystem {
                 }
 
                 if(valid) {
-                    return Optional.of(new VisionEstimationResult(est.estimatedPose, latestTimestamp, ambiguity));
+                    return Optional.of(new VisionEstimationResult(est.estimatedPose, latestTimestamp, ambiguity, 
+                                                                    getEstimationStdDevs(est.estimatedPose.toPose2d())));
                 }
             }
         }
