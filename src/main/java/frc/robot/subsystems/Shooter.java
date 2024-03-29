@@ -38,6 +38,8 @@ public class Shooter extends SubsystemBase {
   SparkPIDController m_LeftSparkPIDController;
   SparkPIDController m_RightSparkPIDController;
 
+  TDNumber m_leftCurrentOutput;
+  TDNumber m_rightCurrentOutput;
 
   private double m_leftSpeedSetpoint;
   private double m_rightSpeedSetpoint;
@@ -77,6 +79,8 @@ public class Shooter extends SubsystemBase {
       m_RightSparkPIDController.setI(m_shootI);
       m_RightSparkPIDController.setD(m_shootD);
 
+      m_leftCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Shooter Left Output", m_SLeftSparkMax.getOutputCurrent());
+      m_rightCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Shooter Right Output", m_SRightSparkMax.getOutputCurrent());
     }
   }
 
@@ -137,7 +141,6 @@ public class Shooter extends SubsystemBase {
     }
   }
 
-
   @Override
   public void periodic() {
     if (Constants.kEnableShooterPIDTuning && 
@@ -164,8 +167,13 @@ public class Shooter extends SubsystemBase {
       }      
     }
 
-    m_leftMeasuredSpeed.set(m_SLeftSparkMax.getEncoder().getVelocity());
-    m_rightMeasuredSpeed.set(m_SRightSparkMax.getEncoder().getVelocity());
+    if (RobotMap.S_SHOOTER_ENABLED) {
+      m_leftMeasuredSpeed.set(m_SLeftSparkMax.getEncoder().getVelocity());
+      m_rightMeasuredSpeed.set(m_SRightSparkMax.getEncoder().getVelocity());
+
+      m_leftCurrentOutput.set(m_SLeftSparkMax.getOutputCurrent());
+      m_rightCurrentOutput.set(m_SRightSparkMax.getOutputCurrent());
+    }
 
     super.periodic();
   }

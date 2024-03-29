@@ -32,6 +32,8 @@ public class Barrel extends SubsystemBase {
   CANSparkMax m_CanSparkMax;
   SparkPIDController m_SparkPIDController;
 
+  TDNumber m_currentOutput;
+
   /** Creates a new Barrel. */
   private Barrel() {
     super("Barrel");
@@ -53,6 +55,8 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setP(m_rollerP);
       m_SparkPIDController.setI(m_rollerI);
       m_SparkPIDController.setD(m_rollerD);
+
+      m_currentOutput = new TDNumber(Drive.getInstance(), "Current", "Barrel Output", m_CanSparkMax.getOutputCurrent());
     }
   }
 
@@ -121,7 +125,10 @@ public class Barrel extends SubsystemBase {
       }
     }
 
-    m_barrelSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
+    if (m_CanSparkMax != null) {
+      m_barrelSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
+      m_currentOutput.set(m_CanSparkMax.getOutputCurrent());
+    }
 
     super.periodic();
   }

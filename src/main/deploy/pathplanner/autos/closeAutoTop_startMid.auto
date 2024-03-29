@@ -86,44 +86,45 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Subwoofer to First"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignPivotToDOWN"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "First to Subwoofer"
-                            }
-                          },
-                          {
-                            "type": "deadline",
+                            "type": "sequential",
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "deadline",
                                   "data": {
-                                    "waitTime": 0.33
+                                    "commands": [
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "Subwoofer to First"
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AlignPivotToDOWN"
+                                        }
+                                      }
+                                    ]
                                   }
                                 },
                                 {
-                                  "type": "named",
+                                  "type": "deadline",
                                   "data": {
-                                    "name": "SpinBarrelForward"
+                                    "commands": [
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "First to Subwoofer"
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AlignPivotToSpeakerClose"
+                                        }
+                                      }
+                                    ]
                                   }
                                 }
                               ]
@@ -132,7 +133,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignPivotToSpeakerClose"
+                              "name": "SpinBarrelForwardAutoSensorStop"
                             }
                           }
                         ]
@@ -162,44 +163,45 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Subwoofer to Second"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignPivotToDOWN"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Second to Subwoofer"
-                            }
-                          },
-                          {
-                            "type": "deadline",
+                            "type": "sequential",
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "deadline",
                                   "data": {
-                                    "waitTime": 0.33
+                                    "commands": [
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "Subwoofer to Second"
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AlignPivotToDOWN"
+                                        }
+                                      }
+                                    ]
                                   }
                                 },
                                 {
-                                  "type": "named",
+                                  "type": "deadline",
                                   "data": {
-                                    "name": "SpinBarrelForward"
+                                    "commands": [
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "Second to Subwoofer"
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AlignPivotToSpeakerClose"
+                                        }
+                                      }
+                                    ]
                                   }
                                 }
                               ]
@@ -208,7 +210,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignPivotToSpeakerClose"
+                              "name": "SpinBarrelForwardAutoSensorStop"
                             }
                           }
                         ]
@@ -238,44 +240,45 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Subwoofer to Third"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AlignPivotToDOWN"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Third to Subwoofer"
-                            }
-                          },
-                          {
-                            "type": "deadline",
+                            "type": "sequential",
                             "data": {
                               "commands": [
                                 {
-                                  "type": "wait",
+                                  "type": "deadline",
                                   "data": {
-                                    "waitTime": 0.33
+                                    "commands": [
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "Subwoofer to Third"
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AlignPivotToDOWN"
+                                        }
+                                      }
+                                    ]
                                   }
                                 },
                                 {
-                                  "type": "named",
+                                  "type": "deadline",
                                   "data": {
-                                    "name": "SpinBarrelForward"
+                                    "commands": [
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "Third to Subwoofer"
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "AlignPivotToSpeakerClose"
+                                        }
+                                      }
+                                    ]
                                   }
                                 }
                               ]
@@ -284,7 +287,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AlignPivotToSpeakerClose"
+                              "name": "SpinBarrelForwardAutoSensorStop"
                             }
                           }
                         ]

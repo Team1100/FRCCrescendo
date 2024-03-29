@@ -50,6 +50,9 @@ public class AmpAddOn extends SubsystemBase {
   SparkPIDController m_PivotSparkPIDController;
   AbsoluteEncoder m_absoluteEncoder;
 
+  TDNumber m_currentOutput;
+  TDNumber m_pivotCurrentOutput;
+
   // initially set motor to "Don't move"
   private double m_lastAngle = 0;
   private double m_lastSpeed = 0;
@@ -96,12 +99,14 @@ public class AmpAddOn extends SubsystemBase {
       m_absoluteEncoder.setPositionConversionFactor(Constants.kAEncoderPositionFactorDegrees);
       m_absoluteEncoder.setZeroOffset(Constants.kAEncoderZeroOffset);
       m_targetAngle = new TDNumber(this, "Encoder Values", "Target Angle", getAngle());
+
+      m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
+      m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
+      m_rollerSpeedRPM = new TDNumber(this, "Encoder Values", "Measured Roller Speed RPM");
+
+      m_currentOutput = new TDNumber(Drive.getInstance(), "Current", "Amp Roller Output", m_CanSparkMax.getOutputCurrent());
+      m_pivotCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Amp Pivot Output", m_PivotCanSparkMax.getOutputCurrent());
     }
-
-    m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kAEncoderPositionFactorDegrees);
-    m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
-    m_rollerSpeedRPM = new TDNumber(this, "Encoder Values", "Measured Roller Speed RPM");
-
   }
 
   public static AmpAddOn getInstance() {
@@ -239,6 +244,9 @@ public class AmpAddOn extends SubsystemBase {
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees.set(getAngle());
       m_rollerSpeedRPM.set(m_CanSparkMax.getEncoder().getVelocity());
+
+      m_currentOutput.set(m_CanSparkMax.getOutputCurrent());
+      m_pivotCurrentOutput.set(m_PivotCanSparkMax.getOutputCurrent());
     }
     super.periodic();
   }

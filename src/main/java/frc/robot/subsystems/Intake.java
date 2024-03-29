@@ -32,6 +32,8 @@ public class Intake extends SubsystemBase {
   CANSparkMax m_IRightSparkMax;
   SparkPIDController m_SparkPIDController;
 
+  TDNumber m_leftCurrentOutput;
+  TDNumber m_rightCurrentOutput;
 
   /** Creates a new Intake. */
   private Intake() {
@@ -61,6 +63,8 @@ public class Intake extends SubsystemBase {
       m_SparkPIDController.setI(m_intakeI);
       m_SparkPIDController.setD(m_intakeD);
 
+      m_leftCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Intake Left Output", m_ILeftSparkMax.getOutputCurrent());
+      m_rightCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Intake Right Output", m_IRightSparkMax.getOutputCurrent());
     }
   }
 
@@ -115,8 +119,10 @@ public class Intake extends SubsystemBase {
             m_intakeD = tmp;
           }
     }
-    if (m_ILeftSparkMax != null) {
+    if (RobotMap.I_INTAKE_ENABLED) {
       m_measuredSpeed.set(m_ILeftSparkMax.getEncoder().getVelocity());
+      m_leftCurrentOutput.set(m_ILeftSparkMax.getOutputCurrent());
+      m_rightCurrentOutput.set(m_IRightSparkMax.getOutputCurrent());
     }
       
     super.periodic();
