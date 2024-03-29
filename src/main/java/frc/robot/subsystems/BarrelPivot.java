@@ -40,8 +40,8 @@ public class BarrelPivot extends SubsystemBase {
   SparkPIDController m_SparkPIDController;
   AbsoluteEncoder m_absoluteEncoder;
 
-  TDNumber m_motorTemperature;
-  TDNumber m_currentOutput;
+  TDNumber m_leftCurrentOutput;
+  TDNumber m_rightCurrentOutput;
 
   /** Creates a new BarrelPivot. */
   private BarrelPivot() {
@@ -85,9 +85,8 @@ public class BarrelPivot extends SubsystemBase {
       m_encoderValueRotations = new TDNumber(this, "Encoder Values", "Rotations", getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees = new TDNumber(this, "Encoder Values", "Angle (degrees)", getAngle());
 
-      // for SPARK w/absolute encoder
-      m_motorTemperature = new TDNumber(this, "Safety", "Motor Temperature (fahrenheit)", getMotorTemperature());
-      m_currentOutput = new TDNumber(this, "Safety", "Current Output", getCurrentOutput());
+      m_leftCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Barrel Pivot Left Output", m_BPLeftSparkMax.getOutputCurrent());
+      m_rightCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Barrel Pivot Right Output", m_BPRightSparkMax.getOutputCurrent());
 
       m_BPLeftSparkMax.burnFlash();
       m_BPRightSparkMax.burnFlash();
@@ -165,25 +164,6 @@ public class BarrelPivot extends SubsystemBase {
     }
   }
 
-  public double getMotorTemperature() {
-    if (m_BPLeftSparkMax != null) {
-      // Converting Celsius to Fahrenheit
-      return (m_BPLeftSparkMax.getMotorTemperature() * 9/5) + 32;
-    }
-    else {
-      return 0;
-    }
-  }
-
-  public double getCurrentOutput() {
-    if (m_BPLeftSparkMax != null) {
-      return m_BPLeftSparkMax.getOutputCurrent();
-    }
-    else {
-      return 0;
-    }
-  }
-
   @Override
   public void periodic() {
     if (RobotMap.BP_ENABLED) {
@@ -208,8 +188,8 @@ public class BarrelPivot extends SubsystemBase {
       m_encoderValueRotations.set(getAngle() / Constants.kBPEncoderPositionFactorDegrees);
       m_encoderValueAngleDegrees.set(getAngle());
 
-      m_motorTemperature.set(getMotorTemperature());
-      m_currentOutput.set(getCurrentOutput());
+      m_leftCurrentOutput.set(m_BPLeftSparkMax.getOutputCurrent());
+      m_rightCurrentOutput.set(m_BPRightSparkMax.getOutputCurrent());
     }
 
     super.periodic();

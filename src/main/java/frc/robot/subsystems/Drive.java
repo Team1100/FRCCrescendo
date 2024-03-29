@@ -92,6 +92,16 @@ public class Drive extends SubsystemBase {
   ChassisSpeeds m_limitSpeeds = new ChassisSpeeds();
   double m_driveTime = 0;
 
+  TDNumber m_DLeftFrontCurrentOutput;
+  TDNumber m_DRightFrontCurrentOutput;
+  TDNumber m_DLeftBackCurrentOutput;
+  TDNumber m_DRightBackCurrentOutput;
+
+  TDNumber m_TLeftFrontCurrentOutput;
+  TDNumber m_TRightFrontCurrentOutput;
+  TDNumber m_TLeftBackCurrentOutput;
+  TDNumber m_TRightBackCurrentOutput;
+
   /** Creates a new Drive. */
   private Drive() {
     super("Drive");
@@ -140,6 +150,16 @@ public class Drive extends SubsystemBase {
         },
         this // Reference to this subsystem to set requirements
     );
+
+  m_DLeftFrontCurrentOutput = new TDNumber(this, "Current", "Drive Front Left Output", m_frontLeft.getDriveOutputCurrent());
+  m_DRightFrontCurrentOutput = new TDNumber(this, "Current", "Drive Front Right Output", m_frontRight.getDriveOutputCurrent());
+  m_DLeftBackCurrentOutput = new TDNumber(this, "Current", "Drive Back Left Output", m_rearLeft.getDriveOutputCurrent());
+  m_DRightBackCurrentOutput = new TDNumber(this, "Current", "Drive Back Right Output", m_rearRight.getDriveOutputCurrent());
+
+  m_TLeftFrontCurrentOutput = new TDNumber(this, "Current", "Turning Front Left Output", m_frontLeft.getTurningOutputCurrent());
+  m_TRightFrontCurrentOutput = new TDNumber(this, "Current", "Turning Front Right Output", m_frontRight.getTurningOutputCurrent());
+  m_TLeftBackCurrentOutput = new TDNumber(this, "Current", "Turning Back Left Output", m_rearLeft.getTurningOutputCurrent());
+  m_TRightBackCurrentOutput = new TDNumber(this, "Current", "Turning Back Right Output", m_rearRight.getTurningOutputCurrent());
   }
 
   public static Drive getInstance() {
@@ -393,6 +413,16 @@ public class Drive extends SubsystemBase {
     TDPoseX.set(currentPose.getX());
     TDPoseY.set(currentPose.getY());
     TDPoseAngle.set(currentPose.getRotation().getDegrees());
+
+    m_DLeftFrontCurrentOutput.set(m_frontLeft.getDriveOutputCurrent());
+    m_DRightFrontCurrentOutput.set(m_frontRight.getDriveOutputCurrent());
+    m_DLeftBackCurrentOutput.set(m_rearLeft.getDriveOutputCurrent());
+    m_DRightBackCurrentOutput.set(m_rearRight.getDriveOutputCurrent());
+
+    m_TLeftFrontCurrentOutput.set(m_frontLeft.getTurningOutputCurrent());
+    m_TRightFrontCurrentOutput.set(m_frontRight.getTurningOutputCurrent());
+    m_TLeftBackCurrentOutput.set(m_rearLeft.getTurningOutputCurrent());
+    m_TRightBackCurrentOutput.set(m_rearRight.getTurningOutputCurrent());
   }
   
   public ChassisSpeeds limitRates(ChassisSpeeds commandedSpeeds) {
