@@ -64,7 +64,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "SpinUpShooter"
+                              "name": "SpinUpShooterNoStop"
                             }
                           },
                           {
@@ -87,6 +87,12 @@
                             }
                           },
                           {
+                            "type": "named",
+                            "data": {
+                              "name": "SpinUpShooter"
+                            }
+                          },
+                          {
                             "type": "sequential",
                             "data": {
                               "commands": [
@@ -95,50 +101,64 @@
                                   "data": {
                                     "commands": [
                                       {
-                                        "type": "path",
+                                        "type": "sequential",
                                         "data": {
-                                          "pathName": "Top Subwoofer to Middle 1"
+                                          "commands": [
+                                            {
+                                              "type": "path",
+                                              "data": {
+                                                "pathName": "Top Subwoofer to Middle 1"
+                                              }
+                                            },
+                                            {
+                                              "type": "path",
+                                              "data": {
+                                                "pathName": "Middle 1 to Far Shoot"
+                                              }
+                                            }
+                                          ]
                                         }
                                       },
                                       {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "Consume"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "deadline",
-                                  "data": {
-                                    "commands": [
-                                      {
-                                        "type": "path",
-                                        "data": {
-                                          "pathName": "Middle 1 to Far Shoot"
-                                        }
-                                      },
-                                      {
-                                        "type": "deadline",
+                                        "type": "sequential",
                                         "data": {
                                           "commands": [
                                             {
                                               "type": "wait",
                                               "data": {
-                                                "waitTime": 0.25
+                                                "waitTime": 2.0
                                               }
                                             },
                                             {
-                                              "type": "named",
+                                              "type": "deadline",
                                               "data": {
-                                                "name": "SpinBarrelForward"
-                                              }
-                                            },
-                                            {
-                                              "type": "named",
-                                              "data": {
-                                                "name": "Consume"
+                                                "commands": [
+                                                  {
+                                                    "type": "sequential",
+                                                    "data": {
+                                                      "commands": [
+                                                        {
+                                                          "type": "named",
+                                                          "data": {
+                                                            "name": "SpinBarrelForwardAutoSensorStop"
+                                                          }
+                                                        },
+                                                        {
+                                                          "type": "wait",
+                                                          "data": {
+                                                            "waitTime": 0.5
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  },
+                                                  {
+                                                    "type": "named",
+                                                    "data": {
+                                                      "name": "Consume"
+                                                    }
+                                                  }
+                                                ]
                                               }
                                             }
                                           ]
@@ -177,50 +197,64 @@
                                   "data": {
                                     "commands": [
                                       {
-                                        "type": "path",
+                                        "type": "sequential",
                                         "data": {
-                                          "pathName": "Far Shoot to Middle 2"
+                                          "commands": [
+                                            {
+                                              "type": "path",
+                                              "data": {
+                                                "pathName": "Far Shoot to Middle 2"
+                                              }
+                                            },
+                                            {
+                                              "type": "path",
+                                              "data": {
+                                                "pathName": "Middle 2 to Far Shoot"
+                                              }
+                                            }
+                                          ]
                                         }
                                       },
                                       {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "Consume"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "deadline",
-                                  "data": {
-                                    "commands": [
-                                      {
-                                        "type": "path",
-                                        "data": {
-                                          "pathName": "Middle 2 to Far Shoot"
-                                        }
-                                      },
-                                      {
-                                        "type": "deadline",
+                                        "type": "sequential",
                                         "data": {
                                           "commands": [
                                             {
                                               "type": "wait",
                                               "data": {
-                                                "waitTime": 0.25
+                                                "waitTime": 1.0
                                               }
                                             },
                                             {
-                                              "type": "named",
+                                              "type": "deadline",
                                               "data": {
-                                                "name": "SpinBarrelForward"
-                                              }
-                                            },
-                                            {
-                                              "type": "named",
-                                              "data": {
-                                                "name": "Consume"
+                                                "commands": [
+                                                  {
+                                                    "type": "sequential",
+                                                    "data": {
+                                                      "commands": [
+                                                        {
+                                                          "type": "named",
+                                                          "data": {
+                                                            "name": "SpinBarrelForwardAutoSensorStop"
+                                                          }
+                                                        },
+                                                        {
+                                                          "type": "wait",
+                                                          "data": {
+                                                            "waitTime": 0.5
+                                                          }
+                                                        }
+                                                      ]
+                                                    }
+                                                  },
+                                                  {
+                                                    "type": "named",
+                                                    "data": {
+                                                      "name": "Consume"
+                                                    }
+                                                  }
+                                                ]
                                               }
                                             }
                                           ]
@@ -249,12 +283,6 @@
                                   }
                                 }
                               ]
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "SpinUpShooter"
                             }
                           }
                         ]

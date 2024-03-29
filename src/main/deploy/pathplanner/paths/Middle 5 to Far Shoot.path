@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.6407262992643044,
-        "y": 3.1333192437377244
+        "x": 1.940431306722638,
+        "y": 2.999363341549934
       },
       "prevControl": {
-        "x": 3.956720381634148,
-        "y": 2.1306570857416522
+        "x": 3.2258727388154673,
+        "y": 1.8502566068002833
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "far shoot bot"
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -49.5,
+    "rotation": -57.0,
     "rotateFast": false
   },
   "reversed": false,

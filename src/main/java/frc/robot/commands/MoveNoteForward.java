@@ -15,6 +15,6 @@ import frc.robot.testingdashboard.ParallelCommandGroup;
 public class MoveNoteForward extends ParallelCommandGroup {
   /** Creates a new MoveNoteForward. */
   public MoveNoteForward() {
-    super(Barrel.getInstance(), "ParallelCommands", "MoveNoteForward", new Consume(), new SpinBarrelForward(), new ShooterSlowOut(), new UNScoreAmp(), new MoveLightsYellow());
+    super(Barrel.getInstance(), "ParallelCommands", "MoveNoteForward", new Consume(), new SpinBarrelForward(), new ShooterSlowOut(), new UNScoreAmp());
   }
 }

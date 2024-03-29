@@ -106,6 +106,9 @@ public class AmpAddOn extends SubsystemBase {
 
       m_currentOutput = new TDNumber(Drive.getInstance(), "Current", "Amp Roller Output", m_CanSparkMax.getOutputCurrent());
       m_pivotCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Amp Pivot Output", m_PivotCanSparkMax.getOutputCurrent());
+      
+      m_CanSparkMax.burnFlash();
+      m_PivotCanSparkMax.burnFlash();
     }
   }
 

@@ -81,6 +81,9 @@ public class Shooter extends SubsystemBase {
 
       m_leftCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Shooter Left Output", m_SLeftSparkMax.getOutputCurrent());
       m_rightCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Shooter Right Output", m_SRightSparkMax.getOutputCurrent());
+    
+      m_SLeftSparkMax.burnFlash();
+      m_SRightSparkMax.burnFlash();
     }
   }
 

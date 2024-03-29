@@ -4,18 +4,18 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.commands.AmpAddOn.AmpPivotUp;
-import frc.robot.commands.BarrelPivot.PivotDOWNDOWNDOWN;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Lights.BlinkLights;
 import frc.robot.commands.Lights.MoveLightsGreen;
-import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.SensorMonitor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SensorMonitor.NoteLocation;
 import frc.robot.testingdashboard.Command;
+import frc.robot.testingdashboard.TDNumber;
 import frc.robot.utils.FieldUtils;
 
 public class PrepareToFerry extends Command {
@@ -33,8 +33,6 @@ public class PrepareToFerry extends Command {
   BlinkLights m_blinkLights;
   MoveNoteToBarrel m_moveNoteToBarrel;
   AmpPivotUp m_ampPivotUp;
-  SpinUpShooter m_spinUpShooter;
-  PivotDOWNDOWNDOWN m_pivotDown;
   TargetDrive m_trackAmp;
   MoveLightsGreen m_moveLightsGreen;
 
@@ -42,10 +40,12 @@ public class PrepareToFerry extends Command {
   SensorMonitor m_sensorMonitor;
   BarrelPivot m_barrelPivot;
 
+  TDNumber m_ferryAngle;
+
   private boolean m_isFinished;
   private State m_state;
 
-  /** Creates a new PrepareToShoot. */
+  /** Creates a new PrepareToFerry. */
   public PrepareToFerry() {
     super(Shooter.getInstance(), "", "PrepareToFerry");
 
@@ -57,9 +57,6 @@ public class PrepareToFerry extends Command {
     m_blinkLights = new BlinkLights();
     m_moveNoteToBarrel = new MoveNoteToBarrel();
     m_ampPivotUp = new AmpPivotUp();
-    m_spinUpShooter = new SpinUpShooter();
-    // m_pivotToSpeaker = new PivotToSpeaker();
-    m_pivotDown = new PivotDOWNDOWNDOWN();
     m_trackAmp = new TargetDrive(()->{
         return FieldUtils.getInstance().getAmpPose().toPose2d();
       }, m_oi.getDriveInputs());
@@ -68,6 +65,8 @@ public class PrepareToFerry extends Command {
     m_shooter = Shooter.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
     m_barrelPivot = BarrelPivot.getInstance();
+
+    m_ferryAngle = new TDNumber(m_barrelPivot, "Setpoints", "FerryPosition (degrees)", Constants.BP_FERRY_ANGLE_DEGREES);
   }
 
   // Called when the command is initially scheduled.
@@ -106,14 +105,14 @@ public class PrepareToFerry extends Command {
 
       case PREPARING_TO_SHOOT:
         m_ampPivotUp.schedule();
-        m_spinUpShooter.schedule();
-        m_pivotDown.schedule();
+        m_shooter.setSpeeds(3500, 2500, false);
+        m_barrelPivot.setTargetAngle(m_ferryAngle.get());
         m_trackAmp.schedule();
         m_state = State.WAIT_FOR_PREPARING_TO_SHOOT;
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:
-        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal()) { // && tracking speaker
+        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal() && m_trackAmp.atGoal()) {
           m_blinkLights.cancel();
           m_moveLightsGreen.schedule();
           m_state = State.READY_TO_SHOOT;
@@ -124,11 +123,11 @@ public class PrepareToFerry extends Command {
         if (m_sensorMonitor.determineLocation() == NoteLocation.c_NoNote) {
           m_state = State.DONE;
         }
-        if (!m_barrelPivot.atGoal() && m_moveLightsGreen.isScheduled()) { // && not targeting speaker
+        if ((!m_barrelPivot.atGoal() || !m_trackAmp.atGoal()) && m_moveLightsGreen.isScheduled()) {
           m_moveLightsGreen.cancel();
           m_blinkLights.schedule();
         }
-        else if (m_barrelPivot.atGoal() && m_blinkLights.isScheduled()) { // && targeting speaker
+        else if (m_barrelPivot.atGoal() && m_trackAmp.atGoal() && m_blinkLights.isScheduled()) {
           m_blinkLights.cancel();
           m_moveLightsGreen.schedule();
         }
@@ -146,9 +145,7 @@ public class PrepareToFerry extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (m_spinUpShooter.isScheduled()) {
-      m_spinUpShooter.cancel();
-    }
+    m_shooter.spinStop();
     if (m_blinkLights.isScheduled()) {
       m_blinkLights.cancel();
     }
@@ -157,9 +154,6 @@ public class PrepareToFerry extends Command {
     }
     if (m_ampPivotUp.isScheduled()) {
       m_ampPivotUp.cancel();
-    }
-    if (m_pivotDown.isScheduled()) {
-      m_pivotDown.cancel();
     }
     if (m_trackAmp.isScheduled()) {
       m_trackAmp.cancel();
