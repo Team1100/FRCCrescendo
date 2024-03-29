@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.75,
-        "y": 6.56
+        "x": 8.45,
+        "y": 2.44
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5216890220257315,
-        "y": 6.544065472472582
+        "x": 6.9069095670812946,
+        "y": 0.38952770669479636
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4243070953520323,
-        "y": 6.56
+        "x": 1.940431306722638,
+        "y": 2.999363341549934
       },
       "prevControl": {
-        "x": 1.4343859823909737,
-        "y": 6.563820567295474
+        "x": 2.622104793438532,
+        "y": 2.2982134694993004
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "random shoot"
+      "linkedName": "far shoot bot"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 55.0,
+    "rotation": -57.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Caitlin's CATastrophies",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
