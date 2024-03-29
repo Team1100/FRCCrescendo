@@ -144,9 +144,6 @@ public class SourceIntake extends Command {
     if (m_moveLightsMagenta.isScheduled()) {
       m_moveLightsMagenta.cancel();
     }
-    if (m_moveLightsGreen.isScheduled()) {
-      m_moveLightsGreen.cancel();
-    }
     if (m_spinUpAmpRollers.isScheduled()) {
       m_spinUpAmpRollers.cancel();
     }

@@ -109,9 +109,6 @@ public class GroundIntake extends Command {
     if (m_moveLightsMagenta.isScheduled()) {
       m_moveLightsMagenta.cancel();
     }
-    if(m_moveLightsGreen.isScheduled()) {
-      m_moveLightsGreen.cancel();
-    }
     if(m_wait.isScheduled()) {
       m_wait.cancel();
     }
