@@ -63,8 +63,12 @@ public class Intake extends SubsystemBase {
       m_SparkPIDController.setI(m_intakeI);
       m_SparkPIDController.setD(m_intakeD);
 
+      m_ILeftSparkMax.setSmartCurrentLimit(Constants.INTAKE_CURRENT_LIMIT_AMPS);
       m_leftCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Intake Left Output", m_ILeftSparkMax.getOutputCurrent());
       m_rightCurrentOutput = new TDNumber(Drive.getInstance(), "Current", "Intake Right Output", m_IRightSparkMax.getOutputCurrent());
+    
+      m_ILeftSparkMax.burnFlash();
+      m_IRightSparkMax.burnFlash();
     }
   }
 

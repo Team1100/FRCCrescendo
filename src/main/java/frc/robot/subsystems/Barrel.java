@@ -57,6 +57,8 @@ public class Barrel extends SubsystemBase {
       m_SparkPIDController.setD(m_rollerD);
 
       m_currentOutput = new TDNumber(Drive.getInstance(), "Current", "Barrel Output", m_CanSparkMax.getOutputCurrent());
+
+      m_CanSparkMax.burnFlash();
     }
   }
 
