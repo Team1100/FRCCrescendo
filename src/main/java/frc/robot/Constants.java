@@ -57,7 +57,7 @@ public final class Constants {
     public static final double kAPivotToleranceDegrees = 5;
     public static final double kAPivotIntakePositionDegrees = 80;
     public static final double kAPivotUpPositionDegrees = 290;
-    public static final double kAPivotDeliverAmpPositionDegrees = 195.1;
+    public static final double kAPivotDeliverAmpPositionDegrees = 197;
     
     public static final double A_ANGLE_INCREMENT_DEGREES = 1.5;
     public static final double kADeadband = 0.05;
@@ -93,10 +93,11 @@ public final class Constants {
     public static final double BP_ANGLE_OFFSET_TO_HORIZONTAL_DEGREES = 70;
     public static final double BP_ANGLE_TOLERANCE_DEGREES = 3;
     public static final double BP_SPEAKER_TOLERANCE_DEGREES = 1;
-    public static final double BP_SOURCE_ANGLE_DEGREES = 105;
+    public static final double BP_SOURCE_ANGLE_DEGREES = 107.5;
     public static final double BP_AMP_SCORING_ANGLE_DEGREES = 100;
     public static final double BP_SHOOTER_SCORING_ANGLE_DEGREES = 120.7;
     public static final double BP_DOWN_ANGLE_DEGREES = 81;
+    public static final double BP_FERRY_ANGLE_DEGREES = 110;
 
     // Defines Drive constants
     public static final double D_ANGLE_TOLERANCE_DEGREES = 2.5;
@@ -136,7 +137,7 @@ public final class Constants {
          new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
          Constants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
          Constants.kBaseRadius, // Drive base radius in meters
-         new ReplanningConfig()); // Default path replanning config. See the API for the options here
+         new ReplanningConfig(true, true)); // Default path replanning config. See the API for the options here
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
@@ -213,6 +214,8 @@ public final class Constants {
     public static final double kIntakeSpeed = 0.6;
     public static final double INTAKE_SPEED_RPM = 3000;
 
+    public static final int INTAKE_CURRENT_LIMIT_AMPS = 100;
+
     // Defines Lights constants
     public static final int LED_LENGTH = 42; // number of LEDs
 
@@ -237,6 +240,10 @@ public final class Constants {
     public static final Transform3d kRobotToCam =
             new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
                 new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180)));
+    public static final Transform3d kRobotToCamIntakeSide =
+    // determine x and z transformatons
+            new Transform3d(new Translation3d(Units.inchesToMeters(0), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
+                new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)));
 
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
@@ -247,10 +254,10 @@ public final class Constants {
     public static final double SPEAKER_ADJUSTMENT_INCREMENT_M = 0.05;
 
     // TODO: Determine & test these Poses on a real field
-    // Most of these are simulation guesses, aside from kAmpScoreBluePose
+    // Most of these are simulation guesses, aside from kAmpScoreBluePose and kAmpScoreRedPose
     public static final Pose2d kSource1RedPose = new Pose2d(0.71, 1.45, new Rotation2d(Units.degreesToRadians(-120)));
     public static final Pose2d kSource3RedPose = new Pose2d(1.78, 0.87, new Rotation2d(Units.degreesToRadians(-120)));
-    public static final Pose2d kAmpScoreRedPose = new Pose2d(14.75, 7.6, new Rotation2d(Math.PI / 2));
+    public static final Pose2d kAmpScoreRedPose = new Pose2d(14.687441, 7.56, new Rotation2d(-Math.PI / 2));
     public static final Pose2d kSpeakerScoreRedPose = new Pose2d();
 
     public static final Pose2d kSource1BluePose = new Pose2d(16, 1.47, new Rotation2d(Units.degreesToRadians(-60)));
