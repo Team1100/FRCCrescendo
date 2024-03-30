@@ -30,7 +30,7 @@ public class VisionSystem {
 
     public VisionSystem(VisionConfig config) {
         m_camera = new PhotonCamera(config.cameraName);
-        m_photonEstimator = new PhotonPoseEstimator(Constants.kTagLayout, config.primaryStrategy, config.cameraPosition);
+        m_photonEstimator = new PhotonPoseEstimator(Constants.kTagLayout, config.primaryStrategy, m_camera, config.cameraPosition);
         if((config.primaryStrategy == PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR) ||
             (config.primaryStrategy == PoseStrategy.MULTI_TAG_PNP_ON_RIO)) {
             m_photonEstimator.setMultiTagFallbackStrategy(config.fallBackStrategy);
@@ -64,8 +64,8 @@ public class VisionSystem {
                 }
 
                 if(valid) {
-                    return Optional.of(new VisionEstimationResult(est.estimatedPose, latestTimestamp, ambiguity, 
-                                                                    getEstimationStdDevs(est.estimatedPose.toPose2d())));
+                    Matrix<N3,N1> stdDevs = getEstimationStdDevs(est.estimatedPose.toPose2d());
+                    return Optional.of(new VisionEstimationResult(est.estimatedPose, latestTimestamp, ambiguity, stdDevs));
                 }
             }
         }

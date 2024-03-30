@@ -21,7 +21,6 @@ public class Vision extends SubsystemBase {
 
   private static Vision m_vision;
   private ArrayList<VisionSystem> m_visionSystems;
-  private double m_lastEstTime;
 
   private TDNumber m_estX;
   private TDNumber m_estY;
@@ -33,7 +32,7 @@ public class Vision extends SubsystemBase {
     super("Vision");
     m_visionSystems = new ArrayList<VisionSystem>();
     if(RobotMap.V_ENABLED){
-      
+      m_visionSystems.ensureCapacity(Constants.kVisionSystems.length);
       for(VisionConfig config : Constants.kVisionSystems) {
         VisionSystem system = new VisionSystem(config);
         m_visionSystems.add(system);
@@ -76,7 +75,7 @@ public class Vision extends SubsystemBase {
         est -> {
           Pose2d estPose = est.estimatedPose.toPose2d();
 
-          robotDrive.addVisionMeasurement(estPose, m_lastEstTime, est.stdDevs);
+          robotDrive.addVisionMeasurement(estPose, est.timestamp, est.stdDevs);
 
           m_estX.set(estPose.getX());
           m_estY.set(estPose.getY());

@@ -82,6 +82,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -108,11 +110,15 @@ public class RobotContainer {
   private final BarrelPivot m_barrelPivot;
   private final AmpAddOn m_ampAddOn;
   private final SendableChooser<Command> m_autoChooser;
+  private PowerDistribution m_pdBoard;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // load configuration
     RobotMap.init();
+
+    m_pdBoard = new PowerDistribution(1, ModuleType.kRev);
+    m_pdBoard.setSwitchableChannel(true);
 
     m_oi = OI.getInstance();
 
