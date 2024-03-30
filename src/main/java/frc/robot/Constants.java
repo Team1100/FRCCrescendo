@@ -288,7 +288,7 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = 4*Math.PI;
 
     //Autonomous control rate limits(Driver control limits are applied after so should be <=)
-    public static final double kAutoMaxAccelerationMpSS = 2.5;
+    public static final double kAutoMaxAccelerationMpSS = 3;
     public static final double kAutoMaxSpeedMpS = 3.5;
     public static final double kAutoMaxAngularAccelRpSS = 2 * Math.PI;
     public static final double kAutoMaxAngularSpeedRpS = Math.PI;
