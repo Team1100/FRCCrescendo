@@ -130,13 +130,13 @@ public class VisionSystem {
             return false;
         }
         
-        double timeSinceLastEstimate = estPose.timestampSeconds - m_lastEstTime;
-        double maxPossibleMovement = timeSinceLastEstimate * Constants.kMaxSpeedMetersPerSecond;
+        // double timeSinceLastEstimate = estPose.timestampSeconds - m_lastEstTime;
+        // double maxPossibleMovement = timeSinceLastEstimate * Constants.kMaxSpeedMetersPerSecond;
 
-        double distanceFromLastEstimate = estPose.estimatedPose.getTranslation().getDistance(m_lastResult.estimatedPose.getTranslation());
-        if(distanceFromLastEstimate > maxPossibleMovement) {
-            return false;
-        }
+        // double distanceFromLastEstimate = estPose.estimatedPose.getTranslation().getDistance(m_lastResult.estimatedPose.getTranslation());
+        // if(distanceFromLastEstimate > maxPossibleMovement) {
+        //     return false;
+        // }
 
         return true;
     }
