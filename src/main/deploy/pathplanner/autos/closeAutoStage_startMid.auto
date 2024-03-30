@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0,
+      "x": 1.15,
       "y": 5.56
     },
     "rotation": 0.0
@@ -15,6 +15,12 @@
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "EnablePoseUpdates"
+                }
+              },
               {
                 "type": "named",
                 "data": {

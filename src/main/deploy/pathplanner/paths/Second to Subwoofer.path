@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.0,
+        "x": 1.15,
         "y": 5.56
       },
       "prevControl": {
-        "x": 1.5,
+        "x": 1.65,
         "y": 5.56
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "subwoofer"
     }
   ],
   "rotationTargets": [],
