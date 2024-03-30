@@ -249,7 +249,7 @@ public final class Constants {
                          PoseStrategy.LOWEST_AMBIGUITY),
         new VisionConfig("Forward_Facing_Arducam_OV9281",
                          new Transform3d(new Translation3d(Units.inchesToMeters(16), Units.inchesToMeters(0.5), Units.inchesToMeters(21.5)), 
-                new Rotation3d(Math.PI, Units.degreesToRadians(20), Units.degreesToRadians(0))),
+                new Rotation3d(0, Units.degreesToRadians(20), Units.degreesToRadians(0))),
                          PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, 
                          PoseStrategy.LOWEST_AMBIGUITY)
     };
