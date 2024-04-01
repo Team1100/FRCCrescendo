@@ -34,12 +34,6 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "Consume"
-                }
-              },
-              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -131,9 +125,48 @@
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "deadline",
                             "data": {
-                              "name": "SpinBarrelForwardAutoSensorStop"
+                              "commands": [
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "SpinBarrelForwardAutoSensorStop"
+                                        }
+                                      },
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.2
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.7
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "Consume"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -153,6 +186,12 @@
                             "type": "named",
                             "data": {
                               "name": "SpinBarrelForward"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Consume"
                             }
                           }
                         ]
@@ -208,9 +247,48 @@
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "deadline",
                             "data": {
-                              "name": "SpinBarrelForwardAutoSensorStop"
+                              "commands": [
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "SpinBarrelForwardAutoSensorStop"
+                                        }
+                                      },
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.2
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.4
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "Consume"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -230,6 +308,12 @@
                             "type": "named",
                             "data": {
                               "name": "SpinBarrelForward"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Consume"
                             }
                           }
                         ]
@@ -285,18 +369,70 @@
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "deadline",
                             "data": {
-                              "name": "SpinBarrelForwardAutoSensorStop"
+                              "commands": [
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "SpinBarrelForwardAutoSensorStop"
+                                        }
+                                      },
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.2
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "sequential",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.7
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "Consume"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "parallel",
                       "data": {
-                        "name": "SpinBarrelForward"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SpinBarrelForward"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Consume"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
