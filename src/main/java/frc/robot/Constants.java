@@ -65,7 +65,7 @@ public final class Constants {
     public static final double kAPivotUpPositionDegrees = 290;
     public static final double kAPivotDeliverAmpPositionDegrees = 197;
     
-    public static final double A_ANGLE_INCREMENT_DEGREES = 1.5;
+    public static final double A_ANGLE_INCREMENT_DEGREES = 2;
     public static final double kADeadband = 0.05;
 
     // Defines Barrel constants
