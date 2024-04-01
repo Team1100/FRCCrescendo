@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Sensors.ToggleSensorsOnOff;
+import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TDNumber;
@@ -93,6 +94,8 @@ public class OI {
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToFerry());
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
+
+    new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new SpinUpShooter());
     
     // Drive to locations on the field
     new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getAmpScorePose));
