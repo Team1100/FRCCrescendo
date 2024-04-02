@@ -5,8 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.OI;
-import frc.robot.commands.AmpAddOn.AmpPivotUp;
-import frc.robot.commands.BarrelPivot.PivotToSpeaker;
+import frc.robot.subsystems.AmpAddOn;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.commands.Drive.TargetDrive;
 import frc.robot.commands.Lights.BlinkLights;
@@ -33,15 +32,14 @@ public class PrepareToShoot extends Command {
   // TODO: implement commands
   BlinkLights m_blinkLights;
   MoveNoteToBarrel m_moveNoteToBarrel;
-  AmpPivotUp m_ampPivotUp;
   SpinUpShooter m_spinUpShooter;
-  PivotToSpeaker m_pivotToSpeaker;
   TargetDrive m_trackSpeaker;
   MoveLightsGreen m_moveLightsGreen;
 
   Shooter m_shooter;
   SensorMonitor m_sensorMonitor;
   BarrelPivot m_barrelPivot;
+  AmpAddOn m_AmpAddOn;
 
   private boolean m_isFinished;
   private State m_state;
@@ -57,9 +55,7 @@ public class PrepareToShoot extends Command {
 
     m_blinkLights = new BlinkLights();
     m_moveNoteToBarrel = new MoveNoteToBarrel();
-    m_ampPivotUp = new AmpPivotUp();
     m_spinUpShooter = new SpinUpShooter();
-    m_pivotToSpeaker = new PivotToSpeaker();
     m_trackSpeaker = new TargetDrive(()->{
         return FieldUtils.getInstance().getSpeakerPose().toPose2d();
       }, m_oi.getDriveInputs());
@@ -68,6 +64,7 @@ public class PrepareToShoot extends Command {
     m_shooter = Shooter.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
     m_barrelPivot = BarrelPivot.getInstance();
+    m_AmpAddOn = AmpAddOn.getInstance();
   }
 
   // Called when the command is initially scheduled.
@@ -105,15 +102,13 @@ public class PrepareToShoot extends Command {
         break;
 
       case PREPARING_TO_SHOOT:
-        m_ampPivotUp.schedule();
         m_spinUpShooter.schedule();
-        m_pivotToSpeaker.schedule();
         m_trackSpeaker.schedule();
         m_state = State.WAIT_FOR_PREPARING_TO_SHOOT;
         break;
 
       case WAIT_FOR_PREPARING_TO_SHOOT:
-        if (m_ampPivotUp.isFinished() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal() && m_trackSpeaker.atGoal()) {
+        if (m_AmpAddOn.pivotUp() && m_shooter.isAtSetSpeed() && m_barrelPivot.atGoal() && m_trackSpeaker.atGoal()) {
           m_blinkLights.cancel();
           m_moveLightsGreen.schedule();
           m_state = State.READY_TO_SHOOT;
@@ -154,12 +149,6 @@ public class PrepareToShoot extends Command {
     }
     if (m_moveNoteToBarrel.isScheduled()) {
       m_moveNoteToBarrel.cancel();
-    }
-    if (m_ampPivotUp.isScheduled()) {
-      m_ampPivotUp.cancel();
-    }
-    if (m_pivotToSpeaker.isScheduled()) {
-      m_pivotToSpeaker.cancel();
     }
     if (m_trackSpeaker.isScheduled()) {
       m_trackSpeaker.cancel();

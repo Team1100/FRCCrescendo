@@ -39,7 +39,9 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.ShootSpeaker;
 import frc.robot.commands.SourceIntake;
 import frc.robot.commands.AmpAddOn.AmpPivotToIntake;
+import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.BarrelPivot.PivotDOWNDOWNDOWN;
+import frc.robot.commands.BarrelPivot.PivotToSpeaker;
 import frc.robot.commands.Drive.DriveToPose;
 
 /**
@@ -90,9 +92,11 @@ public class OI {
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
 
-    // Driver Mapping
+    // Driver Grease Man's Special Abilities(OP)
     new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
     new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToFerry());
+    new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new PivotToSpeaker());
+    new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new AmpPivotUp());
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
 
     new Trigger(()->{return (m_DriverXboxController.getLeftTriggerAxis() > 0.5);}).whileTrue(new SpinUpShooter());
@@ -103,7 +107,7 @@ public class OI {
     // new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource3Pose));
     // new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSpeakerScorePose));
 
-    // Operator Mapping
+    // Operator Cookie Monster Special Abilities(MEGA OP)
     new JoystickButton(m_OperatorXboxController, Button.kB.value).whileTrue(new SourceIntake());
     new JoystickButton(m_OperatorXboxController, Button.kA.value).whileTrue(new MoveNoteForward());
     new JoystickButton(m_OperatorXboxController, Button.kX.value).whileTrue(new GroundIntake());
