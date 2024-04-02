@@ -119,7 +119,7 @@ public class RobotMap {
   public static int BP_MOTOR_RIGHT = RoboRioMap.CAN_14;
 
   //[D]rive
-  public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_1;
+  public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_18;
   public static int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_5;
   public static int D_FRONT_RIGHT_DRIVE = RoboRioMap.CAN_3;
   public static int D_BACK_RIGHT_DRIVE = RoboRioMap.CAN_7;
@@ -132,7 +132,7 @@ public class RobotMap {
   //[E]levator
   // TODO: determine CAN IDs
   public static boolean E_ELEVATOR_ENABLED = false;
-  public static int E_MOTOR_LEFT = RoboRioMap.CAN_18;
+  public static int E_MOTOR_LEFT = RoboRioMap.CAN_20;
   public static int E_MOTOR_RIGHT = RoboRioMap.CAN_19;
 
   //[I]ntake

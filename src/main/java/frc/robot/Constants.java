@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -24,6 +28,8 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+
+import frc.robot.utils.vision.VisionConfig;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -59,7 +65,7 @@ public final class Constants {
     public static final double kAPivotUpPositionDegrees = 290;
     public static final double kAPivotDeliverAmpPositionDegrees = 197;
     
-    public static final double A_ANGLE_INCREMENT_DEGREES = 1.5;
+    public static final double A_ANGLE_INCREMENT_DEGREES = 2;
     public static final double kADeadband = 0.05;
 
     // Defines Barrel constants
@@ -234,16 +240,22 @@ public final class Constants {
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 500;
 
-    // Vision Constants
-    public static final String kCameraName = "Arducam_OV9281_USB_Camera";
-    // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
-    public static final Transform3d kRobotToCam =
-            new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
-                new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180)));
-    public static final Transform3d kRobotToCamIntakeSide =
-    // determine x and z transformatons
-            new Transform3d(new Translation3d(Units.inchesToMeters(0), Units.inchesToMeters(0.5), Units.inchesToMeters(21)), 
-                new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)));
+
+    public static final VisionConfig[] kVisionSystems = {
+        new VisionConfig("Arducam_OV9281_USB_Camera",
+                         new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(24)), 
+                                new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180))),
+                         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                         PoseStrategy.LOWEST_AMBIGUITY),
+        new VisionConfig("Forward_Facing_Arducam_OV9281",
+                         new Transform3d(new Translation3d(Units.inchesToMeters(16), Units.inchesToMeters(0.5), Units.inchesToMeters(21.5)), 
+                new Rotation3d(0, Units.degreesToRadians(20), Units.degreesToRadians(0))),
+                         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, 
+                         PoseStrategy.LOWEST_AMBIGUITY)
+    };
+
+    //Maximum ambiguity accepted as a valid result from the vision systems
+    public static final double kMaxValidAmbiguity = 1.0;
 
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
@@ -276,7 +288,7 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = 4*Math.PI;
 
     //Autonomous control rate limits(Driver control limits are applied after so should be <=)
-    public static final double kAutoMaxAccelerationMpSS = 2.5;
+    public static final double kAutoMaxAccelerationMpSS = 3;
     public static final double kAutoMaxSpeedMpS = 3.5;
     public static final double kAutoMaxAngularAccelRpSS = 2 * Math.PI;
     public static final double kAutoMaxAngularSpeedRpS = Math.PI;
