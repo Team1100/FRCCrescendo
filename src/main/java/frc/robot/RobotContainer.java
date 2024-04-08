@@ -35,6 +35,7 @@ import frc.robot.commands.BarrelPivot.AlignWithSource;
 import frc.robot.commands.BarrelPivot.PivotDOWNDOWNDOWN;
 import frc.robot.commands.BarrelPivot.PivotDownwards;
 import frc.robot.commands.BarrelPivot.PivotRelativeAngleControl;
+import frc.robot.commands.BarrelPivot.PivotToSpeaker;
 import frc.robot.commands.BarrelPivot.PivotUpwards;
 import frc.robot.commands.BarrelPivot.SetZeroAsCurrentPosition;
 import frc.robot.commands.BarrelPivot.ResetTargetAngle;
@@ -191,6 +192,7 @@ public class RobotContainer {
     new PivotUpwards();
     new PivotDOWNDOWNDOWN();
     new PivotDownwards();
+    new PivotToSpeaker();
 
     // Elevator commands
     new Climb();
