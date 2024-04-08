@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.commands.Barrel.SpinBarrelForward;
+import frc.robot.commands.Intake.Consume;
 import frc.robot.commands.Lights.MoveLightsPurple;
 import frc.robot.subsystems.SensorMonitor;
 import frc.robot.subsystems.SensorMonitor.NoteLocation;
@@ -20,6 +21,7 @@ public class ShootSpeaker extends Command {
 
   MoveLightsPurple m_MoveLightsPurple;
   SpinBarrelForward m_spinBarrelForward;
+  Consume m_consume;
   
   Shooter m_shooter;
   SensorMonitor m_sensorMonitor;
@@ -36,6 +38,7 @@ public class ShootSpeaker extends Command {
 
     m_MoveLightsPurple = new MoveLightsPurple();
     m_spinBarrelForward = new SpinBarrelForward();
+    m_consume = new Consume();
 
     m_shooter = Shooter.getInstance();
     m_sensorMonitor = SensorMonitor.getInstance();
@@ -56,6 +59,7 @@ public class ShootSpeaker extends Command {
         // if (m_shooter.isAtSetSpeed()) {
           m_MoveLightsPurple.schedule();
           m_spinBarrelForward.schedule();
+          m_consume.schedule();
           m_state = State.WAIT_FOR_RELEASE;
         // }
         break;
@@ -83,6 +87,9 @@ public class ShootSpeaker extends Command {
     }
     if (m_MoveLightsPurple.isScheduled()) {
       m_MoveLightsPurple.cancel();
+    }
+    if (m_consume.isScheduled()) {
+      m_consume.cancel();
     }
   }
 

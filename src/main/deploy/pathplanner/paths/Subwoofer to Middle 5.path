@@ -8,36 +8,52 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8287296807672502,
-        "y": 5.493753074020143
+        "x": 1.5248307100172926,
+        "y": 4.255590195640653
       },
       "isLocked": false,
       "linkedName": "subwoofer"
     },
     {
       "anchor": {
-        "x": 2.0453956429541362,
-        "y": 4.1
+        "x": 4.686601638920953,
+        "y": 1.6262781754507767
       },
       "prevControl": {
-        "x": 1.4813981790813457,
-        "y": 4.198647786608551
+        "x": 3.3405009303657285,
+        "y": 1.7337699815348742
       },
       "nextControl": {
-        "x": 2.1439002245717966,
-        "y": 4.082770739994718
+        "x": 6.043124010345291,
+        "y": 1.5179541557313392
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.7,
-        "y": 4.1
+        "x": 7.6,
+        "y": 2.4
       },
       "prevControl": {
-        "x": 2.6,
-        "y": 4.1
+        "x": 7.225816792600507,
+        "y": 2.3164448201669927
+      },
+      "nextControl": {
+        "x": 7.697596375754702,
+        "y": 2.4217932888648517
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.280700937992206,
+        "y": 2.423100215157174
+      },
+      "prevControl": {
+        "x": 8.180700937992206,
+        "y": 2.423100215157174
       },
       "nextControl": null,
       "isLocked": false,
@@ -54,12 +70,12 @@
     "maxAngularAcceleration": 180.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0.0,
+    "velocity": 0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Caitlin's CATastrophies",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

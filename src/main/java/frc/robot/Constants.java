@@ -91,7 +91,7 @@ public final class Constants {
 
     public static final double kBPEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
 
-    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.5;
+    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.25;
     public static final double kBPDeadband = 0.05;
 
     public static final double BP_SPEED = 0.1;
@@ -240,22 +240,22 @@ public final class Constants {
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
     public static final double SHOOTER_INTAKING_SPEED_RPM = 500;
 
-
+    // TODO: accurately test & remeasure these constants
     public static final VisionConfig[] kVisionSystems = {
         new VisionConfig("Arducam_OV9281_USB_Camera",
-                         new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(0.5), Units.inchesToMeters(24)), 
+                         new Transform3d(new Translation3d(Units.inchesToMeters(11.5), Units.inchesToMeters(0.5), Units.inchesToMeters(20.5)), 
                                 new Rotation3d(0, Units.degreesToRadians(-30), Units.degreesToRadians(180))),
                          PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
                          PoseStrategy.LOWEST_AMBIGUITY),
         new VisionConfig("Forward_Facing_Arducam_OV9281",
-                         new Transform3d(new Translation3d(Units.inchesToMeters(16), Units.inchesToMeters(0.5), Units.inchesToMeters(21.5)), 
+                         new Transform3d(new Translation3d(Units.inchesToMeters(15.5), Units.inchesToMeters(0.5), Units.inchesToMeters(21.5)), 
                 new Rotation3d(0, Units.degreesToRadians(20), Units.degreesToRadians(0))),
                          PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, 
                          PoseStrategy.LOWEST_AMBIGUITY)
     };
 
     //Maximum ambiguity accepted as a valid result from the vision systems
-    public static final double kMaxValidAmbiguity = 1.0;
+    public static final double kMaxValidAmbiguity = 0.2;
 
     // The layout of the AprilTags on the field
     public static final AprilTagFieldLayout kTagLayout =
