@@ -108,8 +108,8 @@ public final class Constants {
     // Defines Drive constants
     public static final double D_ANGLE_TOLERANCE_DEGREES = 2.5;
 
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
-    public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
+    public static final double kMaxSpeedMetersPerSecond = 4.8/2;
+    public static final double kMaxAngularSpeed = 2 * Math.PI/2; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
     public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
@@ -217,7 +217,7 @@ public final class Constants {
     public static final double kIntakeI = 0.000001;
     public static final double kIntakeD = 0.003600;
 
-    public static final double kIntakeSpeed = 0.6;
+    public static final double kIntakeSpeed = 0.5;
     public static final double INTAKE_SPEED_RPM = 3000;
 
     public static final int INTAKE_CURRENT_LIMIT_AMPS = 100;
@@ -233,8 +233,8 @@ public final class Constants {
 
     public static final double LEFT_SHOOTER_SPEED = 0.40;
     public static final double RIGHT_SHOOTER_SPEED = 0.70;
-    public static final double LEFT_SHOOTER_SPEED_RPM = 3500;
-    public static final double RIGHT_SHOOTER_SPEED_RPM = 4700;
+    public static final double LEFT_SHOOTER_SPEED_RPM = 2000;
+    public static final double RIGHT_SHOOTER_SPEED_RPM = 2000;
     public static final double SHOOTER_SPEED_TOLERANCE = 500; // RPM Diff
 
     public static final double SHOOTER_INTAKING_SPEED = 0.2;
