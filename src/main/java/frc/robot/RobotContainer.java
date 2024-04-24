@@ -145,7 +145,7 @@ public class RobotContainer {
     m_intake = Intake.getInstance();
 
     m_lights = Lights.getInstance();
-    m_lights.setDefaultCommand(new MoveLightsBlue());
+    m_lights.setDefaultCommand(new MoveLightsColor());
 
     m_shooter = Shooter.getInstance();
 

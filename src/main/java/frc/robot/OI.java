@@ -21,9 +21,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Sensors.ResetAllSensors;
 import frc.robot.commands.Sensors.ToggleSensorsOnOff;
+import frc.robot.commands.Shooter.ShootSlower;
 import frc.robot.commands.Shooter.SpinUpShooter;
 import frc.robot.subsystems.BarrelPivot;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Lights;
 import frc.robot.testingdashboard.TDNumber;
 import frc.robot.utils.FieldUtils;
 import frc.robot.utils.SwerveDriveInputs;
@@ -43,6 +45,7 @@ import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.BarrelPivot.PivotDOWNDOWNDOWN;
 import frc.robot.commands.BarrelPivot.PivotToSpeaker;
 import frc.robot.commands.Drive.DriveToPose;
+import frc.robot.commands.Drive.TargetDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -53,6 +56,7 @@ public class OI {
 
   private static XboxController m_DriverXboxController;
   private static XboxController m_OperatorXboxController;
+  private static XboxController m_DemoXboxController;
 
   private SwerveDriveInputs m_driveInputs;
 
@@ -72,6 +76,7 @@ public class OI {
     // TODO: Tune deadband
     m_DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER);
     m_OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER);
+    m_DemoXboxController = new XboxController(RobotMap.U_DEMO_XBOX_CONTROLLER);
 
     // Set up drive translation and rotation inputs
     XboxController driveController = m_DriverXboxController;
@@ -93,16 +98,32 @@ public class OI {
     ////////////////////////////////////////////////////
     
     // Driver Grease Man's Special Abilities(OP)
-    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
-    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToFerry());
-    new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new PivotToSpeaker());
-    new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new AmpPivotUp());
+    //new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShoot());
+    //new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToFerry());
+    //new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new PivotToSpeaker());
+    //new Trigger(()->{return (m_DriverXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new AmpPivotUp());
     new JoystickButton(m_DriverXboxController, Button.kBack.value).onTrue(new InstantCommand(()->Drive.getInstance().zeroHeading()));
 
-    new Trigger(()->{return (m_DriverXboxController.getLeftTriggerAxis() > 0.5);}).whileTrue(new SpinUpShooter());
+    new JoystickButton(m_DriverXboxController, Button.kLeftBumper.value).onTrue(new InstantCommand(()->{
+      TDNumber hue = new TDNumber(Lights.getInstance(), "Basic", "hue");
+      hue.set((hue.get() - 20 + 180) % 180);
+    }));
+
+    new JoystickButton(m_DriverXboxController, Button.kRightBumper.value).onTrue(new InstantCommand(()->{
+      TDNumber hue = new TDNumber(Lights.getInstance(), "Basic", "hue");
+      hue.set((hue.get() + 20) % 180);
+    }));
+
+    new JoystickButton(m_DriverXboxController, Button.kY.value).toggleOnTrue(
+      new TargetDrive(() -> {
+        return FieldUtils.getInstance().getAmpPose().toPose2d();
+      }, m_oi.getDriveInputs())
+    );
+
+    //new Trigger(()->{return (m_DriverXboxController.getLeftTriggerAxis() > 0.5);}).whileTrue(new SpinUpShooter());
     
     // Drive to locations on the field
-    new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getAmpScorePose));
+    //new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getAmpScorePose));
     // new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource1Pose));
     // new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource3Pose));
     // new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSpeakerScorePose));
@@ -117,7 +138,7 @@ public class OI {
     new JoystickButton(m_OperatorXboxController, Button.kStart.value).whileTrue(new PivotDOWNDOWNDOWN());
     new JoystickButton(m_OperatorXboxController, Button.kStart.value).whileTrue(new AmpPivotToIntake());
 
-    new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new PrepareToShootClose());
+    new JoystickButton(m_OperatorXboxController, Button.kRightBumper.value).whileTrue(new SpinUpShooter());
     new Trigger(()->{return (m_OperatorXboxController.getRightTriggerAxis() > 0.5);}).whileTrue(new ShootSpeaker());
 
     new JoystickButton(m_OperatorXboxController, Button.kLeftBumper.value).whileTrue(new PrepareToAmp());
@@ -132,6 +153,20 @@ public class OI {
       TDNumber speakerHeightOffset = new TDNumber(BarrelPivot.getInstance(), "Auto Pivot", "Speaker Height Offset (meters)");
       speakerHeightOffset.set(speakerHeightOffset.get() - Constants.SPEAKER_ADJUSTMENT_INCREMENT_M);
     }));
+
+    // Demo Operator Controller (NOT OP = BORING)
+    new JoystickButton(m_DemoXboxController, Button.kB.value).onTrue(new Shoot());
+    new JoystickButton(m_DemoXboxController, Button.kX.value).whileTrue(new GroundIntake());
+    new JoystickButton(m_DemoXboxController, Button.kLeftBumper.value).onTrue(new InstantCommand(()->{
+      TDNumber hue = new TDNumber(Lights.getInstance(), "Basic", "hue");
+      hue.set((hue.get() - 20 + 180) % 180);
+    }));
+
+    new JoystickButton(m_DemoXboxController, Button.kRightBumper.value).onTrue(new InstantCommand(()->{
+      TDNumber hue = new TDNumber(Lights.getInstance(), "Basic", "hue");
+      hue.set((hue.get() + 20) % 180);
+    }));
+    new JoystickButton(m_DemoXboxController, Button.kY.value).whileTrue(new MoveNoteBackward());
   }
 
   /**
@@ -144,6 +179,10 @@ public class OI {
 
   public XboxController getOperatorXboxController() {
     return m_OperatorXboxController;
+  }
+
+  public XboxController getDemoXboxController() {
+    return m_DemoXboxController;
   }
 
   public SwerveDriveInputs getDriveInputs() {
