@@ -67,23 +67,25 @@ public class Vision extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(getPoseUpdatesEnabled()){
-      Drive robotDrive = Drive.getInstance();
+    if (RobotMap.V_ENABLED) {
+      if(getPoseUpdatesEnabled()){
+        Drive robotDrive = Drive.getInstance();
 
-      var newest = getEstimatedGlobalPose();
-      newest.ifPresent(
-        est -> {
-          Pose2d estPose = est.estimatedPose.toPose2d();
+        var newest = getEstimatedGlobalPose();
+        newest.ifPresent(
+          est -> {
+            Pose2d estPose = est.estimatedPose.toPose2d();
 
-          robotDrive.addVisionMeasurement(estPose, est.timestamp, est.stdDevs);
+            robotDrive.addVisionMeasurement(estPose, est.timestamp, est.stdDevs);
 
-          m_estX.set(estPose.getX());
-          m_estY.set(estPose.getY());
-          m_estRot.set(estPose.getRotation().getDegrees());
-        }
-      );
+            m_estX.set(estPose.getX());
+            m_estY.set(estPose.getY());
+            m_estRot.set(estPose.getRotation().getDegrees());
+          }
+        );
+      }
+      super.periodic();
     }
-    super.periodic();
   }
 
   public Optional<VisionEstimationResult> getEstimatedGlobalPose() {

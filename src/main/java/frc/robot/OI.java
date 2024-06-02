@@ -43,6 +43,7 @@ import frc.robot.commands.AmpAddOn.AmpPivotUp;
 import frc.robot.commands.BarrelPivot.PivotDOWNDOWNDOWN;
 import frc.robot.commands.BarrelPivot.PivotToSpeaker;
 import frc.robot.commands.Drive.DriveToPose;
+import frc.robot.commands.Drive.SetX;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -103,6 +104,7 @@ public class OI {
     
     // Drive to locations on the field
     new JoystickButton(m_DriverXboxController, Button.kA.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getAmpScorePose));
+    new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new SetX());
     // new JoystickButton(m_DriverXboxController, Button.kX.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource1Pose));
     // new JoystickButton(m_DriverXboxController, Button.kB.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSource3Pose));
     // new JoystickButton(m_DriverXboxController, Button.kY.value).whileTrue(new DriveToPose(FieldUtils.getInstance()::getSpeakerScorePose));
