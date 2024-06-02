@@ -61,9 +61,9 @@ public final class Constants {
     public static final double kAPivotUpperLimitDegrees = 300;
     public static final double kAPivotLowerLimitDegrees = 70;
     public static final double kAPivotToleranceDegrees = 5;
-    public static final double kAPivotIntakePositionDegrees = 80;
+    public static final double kAPivotIntakePositionDegrees = 100; // 100
     public static final double kAPivotUpPositionDegrees = 290;
-    public static final double kAPivotDeliverAmpPositionDegrees = 197;
+    public static final double kAPivotDeliverAmpPositionDegrees = 217;
     
     public static final double A_ANGLE_INCREMENT_DEGREES = 2;
     public static final double kADeadband = 0.05;
@@ -91,7 +91,7 @@ public final class Constants {
 
     public static final double kBPEncoderPositionFactorDegrees = DEGREES_PER_REVOLUTION;
 
-    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.25;
+    public static final double BP_ANGLE_INCREMENT_DEGREES = 0.5;
     public static final double kBPDeadband = 0.05;
 
     public static final double BP_SPEED = 0.1;
@@ -209,7 +209,7 @@ public final class Constants {
     public static final int kTurningMotorCurrentLimit = 20; // amps
 
     public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.2;
+    public static final double kDriveDeadband = 0.05;
 
     // Defines Intake constants
     public static final boolean kEnableIntakePIDTuning = false;

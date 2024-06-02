@@ -13,6 +13,7 @@ import frc.robot.commands.BarrelPivot.ResetTargetAngle;
 import frc.robot.commands.Lights.MakeCool;
 import frc.robot.commands.Lights.MakeRainbow;
 import frc.robot.subsystems.BarrelPivot;
+import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Vision;
 import frc.robot.testingdashboard.TDNumber;
 
@@ -97,7 +98,9 @@ public class Robot extends TimedRobot {
     }
     
     m_makeCool.schedule();
-    m_vision.enablePoseUpdates();
+    if (RobotMap.V_ENABLED) {
+      m_vision.enablePoseUpdates();
+    }
   }
 
   /** This function is called periodically during autonomous. */
